@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  database:
+    image: mysql:8
+    container_name: "db_container"
+    restart: on-failure
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - default
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: api_db
+      MYSQL_USER: john
+      MYSQL_PASSWORD: test123
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "exit | mysql -h localhost -P 3306 -u root -p$$MYSQL_ROOT_PASSWORD",
+        ]
+      interval: 5s
+      timeout: 20s
+      retries: 30
+  #kotlinapi:
+  #  container_name: "api_kotlin_container"
+  #  image: ed/kotlin:latest
+  #  build: .
+  #  restart: unless-stopped
+  #  depends_on:
+  #    database:
+  #      condition: service_healthy
+  #  networks:
+  #    - default
+  #  ports:
+  #    - "3100:3100"
+  #  stdin_open: true
+  #  tty: true
+
+volumes:
+  db:
+  logs:
+
+networks:
+  default:
+    driver: bridge
