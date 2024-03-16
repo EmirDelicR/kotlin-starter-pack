@@ -11,3 +11,5 @@
 5. Dependencies -> Spring Data JPA, Spring Web, MySQL Driver
 
 Maven docker image: https://hub.docker.com/r/fxdom/maven-openjdk-21/tags
+
+TODO @ed add more docs
