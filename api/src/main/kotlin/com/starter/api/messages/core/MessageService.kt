@@ -1,15 +1,17 @@
 package com.starter.api.messages.core
 
+import com.starter.api.exception.NotFoundException
 import com.starter.api.messages.dtos.MessageRequest
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.http.HttpStatus
+
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
-import java.util.*
+
 
 @Service
 class MessageService(val messageRepository: MessageRepository) {
-    fun getById(id: String): Message? = messageRepository.findByIdOrNull(id)
+    fun getById(id: String): Message = messageRepository.findByIdOrNull(id)
+        ?: throw NotFoundException("Message with $id was not found!")
 
     fun create(messageRequest: MessageRequest): Message {
         val message = Message(

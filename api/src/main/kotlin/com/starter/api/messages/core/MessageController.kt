@@ -3,6 +3,8 @@ package com.starter.api.messages.core
 import com.starter.api.dtos.ResponseEnvelope
 import com.starter.api.messages.dtos.MessageRequest
 import com.starter.api.messages.dtos.MessageResponse
+import com.starter.api.utils.logger
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -18,27 +20,23 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/v1/messages"])
 class MessageController(val messageService: MessageService) {
+    private val logger = logger()
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun getMessage(@PathVariable id: String): ResponseEnvelope<MessageResponse?> {
-        val msg =
-            messageService.getById(id)
-                ?:  return ResponseEnvelope(
-                    data = null,
-                    message = "Message with $id was not found!",
-                    status = 404
-                )
+        logger.info("Handling getMessage Request with id: $id")
+        val msg = messageService.getById(id)
 
         return ResponseEnvelope(
             data = msg.toResponse(),
             message = "Fetch message successful.",
-            status = 200
+            status = HttpStatus.OK.value()
         )
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    fun saveMessage(@RequestBody messageRequest: MessageRequest): ResponseEnvelope<MessageResponse> {
+    fun saveMessage(@Valid @RequestBody messageRequest: MessageRequest): ResponseEnvelope<MessageResponse> {
         val msg: Message = messageService.create(messageRequest)
         return ResponseEnvelope(
             data = msg.toResponse(),
