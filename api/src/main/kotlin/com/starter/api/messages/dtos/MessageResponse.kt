@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.OffsetDateTime
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-data class MessageResponse (
+data class MessageResponse(
     val id: String,
     val sender: String,
     val email: String,

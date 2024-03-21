@@ -4,11 +4,9 @@ import com.starter.api.messages.dtos.MessageResponse
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
-import jakarta.persistence.PreUpdate
 import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
-import org.springframework.format.annotation.DateTimeFormat
 import java.time.OffsetDateTime
 import java.util.UUID
 
@@ -31,10 +29,8 @@ class Message(
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
     @UpdateTimestamp
     @Column(name = "updated_at")
-    var updatedAt: OffsetDateTime = OffsetDateTime.now()
+    var updatedAt: OffsetDateTime = OffsetDateTime.now(),
 ) {
-
-
     /*@PreUpdate
     fun preUpdate() {
         updatedAt = OffsetDateTime.now()

@@ -5,4 +5,4 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MessageRepository : JpaRepository<Message, String>, JpaSpecificationExecutor<Message> {}
+interface MessageRepository : JpaRepository<Message, String>, JpaSpecificationExecutor<Message>

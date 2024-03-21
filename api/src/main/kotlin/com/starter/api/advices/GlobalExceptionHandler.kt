@@ -21,8 +21,8 @@ class GlobalExceptionHandler {
             ResponseEnvelope(
                 data = null,
                 message = exception.message as String,
-                status = exception.status
-            )
+                status = exception.status,
+            ),
         )
     }
 
@@ -34,21 +34,21 @@ class GlobalExceptionHandler {
             ResponseEnvelope(
                 data = null,
                 message = exception.message as String,
-                status = exception.status
-            )
+                status = exception.status,
+            ),
         )
     }
 
     @ExceptionHandler
-    fun handle(exception: Exception): ResponseEntity<ResponseEnvelope<Nothing?>>  {
+    fun handle(exception: Exception): ResponseEntity<ResponseEnvelope<Nothing?>> {
         logger.error("Handling generic exception:", exception)
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
             ResponseEnvelope(
                 data = null,
                 message = "An unexpected error occurred",
-                status = HttpStatus.INTERNAL_SERVER_ERROR.value()
-            )
+                status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            ),
         )
     }
 }
