@@ -69,7 +69,9 @@ class MessageController(val messageService: MessageService) {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateMessage(@PathVariable id: String): ResponseEnvelope<MessageResponse> {
+    fun updateMessage(
+        @PathVariable id: String,
+    ): ResponseEnvelope<MessageResponse> {
         val msg: Message = messageService.update(id)
 
         return ResponseEnvelope(

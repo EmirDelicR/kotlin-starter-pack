@@ -10,10 +10,8 @@ import jakarta.validation.constraints.NotBlank
 data class MessageRequest(
     @field:NotBlank(message = "Full name must not be blank!")
     val fullName: String,
-
     @field:NotBlank(message = "Message must not be blank!")
     val message: String,
-
     @field:NotBlank(message = "Email must not be blank!")
     @field:Email(regexp = ".+[@].+[\\.].+", message = "Email is not valid!")
     val email: String,
