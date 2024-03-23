@@ -7,12 +7,14 @@ import jakarta.validation.constraints.NotBlank
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-class MessageRequest(
-    @NotBlank(message = "Full name must not be blank")
+data class MessageRequest(
+    @field:NotBlank(message = "Full name must not be blank!")
     val fullName: String,
-    @NotBlank(message = "Message must not be blank")
+
+    @field:NotBlank(message = "Message must not be blank!")
     val message: String,
-    @NotBlank(message = "Email must not be blank")
-    @Email(regexp = ".+[@].+[\\.].+")
+
+    @field:NotBlank(message = "Email must not be blank!")
+    @field:Email(regexp = ".+[@].+[\\.].+", message = "Email is not valid!")
     val email: String,
 )

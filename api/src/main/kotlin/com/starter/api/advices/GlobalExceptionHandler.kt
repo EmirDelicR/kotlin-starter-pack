@@ -6,6 +6,7 @@ import com.starter.api.exception.NotValidException
 import com.starter.api.utils.logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 
@@ -35,6 +36,19 @@ class GlobalExceptionHandler {
                 data = null,
                 message = exception.message as String,
                 status = exception.status,
+            ),
+        )
+    }
+
+    @ExceptionHandler
+    fun handle(exception: MethodArgumentNotValidException): ResponseEntity<ResponseEnvelope<Nothing?>> {
+        logger.error("Handling MethodArgumentNotValidException:", exception)
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            ResponseEnvelope(
+                data = null,
+                message = exception.bindingResult.fieldErrors[0].defaultMessage as String,
+                status = HttpStatus.BAD_REQUEST.value(),
             ),
         )
     }

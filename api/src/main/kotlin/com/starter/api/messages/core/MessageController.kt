@@ -42,7 +42,9 @@ class MessageController(val messageService: MessageService) {
     fun saveMessage(
         @Valid @RequestBody messageRequest: MessageRequest,
     ): ResponseEnvelope<MessageResponse> {
+        logger.info("Handling saveMessage Request")
         val msg: Message = messageService.create(messageRequest)
+
         return ResponseEnvelope(
             data = msg.toResponse(),
             message = "Message was send successful.",
