@@ -62,3 +62,10 @@ Add to pom.xml file
 </dependency>
 <!--End Swagger-->
 ```
+
+
+https://github.com/springdoc/springdoc-openapi-demos/blob/2.x/demo-spring-boot-3-webmvc/pom.xml
+
+https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
+
+https://springdoc.org/#demos
