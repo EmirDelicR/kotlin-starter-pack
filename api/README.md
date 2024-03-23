@@ -14,6 +14,16 @@ Maven docker image: https://hub.docker.com/r/fxdom/maven-openjdk-21/tags
 
 TODO @ed add more docs
 
+## How to run
+
+gor to /api folder and run:
+
+```console
+docker compose up
+```
+
+run app by clicking play
+
 ## Adding lint and format
 
 [ktlint](https://reflectoring.io/code-format-with-ktlint/)
@@ -22,9 +32,9 @@ TODO @ed add more docs
 
 ktlint:format format your Kotlin sources using ktlint.
 
-ktlint:check check your Kotlin sources for code style violations using ktlint.
+ktlint: check your Kotlin sources for code style violations using ktlint.
 
-ktlint:ktlint generate project report of code style violations using ktlint.
+ktlint: ktlint generate project report of code style violations using ktlint.
 
 ```console
 mvn ktlint:format
@@ -37,6 +47,18 @@ mvn ktlint:ktlint
 
 ## Adding swagger
 
-[swagger](https://www.geeksforgeeks.org/spring-boot-rest-api-documentation-using-swagger/)
+[swagger](https://springdoc.org/#spring-hateoas-support)
 
-https://github.com/vojtechruz/springfox-example/blob/master/src/main/java/com/vojtechruzicka/springfoxexample/config/SpringFoxConfig.java
+[Swagger-app-url](http://localhost:3100/swagger-ui/index.html)
+
+Add to pom.xml file
+
+```xml
+<!--Swagger-->
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.4.0</version>
+</dependency>
+<!--End Swagger-->
+```
