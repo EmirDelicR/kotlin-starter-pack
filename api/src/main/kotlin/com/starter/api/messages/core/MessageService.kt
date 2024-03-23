@@ -4,13 +4,12 @@ import com.starter.api.exception.NotFoundException
 import com.starter.api.messages.dtos.MessageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import org.springframework.web.server.ResponseStatusException
 
 @Service
 class MessageService(val messageRepository: MessageRepository) {
     fun getById(id: String): Message =
         messageRepository.findByIdOrNull(id)
-            ?: throw NotFoundException("Message with $id was not found!")
+            ?: throw NotFoundException("Message with id: ($id) was not found!")
 
     fun create(messageRequest: MessageRequest): Message {
         val message =
@@ -25,27 +24,19 @@ class MessageService(val messageRepository: MessageRepository) {
     }
 
     fun remove(id: String) {
-        // TODO @ed make here custom exceptions
         if (!messageRepository.existsById(id)) {
-            throw ResponseStatusException(404, "Message with $id was not found!", null)
+            throw NotFoundException("Message with id: ($id) was not found!")
         }
 
         messageRepository.deleteById(id)
     }
 
-/*    fun update(id: String): Message? {
+    fun update(id: String): Message {
         val message = getById(id)
 
-        message.ifPresentOrElse(
-            { value ->
-                value.apply {
-                    unread = !value.unread
-                }
-            },
-            {
-                throw ResponseStatusException(HttpStatus.NOT_FOUND)
-            })
-
-        return message.let { messageRepository.saveAndFlush(it) }
-    }*/
+        return message.let {
+            it.unread = !it.unread
+            messageRepository.saveAndFlush(it)
+        }
+    }
 }

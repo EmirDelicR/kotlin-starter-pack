@@ -22,7 +22,7 @@ class GlobalExceptionHandler {
             ResponseEnvelope(
                 data = null,
                 message = exception.message as String,
-                status = exception.status,
+                status = HttpStatus.BAD_REQUEST.value(),
             ),
         )
     }
@@ -35,7 +35,7 @@ class GlobalExceptionHandler {
             ResponseEnvelope(
                 data = null,
                 message = exception.message as String,
-                status = exception.status,
+                status = HttpStatus.NOT_FOUND.value(),
             ),
         )
     }
