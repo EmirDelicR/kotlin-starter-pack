@@ -31,7 +31,6 @@ class Message(
     @Column(name = "updated_at")
     var updatedAt: OffsetDateTime = OffsetDateTime.now(),
 ) {
-
     fun toResponse(): MessageResponse {
         return MessageResponse(
             id,

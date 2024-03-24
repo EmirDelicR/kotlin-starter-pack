@@ -28,7 +28,7 @@ class PageableResolver {
     }
 
     fun isFilterEmpty(filter: String): Boolean {
-        return filter.isEmpty()
+        return filter.trim().isEmpty()
     }
 
     fun getSortObject(
