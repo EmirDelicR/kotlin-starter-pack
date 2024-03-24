@@ -1,5 +1,6 @@
 package com.starter.api.messages.core
 
+import com.starter.api.dtos.PageableResponse
 import com.starter.api.dtos.ResponseEnvelope
 import com.starter.api.messages.dtos.MessageRequest
 import com.starter.api.messages.dtos.MessageResponse
@@ -59,9 +60,9 @@ class MessageController(val messageService: MessageService) {
         @RequestParam(name = "filter", defaultValue = "") filter: String,
         @RequestParam(name = "order", defaultValue = PageableResolver.ORDER_DEFAULT_VALUE) order: String,
         @RequestParam(name = "columnId", defaultValue = PageableResolver.SORT_DEFAULT_FIELD) columnId: String,
-    ): ResponseEnvelope<List<Message>> {
+    ): ResponseEnvelope<PageableResponse<Message>> {
         logger.info("Handling getMessages/paginated Request")
-        val messages: List<Message> = messageService.findAll(filter, order, columnId)
+        val messages: PageableResponse<Message> = messageService.findAll(filter, order, columnId, page, pageSize)
 
         return ResponseEnvelope(
             data = messages,

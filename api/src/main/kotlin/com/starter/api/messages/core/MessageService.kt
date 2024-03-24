@@ -1,8 +1,10 @@
 package com.starter.api.messages.core
 
+import com.starter.api.dtos.PageableResponse
 import com.starter.api.exception.NotFoundException
 import com.starter.api.messages.dtos.MessageRequest
 import com.starter.api.utils.PageableResolver
+import org.springframework.data.domain.Page
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -16,15 +18,20 @@ class MessageService(val messageRepository: MessageRepository) {
         filter: String,
         order: String,
         columnId: String,
-    ): List<Message> {
+        offset: Int,
+        limit: Int,
+    ): PageableResponse<Message> {
         val pageableResolver = PageableResolver()
         val sort = pageableResolver.getSortObject(order, columnId)
+        val pageableRequest = pageableResolver.getPageableObject(offset, limit, sort)
+        val response: Page<Message> =
+            if (pageableResolver.isFilterEmpty(filter)) {
+                messageRepository.findAndCount(pageableRequest)
+            } else {
+                messageRepository.findAndCountWithFilter(filter.lowercase(), pageableRequest)
+            }
 
-        if (pageableResolver.isFilterEmpty(filter)) {
-            return messageRepository.countAllByIdAndOrderBy(sort)
-        }
-
-        return messageRepository.findAndCount(filter.lowercase(), sort)
+        return PageableResponse(totalCount = response.totalElements, numberOfPages = response.totalPages, items = response.content)
     }
 
     fun create(messageRequest: MessageRequest): Message {

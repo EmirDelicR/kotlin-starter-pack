@@ -1,6 +1,7 @@
 package com.starter.api.utils
 
 import com.starter.api.exception.NotValidException
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 
 class PageableResolver {
@@ -37,5 +38,13 @@ class PageableResolver {
         val direction = getSortingDirection(order)
         validateColumnIdOrderByProperty(columnId)
         return Sort.by(direction, columnId)
+    }
+
+    fun getPageableObject(
+        offset: Int,
+        limit: Int,
+        sort: Sort,
+    ): PageRequest {
+        return PageRequest.of(offset - 1, limit, sort)
     }
 }
