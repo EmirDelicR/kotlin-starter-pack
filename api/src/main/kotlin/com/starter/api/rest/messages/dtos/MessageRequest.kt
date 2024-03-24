@@ -1,4 +1,4 @@
-package com.starter.api.messages.dtos
+package com.starter.api.rest.messages.dtos
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude

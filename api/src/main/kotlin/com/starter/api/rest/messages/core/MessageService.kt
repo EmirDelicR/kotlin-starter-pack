@@ -1,8 +1,8 @@
-package com.starter.api.messages.core
+package com.starter.api.rest.messages.core
 
 import com.starter.api.dtos.PageableResponse
 import com.starter.api.exception.NotFoundException
-import com.starter.api.messages.dtos.MessageRequest
+import com.starter.api.rest.messages.dtos.MessageRequest
 import com.starter.api.utils.PageableResolver
 import org.springframework.data.domain.Page
 import org.springframework.data.repository.findByIdOrNull

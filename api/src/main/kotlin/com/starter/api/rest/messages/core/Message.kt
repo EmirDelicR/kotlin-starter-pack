@@ -1,6 +1,6 @@
-package com.starter.api.messages.core
+package com.starter.api.rest.messages.core
 
-import com.starter.api.messages.dtos.MessageResponse
+import com.starter.api.rest.messages.dtos.MessageResponse
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id

@@ -1,9 +1,9 @@
-package com.starter.api.messages.core
+package com.starter.api.rest.messages.core
 
 import com.starter.api.dtos.PageableResponse
 import com.starter.api.dtos.ResponseEnvelope
-import com.starter.api.messages.dtos.MessageRequest
-import com.starter.api.messages.dtos.MessageResponse
+import com.starter.api.rest.messages.dtos.MessageRequest
+import com.starter.api.rest.messages.dtos.MessageResponse
 import com.starter.api.utils.PageableResolver
 import com.starter.api.utils.logger
 import jakarta.validation.Valid

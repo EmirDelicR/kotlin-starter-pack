@@ -1,4 +1,4 @@
-package com.starter.api.messages.core
+package com.starter.api.rest.messages.core
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
