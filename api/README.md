@@ -69,3 +69,8 @@ https://github.com/springdoc/springdoc-openapi-demos/blob/2.x/demo-spring-boot-3
 https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
 
 https://springdoc.org/#demos
+
+## TEsting
+https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.testing.spring-boot-applications.spring-mvc-tests
+
+https://www.baeldung.com/bdd-mockito
