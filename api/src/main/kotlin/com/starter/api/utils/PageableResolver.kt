@@ -3,7 +3,6 @@ package com.starter.api.utils
 import com.starter.api.exception.NotValidException
 import org.springframework.data.domain.Sort
 
-
 class PageableResolver {
     companion object {
         const val SORT_DEFAULT_FIELD = "createdAt"
@@ -27,7 +26,7 @@ class PageableResolver {
         }
     }
 
-    fun isFilterEmpty(filter:String): Boolean {
+    fun isFilterEmpty(filter: String): Boolean {
         return filter.isEmpty()
     }
 

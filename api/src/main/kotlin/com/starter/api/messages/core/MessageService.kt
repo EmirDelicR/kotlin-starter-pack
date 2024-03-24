@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class MessageService(val messageRepository: MessageRepository) {
-
     fun getById(id: String): Message =
         messageRepository.findByIdOrNull(id)
             ?: throw NotFoundException("Message with id: ($id) was not found!")
