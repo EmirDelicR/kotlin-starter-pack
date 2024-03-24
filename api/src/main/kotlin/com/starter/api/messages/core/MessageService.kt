@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class MessageService(val messageRepository: MessageRepository) {
+    private val pageableResolver = PageableResolver()
     fun getById(id: String): Message =
         messageRepository.findByIdOrNull(id)
             ?: throw NotFoundException("Message with id: ($id) was not found!")
@@ -21,7 +22,6 @@ class MessageService(val messageRepository: MessageRepository) {
         offset: Int,
         limit: Int,
     ): PageableResponse<Message> {
-        val pageableResolver = PageableResolver()
         val sort = pageableResolver.getSortObject(order, columnId)
         val pageableRequest = pageableResolver.getPageableObject(offset, limit, sort)
         val response: Page<Message> =
