@@ -2,12 +2,13 @@ package com.starter.api.messages.core
 
 import com.starter.api.exception.NotFoundException
 import com.starter.api.messages.dtos.MessageRequest
-import org.springframework.data.domain.Sort
+import com.starter.api.utils.PageableResolver
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
 class MessageService(val messageRepository: MessageRepository) {
+
     fun getById(id: String): Message =
         messageRepository.findByIdOrNull(id)
             ?: throw NotFoundException("Message with id: ($id) was not found!")
@@ -17,10 +18,10 @@ class MessageService(val messageRepository: MessageRepository) {
         order: String,
         columnId: String,
     ): List<Message> {
-        val direction = if (order == "DESC") Sort.Direction.DESC else Sort.Direction.ASC
-        val sort = Sort.by(direction, columnId)
+        val pageableResolver = PageableResolver()
+        val sort = pageableResolver.getSortObject(order, columnId)
 
-        if (filter == "") {
+        if (pageableResolver.isFilterEmpty(filter)) {
             return messageRepository.countAllByIdAndOrderBy(sort)
         }
 

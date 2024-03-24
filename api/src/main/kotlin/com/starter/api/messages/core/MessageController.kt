@@ -3,8 +3,11 @@ package com.starter.api.messages.core
 import com.starter.api.dtos.ResponseEnvelope
 import com.starter.api.messages.dtos.MessageRequest
 import com.starter.api.messages.dtos.MessageResponse
+import com.starter.api.utils.PageableResolver
 import com.starter.api.utils.logger
 import jakarta.validation.Valid
+import jakarta.validation.constraints.Max
+import jakarta.validation.constraints.Min
 import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -39,13 +42,23 @@ class MessageController(val messageService: MessageService) {
         )
     }
 
-    /** GET /messages/paginated?page=1&pageSize=1&columnId=''&filter=''&order='DESC */
+    /** GET /messages/paginated?page=1&pageSize=1&columnId=''&filter=''&order='DESC' */
     @GetMapping("/paginated")
     @ResponseStatus(HttpStatus.OK)
     fun getMessage(
+        @RequestParam(
+            name = "page",
+            defaultValue = "1",
+        )
+        @Min(value = 1, message = "Page Value must be at least 1")
+        @Max(value = 100, message = "Page Value must be less then 100") page: Int,
+        @RequestParam(
+            name = "pageSize",
+            defaultValue = "10",
+        ) @Min(value = 0, message = "Page Size must be greater than or equal 0") pageSize: Int,
         @RequestParam(name = "filter", defaultValue = "") filter: String,
-        @RequestParam(name = "order", defaultValue = "DESC") order: String,
-        @RequestParam(name = "columnId", defaultValue = "createdAt") columnId: String,
+        @RequestParam(name = "order", defaultValue = PageableResolver.ORDER_DEFAULT_VALUE) order: String,
+        @RequestParam(name = "columnId", defaultValue = PageableResolver.SORT_DEFAULT_FIELD) columnId: String,
     ): ResponseEnvelope<List<Message>> {
         logger.info("Handling getMessages/paginated Request")
         val messages: List<Message> = messageService.findAll(filter, order, columnId)
