@@ -6,6 +6,7 @@ import com.starter.api.rest.messages.dtos.MessageRequest
 import com.starter.api.rest.messages.dtos.MessageResponse
 import com.starter.api.utils.PageableResolver
 import com.starter.api.utils.logger
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
+@SecurityRequirement(name = "basicAuth")
 @Validated
 @RestController
 @RequestMapping(path = ["/api/v1/messages"])

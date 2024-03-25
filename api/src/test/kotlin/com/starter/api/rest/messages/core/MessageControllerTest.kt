@@ -1,6 +1,7 @@
 package com.starter.api.rest.messages.core
 
 import com.starter.api.exception.NotFoundException
+import com.starter.api.testUtils.sampleMessage
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
 import org.mockito.BDDMockito.willThrow
@@ -16,13 +17,7 @@ import org.springframework.test.web.servlet.get
 @AutoConfigureMockMvc
 class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
     private val apiUrl = "/api/v1/messages"
-    private val messageResponseMock = Message(
-        message = "Some message text",
-        email = "john@doe.com",
-        sender = "John Doe",
-        unread = false,
-        id = "message-uuid"
-    )
+    private val messageResponseMock = sampleMessage()
 
     @MockBean
     lateinit var messageService: MessageService

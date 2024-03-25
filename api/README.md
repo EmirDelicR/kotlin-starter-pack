@@ -63,6 +63,9 @@ Add to pom.xml file
 <!--End Swagger-->
 ```
 
+https://www.baeldung.com/springdoc-openapi-form-login-and-basic-authentication
+
+https://github.com/eugenp/tutorials/blob/master/spring-security-modules/spring-security-web-springdoc/src/main/java/com/baeldung/basicauth/FooController.java
 
 https://github.com/springdoc/springdoc-openapi-demos/blob/2.x/demo-spring-boot-3-webmvc/pom.xml
 
@@ -74,3 +77,5 @@ https://springdoc.org/#demos
 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.testing.spring-boot-applications.spring-mvc-tests
 
 https://www.baeldung.com/bdd-mockito
+
+https://junit.org/junit5/docs/current/user-guide/#writing-tests-nested

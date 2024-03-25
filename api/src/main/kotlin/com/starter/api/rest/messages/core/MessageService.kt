@@ -5,7 +5,6 @@ import com.starter.api.exception.NotFoundException
 import com.starter.api.rest.messages.dtos.MessageRequest
 import com.starter.api.utils.PageableResolver
 import org.springframework.data.domain.Page
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,7 +12,7 @@ class MessageService(val messageRepository: MessageRepository) {
     private val pageableResolver = PageableResolver()
 
     fun getById(id: String): Message =
-        messageRepository.findByIdOrNull(id)
+        messageRepository.findByIdOrMessageNull(id)
             ?: throw NotFoundException("Message with id: ($id) was not found!")
 
     fun findAll(

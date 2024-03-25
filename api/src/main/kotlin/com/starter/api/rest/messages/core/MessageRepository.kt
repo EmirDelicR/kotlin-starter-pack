@@ -19,4 +19,6 @@ interface MessageRepository : JpaRepository<Message, String>, JpaSpecificationEx
 
     @Query(value = "SELECT m FROM Message m")
     fun findAndCount(pageable: Pageable): Page<Message>
+
+    fun findByIdOrMessageNull(id: String): Message?
 }
