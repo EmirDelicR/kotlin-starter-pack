@@ -53,12 +53,12 @@ class MessageController(val messageService: MessageService) {
             name = "page",
             defaultValue = "1",
         )
-        @Min(value = 1, message = "Page Value must be at least 1")
-        @Max(value = 100, message = "Page Value must be less then 100") page: Int,
+        @Min(value = 1, message = "Page must be at least 1")
+        @Max(value = 100, message = "Page must be less then 100") page: Int,
         @RequestParam(
             name = "pageSize",
             defaultValue = "10",
-        ) @Min(value = 0, message = "Page Size must be greater than or equal 0") pageSize: Int,
+        ) @Min(value = 1, message = "PageSize must be at least 1") pageSize: Int,
         @RequestParam(name = "filter", defaultValue = "") filter: String,
         @RequestParam(name = "order", defaultValue = PageableResolver.ORDER_DEFAULT_VALUE) order: String,
         @RequestParam(name = "columnId", defaultValue = PageableResolver.SORT_DEFAULT_FIELD) columnId: String,

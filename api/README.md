@@ -63,6 +63,26 @@ Add to pom.xml file
 <!--End Swagger-->
 ```
 
+for auth in swagger SpringdocConfig File
+
+```kotlin
+package com.starter.api.config
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
+import io.swagger.v3.oas.annotations.info.Info
+import io.swagger.v3.oas.annotations.security.SecurityScheme
+import org.springframework.context.annotation.Configuration
+
+@Configuration
+@OpenAPIDefinition(info = Info(title = "Swagger application API", version = "v1"))
+@SecurityScheme(
+    type = SecuritySchemeType.HTTP,
+    name = "basicAuth",
+    scheme = "basic")
+class SpringdocConfig
+```
+
 https://www.baeldung.com/springdoc-openapi-form-login-and-basic-authentication
 
 https://github.com/eugenp/tutorials/blob/master/spring-security-modules/spring-security-web-springdoc/src/main/java/com/baeldung/basicauth/FooController.java
@@ -73,9 +93,19 @@ https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
 
 https://springdoc.org/#demos
 
-## TEsting
-https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.testing.spring-boot-applications.spring-mvc-tests
+## Test setup
 
-https://www.baeldung.com/bdd-mockito
+1. Add in test folder resource/application.properties
+    - This will not connect to test during app boot
 
-https://junit.org/junit5/docs/current/user-guide/#writing-tests-nested
+```properties
+spring.jpa.properties.hibernate.globally_quoted_identifiers=true
+```
+
+2. Check test examples
+
+Links:
+
+[Spring test - lot of examples](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.testing.spring-boot-applications.spring-mvc-tests)
+
+[BDD-mockito](https://www.baeldung.com/bdd-mockito)

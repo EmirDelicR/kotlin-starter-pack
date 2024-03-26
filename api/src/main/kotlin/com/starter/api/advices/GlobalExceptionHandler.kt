@@ -4,6 +4,7 @@ import com.starter.api.dtos.ResponseEnvelope
 import com.starter.api.exception.NotFoundException
 import com.starter.api.exception.NotValidException
 import com.starter.api.utils.logger
+import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -21,7 +22,7 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             ResponseEnvelope(
                 data = null,
-                message = exception.message as String,
+                message = exception.message.toString(),
                 status = HttpStatus.BAD_REQUEST.value(),
             ),
         )
@@ -34,7 +35,7 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
             ResponseEnvelope(
                 data = null,
-                message = exception.message as String,
+                message = exception.message.toString(),
                 status = HttpStatus.NOT_FOUND.value(),
             ),
         )
@@ -47,12 +48,24 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             ResponseEnvelope(
                 data = null,
-                message = exception.bindingResult.fieldErrors[0].defaultMessage as String,
+                message = exception.bindingResult.fieldErrors[0].defaultMessage.toString(),
                 status = HttpStatus.BAD_REQUEST.value(),
             ),
         )
     }
 
+    @ExceptionHandler
+    fun handle(exception: ConstraintViolationException): ResponseEntity<ResponseEnvelope<Nothing?>> {
+        logger.error("Handling ConstraintViolationException:", exception)
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            ResponseEnvelope(
+                data = null,
+                message = exception.constraintViolations.first().message,
+                status = HttpStatus.BAD_REQUEST.value(),
+            ),
+        )
+    }
     @ExceptionHandler
     fun handle(exception: Exception): ResponseEntity<ResponseEnvelope<Nothing?>> {
         logger.error("Handling generic exception:", exception)

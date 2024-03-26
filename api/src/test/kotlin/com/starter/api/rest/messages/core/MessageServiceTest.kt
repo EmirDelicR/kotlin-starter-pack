@@ -2,28 +2,29 @@ package com.starter.api.rest.messages.core
 
 import com.starter.api.exception.NotFoundException
 import com.starter.api.exception.NotValidException
+import com.starter.api.testUtils.createPageObject
 import com.starter.api.testUtils.sampleMessage
 import com.starter.api.testUtils.sampleMessageRequest
 import com.starter.api.utils.PageableResolver
-import org.junit.jupiter.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatCode
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.assertThrows
 import org.mockito.BDDMockito.times
 import org.mockito.BDDMockito.verify
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argForWhich
-import org.mockito.kotlin.mock
 import org.mockito.kotlin.doNothing
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.eq
+
 
 @DisplayName("MessageService test")
 class MessageServiceTest {
     private val messageResponseMock = sampleMessage()
-    private val pageableResolver = PageableResolver()
     private lateinit var messageService: MessageService
     private val messageRepository = mock<MessageRepository>()
 
@@ -45,9 +46,11 @@ class MessageServiceTest {
         @Test
         fun `should throw NotFoundException if no entry in DB`() {
             given(messageRepository.findByIdOrMessageNull(messageResponseMock.id)).willReturn(null)
-            val exc = assertThrows<NotFoundException> { messageService.getById(messageResponseMock.id) }
 
-            assertThat(exc.message).isEqualTo("Message with id: (${messageResponseMock.id}) was not found!")
+            assertThatCode {
+                messageService.getById(messageResponseMock.id)
+            }.hasMessage("Message with id: (${messageResponseMock.id}) was not found!")
+                .isInstanceOf(NotFoundException::class.java)
         }
     }
 
@@ -56,22 +59,88 @@ class MessageServiceTest {
     inner class FindAll {
         @Test
         fun `should throw exception if columnId is not valid`() {
-            val exc = assertThrows<NotValidException> { messageService.findAll("", "DESC", "wrong-column", 0, 1) }
-            assertThat(exc.message).isEqualTo("Cannot sort by wrong-column.Allowed sorting fields: createdAt, name")
-
-            /*verify(
-                pageableResolver,
-                times(1),
-            ).getSortObject(
-               *//* argForWhich {
-                    this.order == msgRequest.fullName && !this.unread && this.email == msgRequest.email && this.message == msgRequest.message
-                },*//*
-            )*/
+            assertThatCode {
+                messageService.findAll("", "DESC", "wrong-column", 0, 1)
+            }.hasMessage("Cannot sort by wrong-column.Allowed sorting fields: ${PageableResolver.allowedOrderingParams.joinToString()}")
+                .isInstanceOf(NotValidException::class.java)
         }
 
         @Test
-        fun `should test is false`() {
-            Assertions.assertFalse(false)
+        fun `should call messageRepository findAndCount method if filter is empty`() {
+            given(messageRepository.findAndCount(any())).willReturn(createPageObject(listOf(messageResponseMock)))
+
+            val response = messageService.findAll("", "DESC", "createdAt", 1, 10)
+
+            verify(
+                messageRepository,
+                times(1),
+            ).findAndCount(
+                 any()
+            )
+
+            verify(
+                messageRepository,
+                times(0),
+            ).findAndCountWithFilter(
+                any(), any()
+            )
+
+            assertThat(response.totalCount).isEqualTo(1)
+            assertThat(response.numberOfPages).isEqualTo(1)
+            assertThat(response.items.size).isEqualTo(1)
+            assertThat(response.items[0]).isEqualTo(messageResponseMock)
+        }
+
+        @Test
+        fun `should call messageRepository findAndCountWithFilter method if filter is not empty`() {
+            val filter = "test"
+            given(messageRepository.findAndCountWithFilter(eq(filter), any())).willReturn(createPageObject(listOf(messageResponseMock)))
+
+            val response = messageService.findAll(filter, "DESC", "createdAt", 1, 10)
+
+            verify(
+                messageRepository,
+                times(0),
+            ).findAndCount(
+                any()
+            )
+
+            verify(
+                messageRepository,
+                times(1),
+            ).findAndCountWithFilter(
+                eq(filter), any()
+            )
+
+            assertThat(response.totalCount).isEqualTo(1)
+            assertThat(response.numberOfPages).isEqualTo(1)
+            assertThat(response.items.size).isEqualTo(1)
+            assertThat(response.items[0]).isEqualTo(messageResponseMock)
+        }
+
+        @Test
+        fun `should call messageRepository findAndCount method if filter is empty and return multiple page`() {
+            given(messageRepository.findAndCount(any())).willReturn(createPageObject(listOf(messageResponseMock, messageResponseMock), 1))
+
+            val response = messageService.findAll("", "DESC", "createdAt", 1, 10)
+
+            assertThat(response.totalCount).isEqualTo(2)
+            assertThat(response.numberOfPages).isEqualTo(2)
+            assertThat(response.items.size).isEqualTo(2)
+            assertThat(response.items[0]).isEqualTo(messageResponseMock)
+        }
+
+        @Test
+        fun `should call messageRepository findAndCountWithFilter method if filter is not empty and return multiple page`() {
+            val filter = "test"
+            given(messageRepository.findAndCountWithFilter(eq(filter), any())).willReturn(createPageObject(listOf(messageResponseMock, messageResponseMock), 1))
+
+            val response = messageService.findAll(filter, "DESC", "createdAt", 1, 10)
+
+            assertThat(response.totalCount).isEqualTo(2)
+            assertThat(response.numberOfPages).isEqualTo(2)
+            assertThat(response.items.size).isEqualTo(2)
+            assertThat(response.items[0]).isEqualTo(messageResponseMock)
         }
     }
 
@@ -102,9 +171,11 @@ class MessageServiceTest {
         @Test
         fun `should throw NotFoundException if no entry in DB`() {
             given(messageRepository.existsById(messageResponseMock.id)).willReturn(false)
-            val exc = assertThrows<NotFoundException> { messageService.remove(messageResponseMock.id) }
 
-            assertThat(exc.message).isEqualTo("Message with id: (${messageResponseMock.id}) was not found!")
+            assertThatCode {
+                messageService.remove(messageResponseMock.id)
+            }.hasMessage("Message with id: (${messageResponseMock.id}) was not found!")
+                .isInstanceOf(NotFoundException::class.java)
         }
 
         @Test
@@ -131,9 +202,11 @@ class MessageServiceTest {
         @Test
         fun `should throw NotFoundException if no entry in DB`() {
             given(messageRepository.findByIdOrMessageNull(messageResponseMock.id)).willReturn(null)
-            val exc = assertThrows<NotFoundException> { messageService.update(messageResponseMock.id) }
 
-            assertThat(exc.message).isEqualTo("Message with id: (${messageResponseMock.id}) was not found!")
+            assertThatCode {
+                messageService.update(messageResponseMock.id)
+            }.hasMessage("Message with id: (${messageResponseMock.id}) was not found!")
+                .isInstanceOf(NotFoundException::class.java)
         }
 
         @Test

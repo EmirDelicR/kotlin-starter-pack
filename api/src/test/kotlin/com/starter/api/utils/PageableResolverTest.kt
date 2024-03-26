@@ -34,7 +34,7 @@ class PageableResolverTest {
     fun `Test getSortObject should throw exception if columnId is not valid`() {
         val columnId = "createdA"
         val exc = assertThrows<NotValidException> { pageableResolver.getSortObject("DESC", columnId) }
-        assertThat(exc.message).isEqualTo("Cannot sort by $columnId.Allowed sorting fields: createdAt, name")
+        assertThat(exc.message).isEqualTo("Cannot sort by $columnId.Allowed sorting fields: ${PageableResolver.allowedOrderingParams.joinToString()}")
     }
 
     @Test
