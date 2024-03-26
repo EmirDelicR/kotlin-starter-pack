@@ -24,10 +24,11 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
-class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
+class MessageControllerTest(
+    @Autowired val mockMvc: MockMvc,
+) {
     private val apiUrl = "/api/v1/messages"
     private val messageResponseMock = sampleMessage()
 
@@ -52,7 +53,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test getMessage should return status 200 if getMessage service function is successful`() {
             given(messageRepository.findByIdOrMessageNull(eq(messageResponseMock.id))).willReturn(messageResponseMock)
 
-            mockMvc.get("${apiUrl}/${messageResponseMock.id}").andExpect {
+            mockMvc.get("$apiUrl/${messageResponseMock.id}").andExpect {
                 status { isOk() }
                 jsonPath("$.status") { value(HttpStatus.OK.value()) }
                 jsonPath("$.message") { value("Fetch message successful.") }
@@ -70,7 +71,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test getMessage should return status 404 if no item is found`() {
             given(messageRepository.findByIdOrMessageNull(eq(messageResponseMock.id))).willReturn(null)
 
-            mockMvc.get("${apiUrl}/${messageResponseMock.id}") {
+            mockMvc.get("$apiUrl/${messageResponseMock.id}") {
                 println()
             }.andExpect {
                 status { isNotFound() }
@@ -88,7 +89,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test getMessage paginated should return status 200 if findAll service function is successful with default values`() {
             given(messageRepository.findAndCount(any())).willReturn(createPageObject(listOf(messageResponseMock)))
 
-            mockMvc.get("${apiUrl}/paginated").andExpect {
+            mockMvc.get("$apiUrl/paginated").andExpect {
                 status { isOk() }
                 jsonPath("$.status") { value(HttpStatus.OK.value()) }
                 jsonPath("$.message") { value("Fetch messages was successful.") }
@@ -110,7 +111,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test getMessage paginated should return status 200 if findAll service function is successful with passed values`() {
             given(messageRepository.findAndCount(any())).willReturn(createPageObject(listOf(messageResponseMock)))
 
-            mockMvc.get("${apiUrl}/paginated?page=1&pageSize=1&columnId=createdAt&order=DESC").andExpect {
+            mockMvc.get("$apiUrl/paginated?page=1&pageSize=1&columnId=createdAt&order=DESC").andExpect {
                 status { isOk() }
                 jsonPath("$.status") { value(HttpStatus.OK.value()) }
                 jsonPath("$.message") { value("Fetch messages was successful.") }
@@ -132,7 +133,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test getMessage paginated should return status 400 if page is less then 1`() {
             given(messageRepository.findAndCount(any())).willReturn(createPageObject(listOf(messageResponseMock)))
 
-            mockMvc.get("${apiUrl}/paginated?page=0&pageSize=1&columnId=createdAt&order=DESC").andExpect {
+            mockMvc.get("$apiUrl/paginated?page=0&pageSize=1&columnId=createdAt&order=DESC").andExpect {
                 status { isBadRequest() }
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
                 jsonPath("$.message") { value("Page must be at least 1") }
@@ -144,7 +145,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test getMessage paginated should return status 400 if page is more then 100`() {
             given(messageRepository.findAndCount(any())).willReturn(createPageObject(listOf(messageResponseMock)))
 
-            mockMvc.get("${apiUrl}/paginated?page=101&pageSize=1&columnId=createdAt&order=DESC").andExpect {
+            mockMvc.get("$apiUrl/paginated?page=101&pageSize=1&columnId=createdAt&order=DESC").andExpect {
                 status { isBadRequest() }
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
                 jsonPath("$.message") { value("Page must be less then 100") }
@@ -156,7 +157,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test getMessage paginated should return status 400 if pageSize is less then 0`() {
             given(messageRepository.findAndCount(any())).willReturn(createPageObject(listOf(messageResponseMock)))
 
-            mockMvc.get("${apiUrl}/paginated?page=1&pageSize=0&columnId=createdAt&order=DESC").andExpect {
+            mockMvc.get("$apiUrl/paginated?page=1&pageSize=0&columnId=createdAt&order=DESC").andExpect {
                 status { isBadRequest() }
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
                 jsonPath("$.message") { value("PageSize must be at least 1") }
@@ -168,10 +169,12 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test getMessage paginated should return status 400 if columnId is not correct`() {
             given(messageRepository.findAndCount(any())).willReturn(createPageObject(listOf(messageResponseMock)))
 
-            mockMvc.get("${apiUrl}/paginated?page=1&pageSize=2&columnId=created&order=DESC").andExpect {
+            mockMvc.get("$apiUrl/paginated?page=1&pageSize=2&columnId=created&order=DESC").andExpect {
                 status { isBadRequest() }
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
-                jsonPath("$.message") { value("Cannot sort by created.Allowed sorting fields: ${PageableResolver.allowedOrderingParams.joinToString()}") }
+                jsonPath(
+                    "$.message",
+                ) { value("Cannot sort by created.Allowed sorting fields: ${PageableResolver.allowedOrderingParams.joinToString()}") }
                 jsonPath("$.data") { value(null) }
             }
         }
@@ -186,12 +189,12 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
 
             val messageRequest =
                 MessageRequest(
-                    fullName =  messageResponseMock.sender,
-                    message =  messageResponseMock.message,
-                    email = messageResponseMock.email
+                    fullName = messageResponseMock.sender,
+                    message = messageResponseMock.message,
+                    email = messageResponseMock.email,
                 )
 
-            mockMvc.post(apiUrl){
+            mockMvc.post(apiUrl) {
                 withJsonContent(messageRequest)
             }.andExpect {
                 status { isCreated() }
@@ -215,7 +218,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test deleteMessage should return status 200 if deleteMessage service function is successful`() {
             given(messageRepository.existsById(eq(messageResponseMock.id))).willReturn(true)
 
-            mockMvc.delete("${apiUrl}/${messageResponseMock.id}").andExpect {
+            mockMvc.delete("$apiUrl/${messageResponseMock.id}").andExpect {
                 status { isOk() }
                 jsonPath("$.status") { value(HttpStatus.OK.value()) }
                 jsonPath("$.message") { value("Message with id: (${messageResponseMock.id}) was deleted successfully.") }
@@ -227,7 +230,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test deleteMessage should return status 404 if no item is found`() {
             given(messageRepository.existsById(eq(messageResponseMock.id))).willReturn(false)
 
-            mockMvc.delete("${apiUrl}/${messageResponseMock.id}") {
+            mockMvc.delete("$apiUrl/${messageResponseMock.id}") {
                 println()
             }.andExpect {
                 status { isNotFound() }
@@ -237,6 +240,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
             }
         }
     }
+
     @Nested
     @DisplayName("updateMessage Function")
     inner class UpdateMessage {
@@ -245,7 +249,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
             given(messageRepository.findByIdOrMessageNull(eq(messageResponseMock.id))).willReturn(messageResponseMock)
             given(messageRepository.saveAndFlush(any())).willReturn(messageResponseMock)
 
-            mockMvc.put("${apiUrl}/${messageResponseMock.id}").andExpect {
+            mockMvc.put("$apiUrl/${messageResponseMock.id}").andExpect {
                 status { isOk() }
                 jsonPath("$.status") { value(HttpStatus.OK.value()) }
                 jsonPath("$.message") { value("Message with id (${messageResponseMock.id}) was updated successfully.") }
@@ -263,7 +267,7 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
         fun `Test updateMessage should return status 404 if no item is found`() {
             given(messageRepository.findByIdOrMessageNull(eq(messageResponseMock.id))).willReturn(null)
 
-            mockMvc.put("${apiUrl}/${messageResponseMock.id}") {
+            mockMvc.put("$apiUrl/${messageResponseMock.id}") {
                 println()
             }.andExpect {
                 status { isNotFound() }
@@ -273,6 +277,4 @@ class MessageControllerTest(@Autowired val mockMvc: MockMvc) {
             }
         }
     }
-
-
 }

@@ -66,6 +66,7 @@ class GlobalExceptionHandler {
             ),
         )
     }
+
     @ExceptionHandler
     fun handle(exception: Exception): ResponseEntity<ResponseEnvelope<Nothing?>> {
         logger.error("Handling generic exception:", exception)

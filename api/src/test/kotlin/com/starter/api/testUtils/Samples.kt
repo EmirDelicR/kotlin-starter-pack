@@ -13,8 +13,7 @@ fun sampleMessage(): Message {
         email = "john@doe.com",
         sender = "John Doe",
         unread = false,
-        id = "message-uuid"
-
+        id = "message-uuid",
     )
 }
 
@@ -26,7 +25,10 @@ fun sampleMessageRequest(): MessageRequest {
     )
 }
 
-fun <T> createPageObject(list: List<T>, pageSize: Int = 10): Page<T> {
+fun <T> createPageObject(
+    list: List<T>,
+    pageSize: Int = 10,
+): Page<T> {
     val pageable: Pageable = PageRequest.of(0, pageSize)
     return PageImpl(list, pageable, list.size.toLong())
 }

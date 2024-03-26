@@ -11,8 +11,6 @@ class PageableResolver {
         val allowedOrderingParams = listOf(SORT_DEFAULT_FIELD, "name")
     }
 
-
-
     private fun getSortingDirection(order: String): Sort.Direction {
         return when (order) {
             "ASC" -> Sort.Direction.ASC

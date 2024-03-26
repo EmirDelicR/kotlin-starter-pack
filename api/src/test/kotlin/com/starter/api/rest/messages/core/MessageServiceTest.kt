@@ -18,9 +18,8 @@ import org.mockito.BDDMockito.verify
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.doNothing
-import org.mockito.kotlin.mock
 import org.mockito.kotlin.eq
-
+import org.mockito.kotlin.mock
 
 @DisplayName("MessageService test")
 class MessageServiceTest {
@@ -40,7 +39,6 @@ class MessageServiceTest {
         fun `should return message if is found in DB`() {
             given(messageRepository.findByIdOrMessageNull(messageResponseMock.id)).willReturn(messageResponseMock)
             assertThat(messageService.getById(messageResponseMock.id)).isEqualTo(messageResponseMock)
-
         }
 
         @Test
@@ -75,14 +73,15 @@ class MessageServiceTest {
                 messageRepository,
                 times(1),
             ).findAndCount(
-                 any()
+                any(),
             )
 
             verify(
                 messageRepository,
                 times(0),
             ).findAndCountWithFilter(
-                any(), any()
+                any(),
+                any(),
             )
 
             assertThat(response.totalCount).isEqualTo(1)
@@ -102,14 +101,15 @@ class MessageServiceTest {
                 messageRepository,
                 times(0),
             ).findAndCount(
-                any()
+                any(),
             )
 
             verify(
                 messageRepository,
                 times(1),
             ).findAndCountWithFilter(
-                eq(filter), any()
+                eq(filter),
+                any(),
             )
 
             assertThat(response.totalCount).isEqualTo(1)
@@ -133,7 +133,9 @@ class MessageServiceTest {
         @Test
         fun `should call messageRepository findAndCountWithFilter method if filter is not empty and return multiple page`() {
             val filter = "test"
-            given(messageRepository.findAndCountWithFilter(eq(filter), any())).willReturn(createPageObject(listOf(messageResponseMock, messageResponseMock), 1))
+            given(
+                messageRepository.findAndCountWithFilter(eq(filter), any()),
+            ).willReturn(createPageObject(listOf(messageResponseMock, messageResponseMock), 1))
 
             val response = messageService.findAll(filter, "DESC", "createdAt", 1, 10)
 
