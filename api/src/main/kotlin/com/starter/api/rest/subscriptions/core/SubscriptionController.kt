@@ -36,7 +36,7 @@ class SubscriptionController(val subscriptionService: SubscriptionService) {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     fun saveSubscription(
-        @Valid @RequestBody subscriptionRequest: SubscriptionRequest,
+        @RequestBody @Valid subscriptionRequest: SubscriptionRequest,
     ): ResponseEnvelope<SubscriptionResponse> {
         logger.info("Handling saveSubscription Request")
         val subscription: Subscription = subscriptionService.create(subscriptionRequest)

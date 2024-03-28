@@ -1,6 +1,7 @@
 package com.starter.api.rest.subscriptions.core
 
 import com.starter.api.rest.subscriptions.dtos.SubscriptionResponse
+import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -20,7 +21,7 @@ class Subscription(
     val id: String = UUID.randomUUID().toString(),
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
-    val name: String,
+    val name: SubscriptionType = SubscriptionType.NEWS,
 ) {
 
     @CreationTimestamp

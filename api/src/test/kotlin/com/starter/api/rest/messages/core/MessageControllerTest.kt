@@ -26,9 +26,7 @@ import org.springframework.test.web.servlet.put
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class MessageControllerTest(
-    @Autowired val mockMvc: MockMvc,
-) {
+class MessageControllerTest() {
     private val apiUrl = "/api/v1/messages"
     private val messageResponseMock = sampleMessage()
 
@@ -37,6 +35,9 @@ class MessageControllerTest(
 
     @SpyBean
     private lateinit var messageService: MessageService
+
+    @Autowired
+    private lateinit var mockMvc: MockMvc
 
     private lateinit var messageController: MessageController
 
@@ -63,7 +64,7 @@ class MessageControllerTest(
                 jsonPath("$.data.unread") { value(messageResponseMock.unread) }
                 jsonPath("$.data.message") { value(messageResponseMock.message) }
                 jsonPath("$.data.createdAt") { isNotEmpty() }
-                jsonPath("$.data.modifiedAt") { isNotEmpty() }
+                jsonPath("$.data.updatedAt") { isNotEmpty() }
             }
         }
 
@@ -206,7 +207,7 @@ class MessageControllerTest(
                 jsonPath("$.data.unread") { value(messageResponseMock.unread) }
                 jsonPath("$.data.message") { value(messageResponseMock.message) }
                 jsonPath("$.data.createdAt") { isNotEmpty() }
-                jsonPath("$.data.modifiedAt") { isNotEmpty() }
+                jsonPath("$.data.updatedAt") { isNotEmpty() }
             }
         }
     }
@@ -259,7 +260,7 @@ class MessageControllerTest(
                 jsonPath("$.data.unread") { value(messageResponseMock.unread) }
                 jsonPath("$.data.message") { value(messageResponseMock.message) }
                 jsonPath("$.data.createdAt") { isNotEmpty() }
-                jsonPath("$.data.modifiedAt") { isNotEmpty() }
+                jsonPath("$.data.updatedAt") { isNotEmpty() }
             }
         }
 

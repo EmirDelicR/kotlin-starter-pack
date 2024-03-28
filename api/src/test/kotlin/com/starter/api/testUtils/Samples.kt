@@ -2,6 +2,8 @@ package com.starter.api.testUtils
 
 import com.starter.api.rest.messages.core.Message
 import com.starter.api.rest.messages.dtos.MessageRequest
+import com.starter.api.rest.subscriptions.core.Subscription
+import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
@@ -14,6 +16,13 @@ fun sampleMessage(): Message {
         sender = "John Doe",
         unread = false,
         id = "message-uuid",
+    )
+}
+
+fun sampleSubscription(): Subscription {
+    return Subscription(
+        id = "subscription-uuid",
+        name = SubscriptionType.NEWS,
     )
 }
 

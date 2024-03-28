@@ -11,5 +11,5 @@ data class MessageResponse(
     val unread: Boolean,
     val message: String,
     val createdAt: OffsetDateTime,
-    val modifiedAt: OffsetDateTime,
+    val updatedAt: OffsetDateTime,
 )

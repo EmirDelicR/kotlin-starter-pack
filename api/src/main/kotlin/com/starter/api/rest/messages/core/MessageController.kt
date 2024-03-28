@@ -76,7 +76,7 @@ class MessageController(val messageService: MessageService) {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     fun saveMessage(
-        @Valid @RequestBody messageRequest: MessageRequest,
+        @RequestBody @Valid messageRequest: MessageRequest,
     ): ResponseEnvelope<MessageResponse> {
         logger.info("Handling saveMessage Request")
         val msg: Message = messageService.create(messageRequest)
