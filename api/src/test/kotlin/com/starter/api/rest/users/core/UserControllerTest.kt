@@ -1,5 +1,6 @@
 package com.starter.api.rest.users.core
 
+import com.starter.api.rest.roles.enums.RoleType
 import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import com.starter.api.testUtils.sampleUpdateUserRequest
 import com.starter.api.testUtils.sampleUser
@@ -57,7 +58,7 @@ class UserControllerTest {
                 jsonPath("$.message") { value("Fetch user successful.") }
                 jsonPath("$.data.id") { value(userResponseMock.id) }
                 jsonPath("$.data.email") { value(userResponseMock.email) }
-                jsonPath("$.data.role") { value("ADMIN") }
+                jsonPath("$.data.role.type") { value(RoleType.USER.toString()) }
                 jsonPath("$.data.age") { value(userResponseMock.age) }
                 jsonPath("$.data.avatar") { value(userResponseMock.avatar) }
                 jsonPath("$.data.firstName") { value(userResponseMock.firstName) }
@@ -104,7 +105,7 @@ class UserControllerTest {
                 jsonPath("$.message") { value("User with id (${userResponseMock.id}) was updated successfully.") }
                 jsonPath("$.data.id") { value(userResponseMock.id) }
                 jsonPath("$.data.email") { value(userResponseMock.email) }
-                jsonPath("$.data.role") { value("ADMIN") }
+                jsonPath("$.data.role.type") { value(RoleType.USER.toString()) }
                 jsonPath("$.data.age") { value(userResponseMock.age) }
                 jsonPath("$.data.avatar") { value(userResponseMock.avatar) }
                 jsonPath("$.data.firstName") { value(userResponseMock.firstName) }
@@ -188,7 +189,7 @@ class UserControllerTest {
                 jsonPath("$.message") { value("User with id (${userResponseMock.id}) was updated successfully.") }
                 jsonPath("$.data.id") { value(userResponseMock.id) }
                 jsonPath("$.data.email") { value(userResponseMock.email) }
-                jsonPath("$.data.role") { value("ADMIN") }
+                jsonPath("$.data.role.type") { value(RoleType.USER.toString()) }
                 jsonPath("$.data.age") { value(updateUserRequestUpdated.age) }
                 jsonPath("$.data.avatar") { value(userResponseMock.avatar) }
                 jsonPath("$.data.firstName") { value(updateUserRequestUpdated.firstName) }

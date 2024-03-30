@@ -50,11 +50,10 @@ data class User(
     @UpdateTimestamp
     @Column(name = "updated_at")
     var updatedAt: OffsetDateTime = OffsetDateTime.now(),
-) {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-    private val role: Role? = null
-
+    val role: Role? = null,
+) {
     @PreUpdate
     fun preUpdate() {
         updatedAt = OffsetDateTime.now()

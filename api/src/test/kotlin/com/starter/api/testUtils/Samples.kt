@@ -38,6 +38,7 @@ fun sampleRole(): Role {
 }
 
 fun sampleUser(): User {
+    val role = sampleRole()
     return User(
         id = "user-uuid",
         email = "john@doe.com",
@@ -51,6 +52,7 @@ fun sampleUser(): User {
         avatar = "avatar",
         loggedIn = false,
         subscribed = true,
+        role = role,
     )
 }
 
