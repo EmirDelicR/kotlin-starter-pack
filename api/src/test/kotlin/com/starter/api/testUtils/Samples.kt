@@ -4,6 +4,8 @@ import com.starter.api.rest.messages.core.Message
 import com.starter.api.rest.messages.dtos.MessageRequest
 import com.starter.api.rest.subscriptions.core.Subscription
 import com.starter.api.rest.subscriptions.enums.SubscriptionType
+import com.starter.api.rest.users.core.User
+import com.starter.api.rest.users.dtos.UserUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
@@ -26,12 +28,41 @@ fun sampleSubscription(): Subscription {
     )
 }
 
+fun sampleUser(): User {
+    return User(
+        id = "user-uuid",
+        email = "john@doe.com",
+        password = "some-password",
+        userName = "Cabal",
+        firstName = "John",
+        lastName = "Doe",
+        profileUpdated = false,
+        age = 25,
+        token = "some-token",
+        avatar = "avatar",
+        loggedIn = false,
+        subscribed = true
+    )
+}
+
 fun sampleMessageRequest(): MessageRequest {
     return MessageRequest(
         message = "Some message text",
         email = "john@doe.com",
         fullName = "John Doe",
     )
+}
+
+fun sampleUpdateUserRequest(): UserUpdateRequest {
+   return UserUpdateRequest(
+            age = 12,
+            avatar = "avatar",
+            userName = "Cabal",
+            lastName = "Doe",
+            firstName = "John",
+            subscribed = true,
+            subscriptions = emptyArray()
+        )
 }
 
 fun <T> createPageObject(
