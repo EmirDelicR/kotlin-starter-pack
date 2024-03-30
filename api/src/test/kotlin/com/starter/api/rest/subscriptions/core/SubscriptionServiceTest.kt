@@ -14,7 +14,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.mock
 
-@DisplayName("MessageService test")
+@DisplayName("SubscriptionService test")
 class SubscriptionServiceTest {
     private val subscriptionResponseMock = sampleSubscription()
     private lateinit var subscriptionService: SubscriptionService

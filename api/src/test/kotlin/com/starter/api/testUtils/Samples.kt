@@ -2,6 +2,8 @@ package com.starter.api.testUtils
 
 import com.starter.api.rest.messages.core.Message
 import com.starter.api.rest.messages.dtos.MessageRequest
+import com.starter.api.rest.roles.core.Role
+import com.starter.api.rest.roles.enums.RoleType
 import com.starter.api.rest.subscriptions.core.Subscription
 import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import com.starter.api.rest.users.core.User
@@ -25,6 +27,13 @@ fun sampleSubscription(): Subscription {
     return Subscription(
         id = "subscription-uuid",
         name = SubscriptionType.NEWS,
+    )
+}
+
+fun sampleRole(): Role {
+    return Role(
+        id = "role-uuid",
+        type = RoleType.USER,
     )
 }
 

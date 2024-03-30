@@ -1,6 +1,7 @@
 package com.starter.api.rest.users.dtos
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.starter.api.rest.roles.core.Role
 import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import java.time.OffsetDateTime
 
@@ -8,7 +9,7 @@ import java.time.OffsetDateTime
 data class UserResponse(
     val id: String,
     val email: String,
-    val role: String,
+    val role: Role?,
     val age: Int,
     val avatar: String,
     val firstName: String,

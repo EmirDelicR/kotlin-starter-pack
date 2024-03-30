@@ -1,10 +1,14 @@
 package com.starter.api.rest.users.core
 
+import com.starter.api.rest.roles.core.Role
 import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import com.starter.api.rest.users.dtos.UserResponse
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.PreUpdate
 import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
@@ -47,6 +51,10 @@ data class User(
     @Column(name = "updated_at")
     var updatedAt: OffsetDateTime = OffsetDateTime.now(),
 ) {
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    private val role: Role? = null
+
     @PreUpdate
     fun preUpdate() {
         updatedAt = OffsetDateTime.now()
@@ -56,7 +64,7 @@ data class User(
         return UserResponse(
             id,
             email,
-            role = "ADMIN",
+            role,
             age,
             avatar,
             firstName,
