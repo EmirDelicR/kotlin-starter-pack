@@ -67,7 +67,7 @@ class UserControllerTest {
                 jsonPath("$.data.loggedIn") { value(userResponseMock.loggedIn) }
                 jsonPath("$.data.profileUpdated") { value(userResponseMock.profileUpdated) }
                 jsonPath("$.data.subscribed") { value(userResponseMock.subscribed) }
-                jsonPath("$.data.subscriptions") {  arrayOf(SubscriptionType.GENERAL) }
+                jsonPath("$.data.subscriptions") { arrayOf(SubscriptionType.GENERAL) }
                 jsonPath("$.data.createdAt") { isNotEmpty() }
                 jsonPath("$.data.updatedAt") { isNotEmpty() }
             }
@@ -114,7 +114,7 @@ class UserControllerTest {
                 jsonPath("$.data.loggedIn") { value(userResponseMock.loggedIn) }
                 jsonPath("$.data.profileUpdated") { value(userResponseMock.profileUpdated) }
                 jsonPath("$.data.subscribed") { value(userResponseMock.subscribed) }
-                jsonPath("$.data.subscriptions") {  arrayOf(SubscriptionType.GENERAL) }
+                jsonPath("$.data.subscriptions") { arrayOf(SubscriptionType.GENERAL) }
                 jsonPath("$.data.createdAt") { isNotEmpty() }
                 jsonPath("$.data.updatedAt") { isNotEmpty() }
             }
@@ -134,7 +134,6 @@ class UserControllerTest {
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
                 jsonPath("$.message") { value("Age must be positive number!") }
                 jsonPath("$.data") { value(null) }
-
             }
         }
 
@@ -152,7 +151,6 @@ class UserControllerTest {
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
                 jsonPath("$.message") { value("First name must not be blank!") }
                 jsonPath("$.data") { value(null) }
-
             }
         }
 
@@ -170,7 +168,6 @@ class UserControllerTest {
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
                 jsonPath("$.message") { value("Last name must not be blank!") }
                 jsonPath("$.data") { value(null) }
-
             }
         }
 
@@ -201,10 +198,9 @@ class UserControllerTest {
                 jsonPath("$.data.loggedIn") { value(userResponseMock.loggedIn) }
                 jsonPath("$.data.profileUpdated") { value(true) }
                 jsonPath("$.data.subscribed") { value(true) }
-                jsonPath("$.data.subscriptions") {  arrayOf(SubscriptionType.GENERAL) }
+                jsonPath("$.data.subscriptions") { arrayOf(SubscriptionType.GENERAL) }
                 jsonPath("$.data.createdAt") { isNotEmpty() }
                 jsonPath("$.data.updatedAt") { isNotEmpty() }
-
             }
         }
 
@@ -222,5 +218,4 @@ class UserControllerTest {
             }
         }
     }
-
 }

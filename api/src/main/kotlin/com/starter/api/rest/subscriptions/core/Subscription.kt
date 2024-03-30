@@ -12,7 +12,6 @@ import org.hibernate.annotations.CreationTimestamp
 import java.time.OffsetDateTime
 import java.util.UUID
 
-
 @Entity
 @Table(name = "subscription")
 class Subscription(
@@ -23,7 +22,6 @@ class Subscription(
     @Enumerated(EnumType.STRING)
     val name: SubscriptionType = SubscriptionType.NEWS,
 ) {
-
     @CreationTimestamp
     @Column(name = "created_at")
     val createdAt: OffsetDateTime = OffsetDateTime.now()
@@ -32,7 +30,7 @@ class Subscription(
         return SubscriptionResponse(
             id,
             name,
-            createdAt
+            createdAt,
         )
     }
 }

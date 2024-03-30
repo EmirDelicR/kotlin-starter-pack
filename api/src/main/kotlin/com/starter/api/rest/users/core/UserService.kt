@@ -10,7 +10,10 @@ class UserService(val userRepository: UserRepository) {
         userRepository.findUserById(id)
             ?: throw NotFoundException("User with id: ($id) was not found!")
 
-    fun update(id: String, userRequest: UserUpdateRequest): User {
+    fun update(
+        id: String,
+        userRequest: UserUpdateRequest,
+    ): User {
         val user = getById(id)
 
         return user.let {
@@ -26,17 +29,20 @@ class UserService(val userRepository: UserRepository) {
         }
     }
 
-
-    private fun getUserName(newUserName: String, oldUserName: String, firstName: String, lastName: String): String {
-        if(newUserName.isNotEmpty()) {
-          return newUserName
+    private fun getUserName(
+        newUserName: String,
+        oldUserName: String,
+        firstName: String,
+        lastName: String,
+    ): String {
+        if (newUserName.isNotEmpty()) {
+            return newUserName
         }
 
-        if(oldUserName.isNotEmpty()) {
+        if (oldUserName.isNotEmpty()) {
             return oldUserName
         }
 
         return "$firstName $lastName".trim()
     }
 }
-

@@ -46,9 +46,7 @@ data class User(
     @UpdateTimestamp
     @Column(name = "updated_at")
     var updatedAt: OffsetDateTime = OffsetDateTime.now(),
-
-    ) {
-
+) {
     @PreUpdate
     fun preUpdate() {
         updatedAt = OffsetDateTime.now()

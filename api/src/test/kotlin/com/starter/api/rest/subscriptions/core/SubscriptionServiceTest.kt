@@ -25,7 +25,6 @@ class SubscriptionServiceTest {
         subscriptionService = SubscriptionService(subscriptionRepository)
     }
 
-
     @Test
     fun `should return list of subscriptions`() {
         val listOfSubs = listOf(subscriptionResponseMock)
@@ -49,5 +48,4 @@ class SubscriptionServiceTest {
             },
         )
     }
-
 }

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class SubscriptionService(val subscriptionRepository: SubscriptionRepository) {
-
     fun findAll(): List<Subscription> {
         return subscriptionRepository.findAll()
     }

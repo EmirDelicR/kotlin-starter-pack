@@ -16,7 +16,7 @@ data class UserUpdateRequest(
     val lastName: String,
     val userName: String,
     val subscribed: Boolean,
-    val subscriptions: Array<SubscriptionType>
+    val subscriptions: Array<SubscriptionType>,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

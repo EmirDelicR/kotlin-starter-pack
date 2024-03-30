@@ -41,7 +41,7 @@ fun sampleUser(): User {
         token = "some-token",
         avatar = "avatar",
         loggedIn = false,
-        subscribed = true
+        subscribed = true,
     )
 }
 
@@ -54,15 +54,15 @@ fun sampleMessageRequest(): MessageRequest {
 }
 
 fun sampleUpdateUserRequest(): UserUpdateRequest {
-   return UserUpdateRequest(
-            age = 12,
-            avatar = "avatar",
-            userName = "Cabal",
-            lastName = "Doe",
-            firstName = "John",
-            subscribed = true,
-            subscriptions = emptyArray()
-        )
+    return UserUpdateRequest(
+        age = 12,
+        avatar = "avatar",
+        userName = "Cabal",
+        lastName = "Doe",
+        firstName = "John",
+        subscribed = true,
+        subscriptions = emptyArray(),
+    )
 }
 
 fun <T> createPageObject(

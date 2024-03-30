@@ -34,5 +34,4 @@ data class UserResponse(
     override fun hashCode(): Int {
         return subscriptions.contentHashCode()
     }
-
 }

@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UserRepository: JpaRepository<User, String>, JpaSpecificationExecutor<User> {
+interface UserRepository : JpaRepository<User, String>, JpaSpecificationExecutor<User> {
     fun findUserById(id: String): User?
 }

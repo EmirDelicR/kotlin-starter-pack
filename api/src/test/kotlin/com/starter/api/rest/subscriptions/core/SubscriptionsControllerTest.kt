@@ -70,7 +70,7 @@ class SubscriptionsControllerTest() {
 
             val subscriptionRequest =
                 SubscriptionRequest(
-                    name = SubscriptionType.NEWS
+                    name = SubscriptionType.NEWS,
                 )
 
             mockMvc.post(apiUrl) {

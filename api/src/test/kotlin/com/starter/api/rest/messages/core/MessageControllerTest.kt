@@ -220,7 +220,6 @@ class MessageControllerTest() {
                     email = messageResponseMock.email,
                 )
 
-
             mockMvc.post(apiUrl) {
                 withJsonContent(messageRequest)
             }.andExpect {
@@ -228,7 +227,6 @@ class MessageControllerTest() {
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
                 jsonPath("$.message") { value("Full name must not be blank!") }
                 jsonPath("$.data") { value(null) }
-
             }
         }
 
@@ -243,7 +241,6 @@ class MessageControllerTest() {
                     email = messageResponseMock.email,
                 )
 
-
             mockMvc.post(apiUrl) {
                 withJsonContent(messageRequest)
             }.andExpect {
@@ -251,7 +248,6 @@ class MessageControllerTest() {
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
                 jsonPath("$.message") { value("Message must not be blank!") }
                 jsonPath("$.data") { value(null) }
-
             }
         }
 
@@ -266,7 +262,6 @@ class MessageControllerTest() {
                     email = "",
                 )
 
-
             mockMvc.post(apiUrl) {
                 withJsonContent(messageRequest)
             }.andExpect {
@@ -274,7 +269,6 @@ class MessageControllerTest() {
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
                 jsonPath("$.message") { value("Email is not valid!") }
                 jsonPath("$.data") { value(null) }
-
             }
         }
 
@@ -289,7 +283,6 @@ class MessageControllerTest() {
                     email = "t@t",
                 )
 
-
             mockMvc.post(apiUrl) {
                 withJsonContent(messageRequest)
             }.andExpect {
@@ -297,7 +290,6 @@ class MessageControllerTest() {
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
                 jsonPath("$.message") { value("Email is not valid!") }
                 jsonPath("$.data") { value(null) }
-
             }
         }
     }

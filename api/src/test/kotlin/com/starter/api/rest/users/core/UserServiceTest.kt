@@ -75,10 +75,10 @@ class UserServiceTest {
             ).saveAndFlush(
                 argForWhich {
                     this.age == updateUserRequest.age &&
-                            this.firstName == updateUserRequest.firstName &&
-                            this.lastName == updateUserRequest.lastName &&
-                            this.subscribed && this.avatar == updateUserRequest.avatar &&
-                            this.profileUpdated && this.userName == updateUserRequest.userName
+                        this.firstName == updateUserRequest.firstName &&
+                        this.lastName == updateUserRequest.lastName &&
+                        this.subscribed && this.avatar == updateUserRequest.avatar &&
+                        this.profileUpdated && this.userName == updateUserRequest.userName
                 },
             )
         }
@@ -98,7 +98,7 @@ class UserServiceTest {
                 times(1),
             ).saveAndFlush(
                 argForWhich {
-                            this.profileUpdated && this.userName == updateUserMock.userName
+                    this.profileUpdated && this.userName == updateUserMock.userName
                 },
             )
         }
