@@ -37,13 +37,13 @@ class MessageServiceTest {
     inner class GetById {
         @Test
         fun `should return message if is found in DB`() {
-            given(messageRepository.findByIdOrMessageNull(messageResponseMock.id)).willReturn(messageResponseMock)
+            given(messageRepository.findMessageById(messageResponseMock.id)).willReturn(messageResponseMock)
             assertThat(messageService.getById(messageResponseMock.id)).isEqualTo(messageResponseMock)
         }
 
         @Test
         fun `should throw NotFoundException if no entry in DB`() {
-            given(messageRepository.findByIdOrMessageNull(messageResponseMock.id)).willReturn(null)
+            given(messageRepository.findMessageById(messageResponseMock.id)).willReturn(null)
 
             assertThatCode {
                 messageService.getById(messageResponseMock.id)
@@ -203,7 +203,7 @@ class MessageServiceTest {
     inner class Update {
         @Test
         fun `should throw NotFoundException if no entry in DB`() {
-            given(messageRepository.findByIdOrMessageNull(messageResponseMock.id)).willReturn(null)
+            given(messageRepository.findMessageById(messageResponseMock.id)).willReturn(null)
 
             assertThatCode {
                 messageService.update(messageResponseMock.id)
@@ -213,7 +213,7 @@ class MessageServiceTest {
 
         @Test
         fun `should return updated message if is found in DB`() {
-            given(messageRepository.findByIdOrMessageNull(messageResponseMock.id)).willReturn(messageResponseMock)
+            given(messageRepository.findMessageById(messageResponseMock.id)).willReturn(messageResponseMock)
             given(messageRepository.saveAndFlush(any())).willAnswer { invocation -> invocation.arguments[0] }
 
             messageService.update(messageResponseMock.id)

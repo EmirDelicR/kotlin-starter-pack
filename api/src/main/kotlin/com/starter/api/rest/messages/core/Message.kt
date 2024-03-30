@@ -13,7 +13,7 @@ import java.util.UUID
 
 @Entity
 @Table(name = "message")
-class Message(
+data class Message(
     @Id
     @Column(name = "id")
     val id: String = UUID.randomUUID().toString(),

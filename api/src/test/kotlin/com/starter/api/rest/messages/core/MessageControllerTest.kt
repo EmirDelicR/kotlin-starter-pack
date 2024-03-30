@@ -52,7 +52,7 @@ class MessageControllerTest() {
     inner class GetMessage {
         @Test
         fun `Test getMessage should return status 200 if getMessage service function is successful`() {
-            given(messageRepository.findByIdOrMessageNull(eq(messageResponseMock.id))).willReturn(messageResponseMock)
+            given(messageRepository.findMessageById(eq(messageResponseMock.id))).willReturn(messageResponseMock)
 
             mockMvc.get("$apiUrl/${messageResponseMock.id}").andExpect {
                 status { isOk() }
@@ -70,11 +70,9 @@ class MessageControllerTest() {
 
         @Test
         fun `Test getMessage should return status 404 if no item is found`() {
-            given(messageRepository.findByIdOrMessageNull(eq(messageResponseMock.id))).willReturn(null)
+            given(messageRepository.findMessageById(eq(messageResponseMock.id))).willReturn(null)
 
-            mockMvc.get("$apiUrl/${messageResponseMock.id}") {
-                println()
-            }.andExpect {
+            mockMvc.get("$apiUrl/${messageResponseMock.id}").andExpect {
                 status { isNotFound() }
                 jsonPath("$.status") { value(HttpStatus.NOT_FOUND.value()) }
                 jsonPath("$.message") { value("Message with id: (${messageResponseMock.id}) was not found!") }
@@ -210,6 +208,98 @@ class MessageControllerTest() {
                 jsonPath("$.data.updatedAt") { isNotEmpty() }
             }
         }
+
+        @Test
+        fun `Test saveMessage should return status 400 if fullName is blank`() {
+            given(messageRepository.saveAndFlush(any())).willReturn(messageResponseMock)
+
+            val messageRequest =
+                MessageRequest(
+                    fullName = "",
+                    message = messageResponseMock.message,
+                    email = messageResponseMock.email,
+                )
+
+
+            mockMvc.post(apiUrl) {
+                withJsonContent(messageRequest)
+            }.andExpect {
+                status { isBadRequest() }
+                jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
+                jsonPath("$.message") { value("Full name must not be blank!") }
+                jsonPath("$.data") { value(null) }
+
+            }
+        }
+
+        @Test
+        fun `Test saveMessage should return status 400 if message is blank`() {
+            given(messageRepository.saveAndFlush(any())).willReturn(messageResponseMock)
+
+            val messageRequest =
+                MessageRequest(
+                    fullName = messageResponseMock.sender,
+                    message = "",
+                    email = messageResponseMock.email,
+                )
+
+
+            mockMvc.post(apiUrl) {
+                withJsonContent(messageRequest)
+            }.andExpect {
+                status { isBadRequest() }
+                jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
+                jsonPath("$.message") { value("Message must not be blank!") }
+                jsonPath("$.data") { value(null) }
+
+            }
+        }
+
+        @Test
+        fun `Test saveMessage should return status 400 if email is blank`() {
+            given(messageRepository.saveAndFlush(any())).willReturn(messageResponseMock)
+
+            val messageRequest =
+                MessageRequest(
+                    fullName = messageResponseMock.sender,
+                    message = messageResponseMock.message,
+                    email = "",
+                )
+
+
+            mockMvc.post(apiUrl) {
+                withJsonContent(messageRequest)
+            }.andExpect {
+                status { isBadRequest() }
+                jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
+                jsonPath("$.message") { value("Email is not valid!") }
+                jsonPath("$.data") { value(null) }
+
+            }
+        }
+
+        @Test
+        fun `Test saveMessage should return status 400 if email is not valid`() {
+            given(messageRepository.saveAndFlush(any())).willReturn(messageResponseMock)
+
+            val messageRequest =
+                MessageRequest(
+                    fullName = messageResponseMock.sender,
+                    message = messageResponseMock.message,
+                    email = "t@t",
+                )
+
+
+            mockMvc.post(apiUrl) {
+                withJsonContent(messageRequest)
+            }.andExpect {
+                status { isBadRequest() }
+                jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
+                jsonPath("$.message") { value("Email is not valid!") }
+                jsonPath("$.data") { value(null) }
+
+            }
+        }
     }
 
     @Nested
@@ -231,9 +321,7 @@ class MessageControllerTest() {
         fun `Test deleteMessage should return status 404 if no item is found`() {
             given(messageRepository.existsById(eq(messageResponseMock.id))).willReturn(false)
 
-            mockMvc.delete("$apiUrl/${messageResponseMock.id}") {
-                println()
-            }.andExpect {
+            mockMvc.delete("$apiUrl/${messageResponseMock.id}").andExpect {
                 status { isNotFound() }
                 jsonPath("$.status") { value(HttpStatus.NOT_FOUND.value()) }
                 jsonPath("$.message") { value("Message with id: (${messageResponseMock.id}) was not found!") }
@@ -247,7 +335,7 @@ class MessageControllerTest() {
     inner class UpdateMessage {
         @Test
         fun `Test updateMessage should return status 200 if updateMessage service function is successful`() {
-            given(messageRepository.findByIdOrMessageNull(eq(messageResponseMock.id))).willReturn(messageResponseMock)
+            given(messageRepository.findMessageById(eq(messageResponseMock.id))).willReturn(messageResponseMock)
             given(messageRepository.saveAndFlush(any())).willReturn(messageResponseMock)
 
             mockMvc.put("$apiUrl/${messageResponseMock.id}").andExpect {
@@ -266,11 +354,9 @@ class MessageControllerTest() {
 
         @Test
         fun `Test updateMessage should return status 404 if no item is found`() {
-            given(messageRepository.findByIdOrMessageNull(eq(messageResponseMock.id))).willReturn(null)
+            given(messageRepository.findMessageById(eq(messageResponseMock.id))).willReturn(null)
 
-            mockMvc.put("$apiUrl/${messageResponseMock.id}") {
-                println()
-            }.andExpect {
+            mockMvc.put("$apiUrl/${messageResponseMock.id}").andExpect {
                 status { isNotFound() }
                 jsonPath("$.status") { value(HttpStatus.NOT_FOUND.value()) }
                 jsonPath("$.message") { value("Message with id: (${messageResponseMock.id}) was not found!") }

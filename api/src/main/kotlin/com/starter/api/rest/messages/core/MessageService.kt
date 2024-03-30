@@ -12,7 +12,7 @@ class MessageService(val messageRepository: MessageRepository) {
     private val pageableResolver = PageableResolver()
 
     fun getById(id: String): Message =
-        messageRepository.findByIdOrMessageNull(id)
+        messageRepository.findMessageById(id)
             ?: throw NotFoundException("Message with id: ($id) was not found!")
 
     fun findAll(
