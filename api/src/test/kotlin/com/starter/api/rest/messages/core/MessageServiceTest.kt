@@ -161,7 +161,8 @@ class MessageServiceTest {
                 times(1),
             ).saveAndFlush(
                 argForWhich {
-                    this.sender == msgRequest.fullName && !this.unread && this.email == msgRequest.email && this.message == msgRequest.message
+                    this.sender == msgRequest.fullName && !this.unread && this.email == msgRequest.email &&
+                        this.message == msgRequest.message
                 },
             )
         }
@@ -223,7 +224,8 @@ class MessageServiceTest {
                 times(1),
             ).saveAndFlush(
                 argForWhich {
-                    this.sender == messageResponseMock.sender && this.unread && this.email == messageResponseMock.email && this.message == messageResponseMock.message
+                    this.sender == messageResponseMock.sender && this.unread && this.email == messageResponseMock.email &&
+                        this.message == messageResponseMock.message
                 },
             )
         }

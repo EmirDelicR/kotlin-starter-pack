@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository
 @Repository
 interface MessageRepository : JpaRepository<Message, String>, JpaSpecificationExecutor<Message> {
     @Query(
-        value = "SELECT m FROM Message m where LOWER(m.email) LIKE %:filter% or LOWER(m.message) LIKE %:filter% or LOWER(m.sender) LIKE %:filter%",
+        value =
+            "SELECT m FROM Message m where LOWER(m.email) LIKE %:filter% or LOWER(m.message) LIKE %:filter% " +
+                "or LOWER(m.sender) LIKE %:filter%",
     )
     fun findAndCountWithFilter(
         filter: String,
