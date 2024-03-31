@@ -39,6 +39,7 @@ fun sampleRole(): Role {
 
 fun sampleUser(): User {
     val role = sampleRole()
+    val subscriptions = sampleSubscription()
     return User(
         id = "user-uuid",
         email = "john@doe.com",
@@ -53,6 +54,7 @@ fun sampleUser(): User {
         loggedIn = false,
         subscribed = true,
         role = role,
+        subscriptions = setOf(subscriptions)
     )
 }
 
@@ -72,7 +74,7 @@ fun sampleUpdateUserRequest(): UserUpdateRequest {
         lastName = "Doe",
         firstName = "John",
         subscribed = true,
-        subscriptions = emptyArray(),
+        subscriptions = emptySet(),
     )
 }
 

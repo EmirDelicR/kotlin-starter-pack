@@ -16,18 +16,5 @@ data class UserUpdateRequest(
     val lastName: String,
     val userName: String,
     val subscribed: Boolean,
-    val subscriptions: Array<SubscriptionType>,
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as UserUpdateRequest
-
-        return subscriptions.contentEquals(other.subscriptions)
-    }
-
-    override fun hashCode(): Int {
-        return subscriptions.contentHashCode()
-    }
-}
+    val subscriptions: Set<SubscriptionType>,
+)

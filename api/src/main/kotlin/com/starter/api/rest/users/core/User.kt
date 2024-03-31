@@ -1,13 +1,16 @@
 package com.starter.api.rest.users.core
 
 import com.starter.api.rest.roles.core.Role
-import com.starter.api.rest.subscriptions.enums.SubscriptionType
+import com.starter.api.rest.subscriptions.core.Subscription
 import com.starter.api.rest.users.dtos.UserResponse
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
+import jakarta.persistence.JoinTable
+import jakarta.persistence.ManyToMany
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.PreUpdate
 import jakarta.persistence.Table
@@ -53,6 +56,9 @@ data class User(
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     val role: Role? = null,
+    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH])
+    @JoinTable(name = "user_subscription", joinColumns = [JoinColumn(name = "user_id")], inverseJoinColumns = [JoinColumn(name = "subscription_id")])
+    val subscriptions: Set<Subscription>? = null
 ) {
     @PreUpdate
     fun preUpdate() {
@@ -73,7 +79,7 @@ data class User(
             loggedIn,
             profileUpdated,
             subscribed,
-            subscriptions = arrayOf(SubscriptionType.GENERAL),
+            subscriptions,
             createdAt,
             updatedAt,
         )

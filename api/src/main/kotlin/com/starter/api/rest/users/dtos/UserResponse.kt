@@ -2,7 +2,7 @@ package com.starter.api.rest.users.dtos
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.starter.api.rest.roles.core.Role
-import com.starter.api.rest.subscriptions.enums.SubscriptionType
+import com.starter.api.rest.subscriptions.core.Subscription
 import java.time.OffsetDateTime
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,20 +19,7 @@ data class UserResponse(
     val loggedIn: Boolean,
     val profileUpdated: Boolean,
     val subscribed: Boolean,
-    val subscriptions: Array<SubscriptionType>,
+    val subscriptions: Set<Subscription>?,
     val createdAt: OffsetDateTime,
     val updatedAt: OffsetDateTime,
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as UserResponse
-
-        return subscriptions.contentEquals(other.subscriptions)
-    }
-
-    override fun hashCode(): Int {
-        return subscriptions.contentHashCode()
-    }
-}
+)
