@@ -57,8 +57,12 @@ data class User(
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     val role: Role? = null,
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH])
-    @JoinTable(name = "user_subscription", joinColumns = [JoinColumn(name = "user_id")], inverseJoinColumns = [JoinColumn(name = "subscription_id")])
-    val subscriptions: Set<Subscription>? = null
+    @JoinTable(
+        name = "user_subscription",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "subscription_id")],
+    )
+    val subscriptions: Set<Subscription>? = null,
 ) {
     @PreUpdate
     fun preUpdate() {

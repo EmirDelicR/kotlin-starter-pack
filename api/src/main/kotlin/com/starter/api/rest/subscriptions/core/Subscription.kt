@@ -28,9 +28,12 @@ class Subscription(
     @Enumerated(EnumType.STRING)
     val name: SubscriptionType = SubscriptionType.NEWS,
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH])
-    @JoinTable(name = "user_subscription", joinColumns = [JoinColumn(name = "subscription_id")],
-        inverseJoinColumns = [JoinColumn(name = "user_id")])
-    val subscriptions: Set<User>? = null
+    @JoinTable(
+        name = "user_subscription",
+        joinColumns = [JoinColumn(name = "subscription_id")],
+        inverseJoinColumns = [JoinColumn(name = "user_id")],
+    )
+    val subscriptions: Set<User>? = null,
 ) {
     @CreationTimestamp
     @Column(name = "created_at")

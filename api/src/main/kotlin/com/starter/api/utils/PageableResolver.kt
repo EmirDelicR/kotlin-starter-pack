@@ -31,8 +31,8 @@ class PageableResolver {
     }
 
     fun getSortObject(
-        order: String,
-        columnId: String,
+        order: String = ORDER_DEFAULT_VALUE,
+        columnId: String = SORT_DEFAULT_FIELD,
     ): Sort {
         val direction = getSortingDirection(order)
         validateColumnIdOrderByProperty(columnId)
