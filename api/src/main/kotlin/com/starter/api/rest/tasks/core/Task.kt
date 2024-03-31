@@ -41,6 +41,6 @@ data class Task(
     }
 
     fun toResponse(): TaskResponse {
-        return TaskResponse(id, title, completed)
+        return TaskResponse(id, title, completed, user?.id, createdAt)
     }
 }

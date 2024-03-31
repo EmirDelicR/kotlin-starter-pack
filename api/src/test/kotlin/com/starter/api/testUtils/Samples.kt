@@ -6,6 +6,7 @@ import com.starter.api.rest.roles.core.Role
 import com.starter.api.rest.roles.enums.RoleType
 import com.starter.api.rest.subscriptions.core.Subscription
 import com.starter.api.rest.subscriptions.enums.SubscriptionType
+import com.starter.api.rest.tasks.core.Task
 import com.starter.api.rest.users.core.User
 import com.starter.api.rest.users.dtos.UserUpdateRequest
 import org.springframework.data.domain.Page
@@ -55,6 +56,15 @@ fun sampleUser(): User {
         subscribed = true,
         role = role,
         subscriptions = setOf(subscriptions),
+    )
+}
+
+fun sampleTask(): Task {
+    val user = sampleUser()
+    return Task(
+        title = "Some task title",
+        id = "task-uuid",
+        user = user,
     )
 }
 

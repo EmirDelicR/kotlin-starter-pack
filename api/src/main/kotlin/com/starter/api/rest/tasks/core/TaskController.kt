@@ -42,13 +42,13 @@ class TaskController(val taskService: TaskService) {
             defaultValue = "10",
         ) @Min(value = 1, message = "PageSize must be at least 1") pageSize: Int,
         @RequestParam(name = "isMobile", defaultValue = "false") isMobile: Boolean,
-    ): ResponseEnvelope<PageableResponse<Task>> {
+    ): ResponseEnvelope<PageableResponse<TaskResponse>> {
         logger.info("Handling getPaginatedTasks Request with user id: $userId")
         val userTasks = taskService.findAllByUserId(userId, page, pageSize, isMobile)
 
         return ResponseEnvelope(
             data = userTasks,
-            message = "Fetch tasks successful.",
+            message = "Fetch tasks was successful.",
             status = HttpStatus.OK.value(),
         )
     }

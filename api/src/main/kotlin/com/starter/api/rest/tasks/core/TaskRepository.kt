@@ -1,6 +1,5 @@
 package com.starter.api.rest.tasks.core
 
-import com.starter.api.rest.users.core.User
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -9,8 +8,8 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TaskRepository : JpaRepository<Task, String>, JpaSpecificationExecutor<Task> {
-    fun countAllByUser(
-        user: User,
+    fun countAllByUserId(
+        userId: String,
         pageable: Pageable,
     ): Page<Task>
 

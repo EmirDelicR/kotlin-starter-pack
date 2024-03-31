@@ -7,6 +7,6 @@ import jakarta.validation.constraints.NotBlank
 data class TaskRequest(
     @field:NotBlank(message = "Title must not be blank!")
     val title: String,
-    @field:NotBlank(message = "user id must be set!")
+    @field:NotBlank(message = "User id must be set!")
     val userId: String,
 )
