@@ -109,3 +109,11 @@ Links:
 [Spring test - lot of examples](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.testing.spring-boot-applications.spring-mvc-tests)
 
 [BDD-mockito](https://www.baeldung.com/bdd-mockito)
+
+
+
+https://github.com/eugenp/tutorials/blob/ff723063a709cd6983cc35bc1302112c43f2c2f0/core-java-modules/core-java-security-3/src/test/java/com/baeldung/hash/argon/HashPasswordUnitTest.java#L13
+
+https://www.baeldung.com/java-argon2-hashing
+
+https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web/3.2.4
