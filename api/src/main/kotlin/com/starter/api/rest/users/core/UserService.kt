@@ -1,6 +1,8 @@
 package com.starter.api.rest.users.core
 
 import com.starter.api.exception.NotFoundException
+import com.starter.api.rest.auth.dtos.RegisterUserRequest
+import com.starter.api.rest.roles.core.Role
 import com.starter.api.rest.users.dtos.UserUpdateRequest
 import org.springframework.stereotype.Service
 
@@ -9,6 +11,26 @@ class UserService(val userRepository: UserRepository) {
     fun getById(id: String): User =
         userRepository.findUserById(id)
             ?: throw NotFoundException("User with id: ($id) was not found!")
+
+    // TODO @ed test this
+    fun getByEmail(email: String): User =
+        userRepository.findUserByEmail(email)
+            ?: throw NotFoundException("User with email: ($email) was not found!")
+
+    // TODO @ed test this
+    fun create(data: RegisterUserRequest, role: Role): User {
+        val user = User(
+            loggedIn = true,
+            email = data.email,
+            password = data.password,
+            firstName = data.firstName.trim(),
+            lastName = data.lastName.trim(),
+            userName = getUserName(data.userName, "", data.firstName, data.lastName),
+            role = role
+        )
+
+        return userRepository.saveAndFlush(user)
+    }
 
     fun update(
         id: String,
@@ -36,7 +58,7 @@ class UserService(val userRepository: UserRepository) {
         lastName: String,
     ): String {
         if (newUserName.isNotEmpty()) {
-            return newUserName
+            return newUserName.trim()
         }
 
         if (oldUserName.isNotEmpty()) {

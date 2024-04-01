@@ -30,9 +30,9 @@ data class User(
     @Column(name = "password")
     var password: String,
     @Column(name = "age", nullable = true)
-    var age: Int,
+    var age: Int? = null,
     @Column(name = "avatar", nullable = true)
-    var avatar: String,
+    var avatar: String? = null,
     @Column(name = "firstName", nullable = true)
     var firstName: String,
     @Column(name = "lastName", nullable = true)
@@ -40,7 +40,7 @@ data class User(
     @Column(name = "userName", nullable = true)
     var userName: String,
     @Column(name = "token", nullable = true)
-    var token: String,
+    var token: String? = null,
     @Column(name = "loggedIn")
     var loggedIn: Boolean = false,
     @Column(name = "profileUpdated")
