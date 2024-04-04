@@ -3,7 +3,6 @@ package com.starter.api.utils
 import com.starter.api.exception.NotValidException
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 
-
 class PasswordEncoder private constructor() {
     companion object {
         private var arg2SpringSecurityInstance: Argon2PasswordEncoder? = null
@@ -20,10 +19,13 @@ class PasswordEncoder private constructor() {
             return getInstance().encode(password)
         }
 
-        fun verifyPassword(rawPassword: String, hashedPassword: String): Boolean {
+        fun verifyPassword(
+            rawPassword: String,
+            hashedPassword: String,
+        ): Boolean {
             val isPasswordOk = getInstance().matches(rawPassword, hashedPassword)
 
-            if(!isPasswordOk) {
+            if (!isPasswordOk) {
                 throw NotValidException("Unfortunately password is not valid. Please try again and check password that you input!")
             }
 

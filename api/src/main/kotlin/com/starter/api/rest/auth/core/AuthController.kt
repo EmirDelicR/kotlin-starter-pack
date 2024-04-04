@@ -57,25 +57,29 @@ class AuthController(val authService: AuthService) {
      @RequestBody @Valid messageRequest: MessageRequest,
  ): ResponseEnvelope<MessageResponse> {
      logger.info("Handling registerUser Request")
-     *//*val msg: Message = messageService.create(messageRequest)
+     */
+    /*val msg: Message = messageService.create(messageRequest)
 
         return ResponseEnvelope(
             data = msg.toResponse(),
             message = "Message was send successful.",
             status = HttpStatus.CREATED.value(),
-        )*//*
+        )*/
+    /*
     }*/
 
 /*    @GetMapping("/refresh")
     @ResponseStatus(HttpStatus.OK)
     fun updateToken(): ResponseEnvelope<MessageResponse?> {
         logger.info("Handling updateToken Request")
-        *//*val msg = messageService.getById(id)
+ */
+/*val msg = messageService.getById(id)
 
         return ResponseEnvelope(
             data = msg.toResponse(),
             message = "Fetch message successful.",
             status = HttpStatus.OK.value(),
-        )*//*
+        )*/
+/*
     }*/
 }

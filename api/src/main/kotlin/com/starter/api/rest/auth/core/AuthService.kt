@@ -11,11 +11,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class AuthService(val userService: UserService, val roleService: RoleService) {
-
     fun registerUser(data: RegisterUserRequest): User {
         val user = userService.getByEmail(data.email)
 
-        if(user != null) {
+        if (user != null) {
             throw ConflictException("User with email: (${data.email}) was already register!")
         }
 
@@ -25,8 +24,9 @@ class AuthService(val userService: UserService, val roleService: RoleService) {
     }
 
     fun loginUser(data: LoginUserRequest): User {
-        val user = userService.getByEmail(data.email)
-            ?: throw NotFoundException("User with email: (${data.email}) was not found!")
+        val user =
+            userService.getByEmail(data.email)
+                ?: throw NotFoundException("User with email: (${data.email}) was not found!")
 
         // verify password
         // update user token

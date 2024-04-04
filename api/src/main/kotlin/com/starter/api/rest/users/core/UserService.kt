@@ -14,16 +14,20 @@ class UserService(val userRepository: UserRepository) {
 
     fun getByEmail(email: String): User? = userRepository.findUserByEmail(email)
 
-    fun create(data: RegisterUserRequest, role: Role): User {
-        val user = User(
-            loggedIn = true,
-            email = data.email,
-            password = data.password,
-            firstName = data.firstName.trim(),
-            lastName = data.lastName.trim(),
-            userName = getUserName(data.userName, "", data.firstName, data.lastName),
-            role = role
-        )
+    fun create(
+        data: RegisterUserRequest,
+        role: Role,
+    ): User {
+        val user =
+            User(
+                loggedIn = true,
+                email = data.email,
+                password = data.password,
+                firstName = data.firstName.trim(),
+                lastName = data.lastName.trim(),
+                userName = getUserName(data.userName, "", data.firstName, data.lastName),
+                role = role,
+            )
 
         return userRepository.saveAndFlush(user)
     }

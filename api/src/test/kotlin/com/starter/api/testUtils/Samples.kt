@@ -95,7 +95,7 @@ fun sampleRegisterUserRequest(): RegisterUserRequest {
         firstName = "John",
         lastName = "Doe",
         password = "Test123!",
-        email = "test@test.com"
+        email = "test@test.com",
     )
 }
 

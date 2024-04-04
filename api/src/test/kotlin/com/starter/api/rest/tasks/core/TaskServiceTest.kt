@@ -13,9 +13,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.mockito.BDDMockito.verify
-import org.mockito.BDDMockito.times
 import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.times
+import org.mockito.BDDMockito.verify
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.doNothing
@@ -150,7 +150,7 @@ class TaskServiceTest {
                 taskRepository,
                 times(0),
             ).saveAndFlush(
-                any()
+                any(),
             )
         }
     }

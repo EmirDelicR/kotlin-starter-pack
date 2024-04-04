@@ -10,15 +10,15 @@ import com.starter.api.rest.users.core.UserService
 import com.starter.api.testUtils.sampleRegisterUserRequest
 import com.starter.api.testUtils.sampleRole
 import com.starter.api.testUtils.sampleUser
-import org.assertj.core.api.Assertions.assertThatCode
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatCode
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.mockito.BDDMockito.verify
-import org.mockito.BDDMockito.times
 import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.times
+import org.mockito.BDDMockito.verify
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.eq
@@ -45,7 +45,6 @@ class AuthServiceTest {
     @SpyBean
     private lateinit var authService: AuthService
 
-
     @BeforeEach
     fun setUp() {
         userService = UserService(userRepository)
@@ -71,17 +70,15 @@ class AuthServiceTest {
             ).saveAndFlush(
                 argForWhich {
                     this.email == registerRequest.email && this.loggedIn && !this.subscribed &&
-                            this.firstName == registerRequest.firstName &&
-                            this.lastName == registerRequest.lastName &&
-                            this.userName == registerRequest.userName &&
-                            !this.profileUpdated
+                        this.firstName == registerRequest.firstName &&
+                        this.lastName == registerRequest.lastName &&
+                        this.userName == registerRequest.userName &&
+                        !this.profileUpdated
                 },
-
             )
 
             assertThat(response).isNotNull()
         }
-
 
         @Test
         fun `Test registerUser should return status 409 if user is already register`() {

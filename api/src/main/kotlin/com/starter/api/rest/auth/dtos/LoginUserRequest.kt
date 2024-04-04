@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class LoginUserRequest (
+data class LoginUserRequest(
     @field:Email(regexp = ".+[@].+[\\.].+", message = "Email is not valid!")
     val email: String,
     @field:NotBlank(message = "Password must not be blank!")

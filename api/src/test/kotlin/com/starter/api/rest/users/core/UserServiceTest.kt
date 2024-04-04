@@ -68,10 +68,10 @@ class UserServiceTest {
             ).saveAndFlush(
                 argForWhich {
                     this.email == registerRequest.email && this.loggedIn && !this.subscribed &&
-                            this.firstName == registerRequest.firstName &&
-                            this.lastName == registerRequest.lastName &&
-                            this.userName == registerRequest.userName &&
-                            !this.profileUpdated
+                        this.firstName == registerRequest.firstName &&
+                        this.lastName == registerRequest.lastName &&
+                        this.userName == registerRequest.userName &&
+                        !this.profileUpdated
                 },
             )
         }
