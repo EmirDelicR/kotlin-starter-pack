@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class RegisterUserRequest(
-    @field:Pattern(regexp = "/(?=.{8,})(?=.*?\\d)(?=.*[\\s!#\$%&()*+,\\-/:;<=>?])(?=[a-zA-Z0-9])",
+    @field:Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*#?&])[A-Za-z\\d@\$!%*#?&]{8,}\$",
         message = "Password is not strong enough!(min 8 char | number | special char)")
     val password: String,
     @field:Email(regexp = ".+[@].+[\\.].+", message = "Email is not valid!")

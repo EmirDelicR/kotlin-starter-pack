@@ -1,5 +1,6 @@
 package com.starter.api.testUtils
 
+import com.starter.api.rest.auth.dtos.RegisterUserRequest
 import com.starter.api.rest.messages.core.Message
 import com.starter.api.rest.messages.dtos.MessageRequest
 import com.starter.api.rest.roles.core.Role
@@ -85,6 +86,16 @@ fun sampleUpdateUserRequest(): UserUpdateRequest {
         firstName = "John",
         subscribed = true,
         subscriptions = emptySet(),
+    )
+}
+
+fun sampleRegisterUserRequest(): RegisterUserRequest {
+    return RegisterUserRequest(
+        userName = "Cabal",
+        firstName = "John",
+        lastName = "Doe",
+        password = "Test123!",
+        email = "test@test.com"
     )
 }
 
