@@ -1,6 +1,8 @@
 package com.starter.api.rest.users.core
 
 import com.starter.api.exception.NotFoundException
+import com.starter.api.testUtils.sampleRegisterUserRequest
+import com.starter.api.testUtils.sampleRole
 import com.starter.api.testUtils.sampleUpdateUserRequest
 import com.starter.api.testUtils.sampleUser
 import org.assertj.core.api.Assertions.assertThat
@@ -44,6 +46,34 @@ class UserServiceTest {
                 userService.getById(userResponseMock.id)
             }.hasMessage("User with id: (${userResponseMock.id}) was not found!")
                 .isInstanceOf(NotFoundException::class.java)
+        }
+    }
+
+    @Nested
+    @DisplayName("create Function")
+    inner class Create {
+        private val registerRequest = sampleRegisterUserRequest().copy()
+        private val role = sampleRole().copy()
+
+        @Test
+        fun `should create and return user`() {
+            given(userRepository.findUserById(userResponseMock.id)).willReturn(userResponseMock)
+            given(userRepository.saveAndFlush(any())).willAnswer { invocation -> invocation.arguments[0] }
+
+            userService.create(registerRequest, role)
+
+            verify(
+                userRepository,
+                times(1),
+            ).saveAndFlush(
+                argForWhich {
+                    this.email == registerRequest.email && this.loggedIn && !this.subscribed &&
+                            this.firstName == registerRequest.firstName &&
+                            this.lastName == registerRequest.lastName &&
+                            this.userName == registerRequest.userName &&
+                            !this.profileUpdated
+                },
+            )
         }
     }
 

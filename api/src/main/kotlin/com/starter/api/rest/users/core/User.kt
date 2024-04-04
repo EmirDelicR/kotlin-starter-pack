@@ -3,6 +3,7 @@ package com.starter.api.rest.users.core
 import com.starter.api.rest.roles.core.Role
 import com.starter.api.rest.subscriptions.core.Subscription
 import com.starter.api.rest.users.dtos.UserResponse
+import com.starter.api.utils.PasswordEncoder
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -12,12 +13,13 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.PrePersist
 import jakarta.persistence.PreUpdate
 import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.OffsetDateTime
-import java.util.UUID
+import java.util.*
 
 @Entity
 @Table(name = "user")
@@ -65,8 +67,14 @@ data class User(
     val subscriptions: Set<Subscription>? = null,
 ) {
     @PreUpdate
-    fun preUpdate() {
+    private fun preUpdate() {
         updatedAt = OffsetDateTime.now()
+    }
+
+    @PrePersist
+    private fun onCreate() {
+        password = PasswordEncoder.hashPassword(this.password)
+        token = "token"
     }
 
     fun toResponse(): UserResponse {

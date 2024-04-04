@@ -12,12 +12,8 @@ class UserService(val userRepository: UserRepository) {
         userRepository.findUserById(id)
             ?: throw NotFoundException("User with id: ($id) was not found!")
 
-    // TODO @ed test this
-    fun getByEmail(email: String): User =
-        userRepository.findUserByEmail(email)
-            ?: throw NotFoundException("User with email: ($email) was not found!")
+    fun getByEmail(email: String): User? = userRepository.findUserByEmail(email)
 
-    // TODO @ed test this
     fun create(data: RegisterUserRequest, role: Role): User {
         val user = User(
             loggedIn = true,
