@@ -1,6 +1,7 @@
 package com.starter.api.advices
 
 import com.starter.api.dtos.ResponseEnvelope
+import com.starter.api.exception.ConflictException
 import com.starter.api.exception.NotFoundException
 import com.starter.api.exception.NotValidException
 import com.starter.api.utils.logger
@@ -37,6 +38,19 @@ class GlobalExceptionHandler {
                 data = null,
                 message = exception.message.toString(),
                 status = HttpStatus.NOT_FOUND.value(),
+            ),
+        )
+    }
+
+    @ExceptionHandler
+    fun handle(exception: ConflictException): ResponseEntity<ResponseEnvelope<Nothing?>> {
+        logger.error("Handling ConflictException:", exception)
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+            ResponseEnvelope(
+                data = null,
+                message = exception.message.toString(),
+                status = HttpStatus.CONFLICT.value(),
             ),
         )
     }

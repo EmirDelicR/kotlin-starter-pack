@@ -2,8 +2,8 @@ package com.starter.api.utils
 
 import com.starter.api.exception.NotValidException
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatCode
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 
@@ -33,10 +33,11 @@ class PageableResolverTest {
     @Test
     fun `Test getSortObject should throw exception if columnId is not valid`() {
         val columnId = "createdA"
-        val exc = assertThrows<NotValidException> { pageableResolver.getSortObject("DESC", columnId) }
-        assertThat(
-            exc.message,
-        ).isEqualTo("Cannot sort by $columnId.Allowed sorting fields: ${PageableResolver.allowedOrderingParams.joinToString()}")
+
+        assertThatCode {
+            pageableResolver.getSortObject("DESC", columnId)
+        }.hasMessage("Cannot sort by $columnId.Allowed sorting fields: ${PageableResolver.allowedOrderingParams.joinToString()}")
+            .isInstanceOf(NotValidException::class.java)
     }
 
     @Test
