@@ -112,6 +112,13 @@ Links:
 
 
 
+## JWT implementation
+[JWT](https://www.baeldung.com/spring-security-sign-jwt-token)
+
+[Repo](https://github.com/eugenp/tutorials/blob/master/spring-security-modules/spring-security-core-2/src/main/java/com/baeldung/jwtsignkey/jwtconfig/JwtUtils.java)
+
+## Argon 2 password hash
+
 https://github.com/eugenp/tutorials/blob/ff723063a709cd6983cc35bc1302112c43f2c2f0/core-java-modules/core-java-security-3/src/test/java/com/baeldung/hash/argon/HashPasswordUnitTest.java#L13
 
 https://www.baeldung.com/java-argon2-hashing

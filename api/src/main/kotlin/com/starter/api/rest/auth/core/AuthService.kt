@@ -7,6 +7,7 @@ import com.starter.api.rest.auth.dtos.RegisterUserRequest
 import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.rest.users.core.User
 import com.starter.api.rest.users.core.UserService
+import com.starter.api.utils.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,6 +21,9 @@ class AuthService(val userService: UserService, val roleService: RoleService) {
 
         val role = roleService.getByType()
 
+        // TODO return refresh token or create function
+        // const refreshToken = signToken(password, email, true);
+
         return userService.create(data, role)
     }
 
@@ -28,9 +32,14 @@ class AuthService(val userService: UserService, val roleService: RoleService) {
             userService.getByEmail(data.email)
                 ?: throw NotFoundException("User with email: (${data.email}) was not found!")
 
-        // verify password
-        // update user token
+        PasswordEncoder.verifyPassword(data.password, user.password)
         // TODO @ed implement this
+        // update user token
+        // const refreshToken = signToken(password, email, true);
+        // update user login status
+        // user.token = signToken(password, email);
+        // user.loggedIn = true;
+        // await userService.saveUser(user);
         return user
     }
 }

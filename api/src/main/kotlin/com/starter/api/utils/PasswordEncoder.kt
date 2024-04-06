@@ -5,6 +5,7 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 
 class PasswordEncoder private constructor() {
     companion object {
+        private val logger = logger()
         private var arg2SpringSecurityInstance: Argon2PasswordEncoder? = null
 
         private fun getInstance(): Argon2PasswordEncoder {
@@ -16,6 +17,7 @@ class PasswordEncoder private constructor() {
         }
 
         fun hashPassword(password: String): String {
+            logger.info("Handling hash user password")
             return getInstance().encode(password)
         }
 
@@ -23,6 +25,7 @@ class PasswordEncoder private constructor() {
             rawPassword: String,
             hashedPassword: String,
         ): Boolean {
+            logger.info("Handling verify user password")
             val isPasswordOk = getInstance().matches(rawPassword, hashedPassword)
 
             if (!isPasswordOk) {

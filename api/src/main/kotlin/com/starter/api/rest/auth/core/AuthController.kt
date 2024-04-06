@@ -28,7 +28,8 @@ class AuthController(val authService: AuthService) {
         logger.info("Handling registerUser Request")
         val user = authService.registerUser(registerRequest)
 
-        // TODO set token here
+        // TODO Set cookie as token to response
+        // res.cookie('jwt', refreshToken, COOKIE_OPTIONS);
         return ResponseEnvelope(
             data = user.toResponse(),
             message = "User is register successfully.",
@@ -44,6 +45,8 @@ class AuthController(val authService: AuthService) {
         logger.info("Handling loginUser Request")
         val user = authService.loginUser(loginRequest)
 
+        // TODO Set cookie as token to response
+        // res.cookie('jwt', refreshToken, COOKIE_OPTIONS);
         return ResponseEnvelope(
             data = user.toResponse(),
             message = "User was logged in successfully.",
