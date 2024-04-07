@@ -51,6 +51,15 @@ class UserService(val userRepository: UserRepository) {
         }
     }
 
+    fun updateToken(id: String, token: String): User {
+        val user = getById(id)
+
+        return user.let {
+            it.token = token
+            userRepository.saveAndFlush(it)
+        }
+    }
+
     private fun getUserName(
         newUserName: String,
         oldUserName: String,
