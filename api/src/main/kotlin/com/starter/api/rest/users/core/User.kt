@@ -3,6 +3,7 @@ package com.starter.api.rest.users.core
 import com.starter.api.rest.roles.core.Role
 import com.starter.api.rest.subscriptions.core.Subscription
 import com.starter.api.rest.users.dtos.UserResponse
+import com.starter.api.utils.JWTHandler
 import com.starter.api.utils.PasswordEncoder
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
@@ -74,7 +75,7 @@ data class User(
     @PrePersist
     private fun onCreate() {
         password = PasswordEncoder.hashPassword(this.password)
-        token = "token"
+        token = JWTHandler().generateJwtToken(this.email)
     }
 
     fun toResponse(): UserResponse {
