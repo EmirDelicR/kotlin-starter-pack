@@ -8,7 +8,7 @@ class PasswordEncoder private constructor() {
         private val logger = logger()
         private var arg2SpringSecurityInstance: Argon2PasswordEncoder? = null
 
-        private fun getInstance(): Argon2PasswordEncoder {
+        fun getInstance(): Argon2PasswordEncoder {
             if (arg2SpringSecurityInstance == null) {
                 arg2SpringSecurityInstance = Argon2PasswordEncoder(16, 32, 1, 60000, 10)
             }
