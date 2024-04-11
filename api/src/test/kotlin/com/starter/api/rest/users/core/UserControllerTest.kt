@@ -18,12 +18,14 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.mock.mockito.SpyBean
 import org.springframework.http.HttpStatus
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.put
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser
 class UserControllerTest {
     private val apiUrl = "/api/v1/users"
     private val userResponseMock = sampleUser()
