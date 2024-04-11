@@ -5,16 +5,18 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.PropertySource
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.util.Date
 import javax.crypto.SecretKey
 
-
 @Component
+@PropertySource("classpath:application.properties")
 class JWTHandler {
+
     @Value("\${jwt.secret}")
-    lateinit var jwtSecret: String
+    private lateinit var jwtSecret: String
 
     // 24h
     private val jwtExpires: Long = 8640000
@@ -35,14 +37,14 @@ class JWTHandler {
         return getAllClaims(token).subject
     }
 
-    fun isTokenExpired(token: String?): Boolean {
-        return getAllClaims(token).expiration.before(Date())
-    }
-
     fun isTokenValid(token: String?, userDetails: UserDetails): Boolean {
         val email = getUserEmailFromJwtToken(token)
 
         return userDetails.username == email && !isTokenExpired(token)
+    }
+
+    fun isTokenExpired(token: String?): Boolean {
+        return getAllClaims(token).expiration.before(Date())
     }
 
     private fun getSigningKey(): SecretKey {
