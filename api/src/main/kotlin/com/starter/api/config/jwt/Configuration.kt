@@ -13,7 +13,6 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 
 @Configuration
 class Configuration {
-
     @Bean
     fun userDetailsService(userRepository: UserRepository): UserDetailsService {
         return CustomUserDetailsService(userRepository)
@@ -26,7 +25,7 @@ class Configuration {
 
     @Bean
     fun authenticationProvider(userRepository: UserRepository): DaoAuthenticationProvider {
-        return DaoAuthenticationProvider() .also {
+        return DaoAuthenticationProvider().also {
             it.setUserDetailsService(userDetailsService(userRepository))
             it.setPasswordEncoder(passwordEncoder())
         }

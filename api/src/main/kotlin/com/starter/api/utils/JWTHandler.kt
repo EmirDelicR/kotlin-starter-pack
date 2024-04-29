@@ -14,7 +14,6 @@ import javax.crypto.SecretKey
 @Component
 @PropertySource("classpath:application.properties")
 class JWTHandler {
-
     @Value("\${jwt.secret}")
     private lateinit var jwtSecret: String
 
@@ -25,10 +24,13 @@ class JWTHandler {
     // https://github.com/eugenp/tutorials/blob/master/spring-security-modules/spring-security-core-2/src/main/java/com/baeldung/jwtsignkey/jwtconfig/JwtUtils.java
     // https://www.youtube.com/watch?v=iqkt9ip567A&list=PLvN8k8yxjoeud4ESoB-wjiieqYGaDVqPR&index=7
 
-    fun generateJwtToken(email: String, isRefreshToken: Boolean = false): String {
+    fun generateJwtToken(
+        email: String,
+        isRefreshToken: Boolean = false,
+    ): String {
         var expiresIn = jwtExpires
 
-        if(isRefreshToken) {
+        if (isRefreshToken) {
             expiresIn = jwtRefreshExpires
         }
 
@@ -44,7 +46,10 @@ class JWTHandler {
         return getAllClaims(token).subject
     }
 
-    fun isTokenValid(token: String?, userDetails: UserDetails): Boolean {
+    fun isTokenValid(
+        token: String?,
+        userDetails: UserDetails,
+    ): Boolean {
         val email = getUserEmailFromJwtToken(token)
 
         return userDetails.username == email && !isTokenExpired(token)

@@ -32,7 +32,7 @@ class AuthService(
 
         return AuthResponse(
             token = setCookie(refreshToken),
-            userService.create(data, role)
+            userService.create(data, role),
         )
     }
 
@@ -47,7 +47,7 @@ class AuthService(
     }
 
     fun autoLoginUser(token: String): AuthResponse {
-        if(jwtHandler.isTokenExpired(token)) {
+        if (jwtHandler.isTokenExpired(token)) {
             throw NotValidException("This token is not valid. Please login again!")
         }
 
@@ -57,13 +57,13 @@ class AuthService(
 
         val user =
             userService.getByEmail(email)
-                ?: throw NotFoundException("User with email: (${email}) was not found!")
+                ?: throw NotFoundException("User with email: ($email) was not found!")
 
         return updateTokenAndGetAuthResponse(user)
     }
 
     fun updateToken(token: String): String {
-        if(jwtHandler.isTokenExpired(token)) {
+        if (jwtHandler.isTokenExpired(token)) {
             throw NotValidException("This token is not valid. Please login again!")
         }
 
@@ -73,7 +73,7 @@ class AuthService(
 
         val user =
             userService.getByEmail(email)
-                ?: throw NotFoundException("User with email: (${email}) was not found!")
+                ?: throw NotFoundException("User with email: ($email) was not found!")
 
         val generatedToken = jwtHandler.generateJwtToken(user.email)
         val refreshToken = jwtHandler.generateJwtToken(user.email, true)

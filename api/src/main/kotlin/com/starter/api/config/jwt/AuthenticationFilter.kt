@@ -18,16 +18,15 @@ import java.io.IOException
 @Component
 class AuthenticationFilter(
     private val userDetailsService: CustomUserDetailsService,
-    private val jwtHandler: JWTHandler
+    private val jwtHandler: JWTHandler,
 ) : OncePerRequestFilter() {
     private val log = logger()
-
 
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        filterChain: FilterChain
+        filterChain: FilterChain,
     ) {
         try {
             val authHeader: String? = request.getHeader("Authorization")
@@ -40,10 +39,10 @@ class AuthenticationFilter(
             val jwt = authHeader!!.substringAfter("Bearer ")
             val email = jwtHandler.getUserEmailFromJwtToken(jwt)
 
-            if(email != null && SecurityContextHolder.getContext().authentication == null) {
+            if (email != null && SecurityContextHolder.getContext().authentication == null) {
                 val foundUser = userDetailsService.loadUserByUsername(email)
 
-                if(jwtHandler.isTokenValid(jwt, foundUser)) {
+                if (jwtHandler.isTokenValid(jwt, foundUser)) {
                     updateContext(foundUser, request)
                 }
             }
@@ -54,7 +53,10 @@ class AuthenticationFilter(
         filterChain.doFilter(request, response)
     }
 
-    private fun updateContext(foundUser: UserDetails, request: HttpServletRequest) {
+    private fun updateContext(
+        foundUser: UserDetails,
+        request: HttpServletRequest,
+    ) {
         val authentication = UsernamePasswordAuthenticationToken(foundUser, null, foundUser.authorities)
         authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
         SecurityContextHolder.getContext().authentication = authentication

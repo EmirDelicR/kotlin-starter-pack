@@ -107,7 +107,6 @@ fun sampleLoginUserRequest(): LoginUserRequest {
     )
 }
 
-
 fun <T> createPageObject(
     list: List<T>,
     pageSize: Int = 10,

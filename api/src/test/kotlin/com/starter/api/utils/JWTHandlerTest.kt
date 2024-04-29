@@ -20,8 +20,8 @@ class JWTHandlerTest {
 
     @Test
     fun `Test getUserEmailFromJwtToken should return user email token`() {
-       val token = jwtHandler.generateJwtToken(email)
-       assertThat(jwtHandler.getUserEmailFromJwtToken(token)).isEqualTo(email)
+        val token = jwtHandler.generateJwtToken(email)
+        assertThat(jwtHandler.getUserEmailFromJwtToken(token)).isEqualTo(email)
     }
 
     @Test

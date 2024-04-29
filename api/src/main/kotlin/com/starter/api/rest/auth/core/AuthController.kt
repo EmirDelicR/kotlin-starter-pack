@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-
 @Validated
 @RestController
 @RequestMapping(path = ["/api/v1/"])
@@ -35,13 +34,13 @@ class AuthController(val authService: AuthService) {
             .status(HttpStatus.CREATED)
             .header(
                 HttpHeaders.SET_COOKIE,
-                authResponse.token
+                authResponse.token,
             ).body(
                 ResponseEnvelope(
                     data = authResponse.user.toResponse(),
                     message = "User is register successfully.",
                     status = HttpStatus.CREATED.value(),
-                )
+                ),
             )
     }
 
@@ -55,17 +54,15 @@ class AuthController(val authService: AuthService) {
         return ResponseEntity.ok()
             .header(
                 HttpHeaders.SET_COOKIE,
-                authResponse.token
+                authResponse.token,
             ).body(
                 ResponseEnvelope(
                     data = authResponse.user.toResponse(),
                     message = "User was logged in successfully.",
                     status = HttpStatus.OK.value(),
-                )
+                ),
             )
     }
-
-
 
     @PostMapping("/autoLogin")
     fun autoLoginUser(
@@ -77,16 +74,15 @@ class AuthController(val authService: AuthService) {
         return ResponseEntity.ok()
             .header(
                 HttpHeaders.SET_COOKIE,
-                authResponse.token
+                authResponse.token,
             ).body(
                 ResponseEnvelope(
                     data = authResponse.user.toResponse(),
                     message = "User was logged in successfully.",
                     status = HttpStatus.OK.value(),
-                )
+                ),
             )
     }
-
 
     @PutMapping("/refresh")
     fun updateToken(
@@ -98,14 +94,13 @@ class AuthController(val authService: AuthService) {
         return ResponseEntity.ok()
             .header(
                 HttpHeaders.SET_COOKIE,
-                updatedToken
+                updatedToken,
             ).body(
                 ResponseEnvelope(
                     data = updatedToken,
                     message = "Token was refreshed successfully.",
                     status = HttpStatus.OK.value(),
-                )
+                ),
             )
     }
-
 }

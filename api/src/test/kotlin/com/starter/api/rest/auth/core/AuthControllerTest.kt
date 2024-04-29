@@ -84,7 +84,7 @@ class AuthControllerTest {
             mockMvc.post("$apiUrl/register") {
                 withJsonContent(registerRequest)
             }.andExpect {
-                header { exists(HttpHeaders.SET_COOKIE)}
+                header { exists(HttpHeaders.SET_COOKIE) }
                 status { isCreated() }
                 jsonPath("$.status") { value(HttpStatus.CREATED.value()) }
                 jsonPath("$.message") { value("User is register successfully.") }
@@ -200,7 +200,7 @@ class AuthControllerTest {
             mockMvc.post("$apiUrl/login") {
                 withJsonContent(loginRequest)
             }.andExpect {
-                header { exists(HttpHeaders.SET_COOKIE)}
+                header { exists(HttpHeaders.SET_COOKIE) }
                 status { isOk() }
                 jsonPath("$.status") { value(HttpStatus.OK.value()) }
                 jsonPath("$.message") { value("User was logged in successfully.") }
@@ -356,7 +356,7 @@ class AuthControllerTest {
             mockMvc.post("$apiUrl/autoLogin") {
                 withJsonContent(token)
             }.andExpect {
-                header { exists(HttpHeaders.SET_COOKIE)}
+                header { exists(HttpHeaders.SET_COOKIE) }
                 status { isOk() }
                 jsonPath("$.status") { value(HttpStatus.OK.value()) }
                 jsonPath("$.message") { value("User was logged in successfully.") }
@@ -457,7 +457,7 @@ class AuthControllerTest {
             mockMvc.put("$apiUrl/refresh") {
                 withJsonContent(token)
             }.andExpect {
-                header { exists(HttpHeaders.SET_COOKIE)}
+                header { exists(HttpHeaders.SET_COOKIE) }
                 status { isOk() }
                 jsonPath("$.status") { value(HttpStatus.OK.value()) }
                 jsonPath("$.message") { value("Token was refreshed successfully.") }

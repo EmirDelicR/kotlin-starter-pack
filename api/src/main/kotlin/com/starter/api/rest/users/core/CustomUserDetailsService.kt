@@ -10,7 +10,6 @@ typealias ApplicationUser = com.starter.api.rest.users.core.User
 
 @Service
 class CustomUserDetailsService(private val userRepository: UserRepository) : UserDetailsService {
-
     override fun loadUserByUsername(username: String): UserDetails {
         return userRepository.findUserByEmail(username)?.mapToUserDetails()
             ?: throw UsernameNotFoundException("User with email $username not found")

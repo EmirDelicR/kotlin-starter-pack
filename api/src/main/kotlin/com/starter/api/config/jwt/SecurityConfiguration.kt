@@ -12,9 +12,9 @@ import org.springframework.security.config.annotation.web.configurers.CorsConfig
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer
+import org.springframework.security.config.http.SessionCreationPolicy.STATELESS
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.security.config.http.SessionCreationPolicy.STATELESS
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +30,10 @@ class SecurityConfiguration(val authenticationProvider: AuthenticationProvider) 
 
     @Bean
     @Throws(Exception::class)
-    fun securityFilterChain(http: HttpSecurity, jwtAuthenticationFilter: AuthenticationFilter): SecurityFilterChain {
+    fun securityFilterChain(
+        http: HttpSecurity,
+        jwtAuthenticationFilter: AuthenticationFilter,
+    ): SecurityFilterChain {
         http.csrf { obj: CsrfConfigurer<HttpSecurity> -> obj.disable() }
             .cors { obj: CorsConfigurer<HttpSecurity> -> obj.disable() }
             .authorizeHttpRequests { req ->
@@ -43,12 +46,12 @@ class SecurityConfiguration(val authenticationProvider: AuthenticationProvider) 
             }
             .exceptionHandling { ex: ExceptionHandlingConfigurer<HttpSecurity?> ->
                 ex.authenticationEntryPoint(
-                    unauthorizedHandler
+                    unauthorizedHandler,
                 )
             }
             .sessionManagement { session: SessionManagementConfigurer<HttpSecurity?> ->
                 session.sessionCreationPolicy(
-                    STATELESS
+                    STATELESS,
                 )
             }
             .authenticationProvider(authenticationProvider)
