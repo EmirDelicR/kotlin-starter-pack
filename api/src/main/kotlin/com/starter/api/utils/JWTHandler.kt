@@ -20,15 +20,22 @@ class JWTHandler {
 
     // 24h
     private val jwtExpires: Long = 8640000
+    private val jwtRefreshExpires: Long = 8640000 * 2
 
     // https://github.com/eugenp/tutorials/blob/master/spring-security-modules/spring-security-core-2/src/main/java/com/baeldung/jwtsignkey/jwtconfig/JwtUtils.java
     // https://www.youtube.com/watch?v=iqkt9ip567A&list=PLvN8k8yxjoeud4ESoB-wjiieqYGaDVqPR&index=7
 
-    fun generateJwtToken(email: String): String {
-          return Jwts.builder()
+    fun generateJwtToken(email: String, isRefreshToken: Boolean = false): String {
+        var expiresIn = jwtExpires
+
+        if(isRefreshToken) {
+            expiresIn = jwtRefreshExpires
+        }
+
+        return Jwts.builder()
             .subject((email))
             .issuedAt(Date())
-            .expiration(Date(Date().time + jwtExpires))
+            .expiration(Date(Date().time + expiresIn))
             .signWith(getSigningKey())
             .compact()
     }

@@ -32,6 +32,14 @@ class UserService(val userRepository: UserRepository) {
         return userRepository.saveAndFlush(user)
     }
 
+    fun updateUserAuthState(user: User, token: String): User {
+        return user.let {
+            it.token = token
+            it.loggedIn = true
+            userRepository.saveAndFlush(it)
+        }
+    }
+
     fun update(
         id: String,
         userRequest: UserUpdateRequest,
@@ -51,9 +59,7 @@ class UserService(val userRepository: UserRepository) {
         }
     }
 
-    fun updateToken(id: String, token: String): User {
-        val user = getById(id)
-
+    fun updateToken(user: User, token: String): User {
         return user.let {
             it.token = token
             userRepository.saveAndFlush(it)

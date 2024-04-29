@@ -2,14 +2,18 @@ package com.starter.api.rest.auth.core
 
 import com.starter.api.exception.ConflictException
 import com.starter.api.exception.NotFoundException
+import com.starter.api.exception.NotValidException
 import com.starter.api.rest.roles.core.RoleRepository
 import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.rest.roles.enums.RoleType
 import com.starter.api.rest.users.core.UserRepository
 import com.starter.api.rest.users.core.UserService
+import com.starter.api.testUtils.sampleLoginUserRequest
 import com.starter.api.testUtils.sampleRegisterUserRequest
 import com.starter.api.testUtils.sampleRole
 import com.starter.api.testUtils.sampleUser
+import com.starter.api.utils.JWTHandler
+import com.starter.api.utils.PasswordEncoder
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
 import org.junit.jupiter.api.BeforeEach
@@ -45,11 +49,14 @@ class AuthServiceTest {
     @SpyBean
     private lateinit var authService: AuthService
 
+    @SpyBean
+    private lateinit var jwtHandler: JWTHandler
+
     @BeforeEach
     fun setUp() {
         userService = UserService(userRepository)
         roleService = RoleService(roleRepository)
-        authService = AuthService(userService, roleService)
+        authService = AuthService(userService, roleService, jwtHandler)
     }
 
     @Nested
@@ -77,7 +84,8 @@ class AuthServiceTest {
                 },
             )
 
-            assertThat(response).isNotNull()
+            assertThat(response).hasFieldOrProperty("token")
+            assertThat(response).hasFieldOrProperty("user")
         }
 
         @Test
@@ -96,6 +104,53 @@ class AuthServiceTest {
                 authService.registerUser(registerRequest)
             }.hasMessage("Role with type: (USER) was not found!")
                 .isInstanceOf(NotFoundException::class.java)
+        }
+    }
+
+    @Nested
+    @DisplayName("loginUser Function")
+    inner class LoginUser {
+        private val loginRequest = sampleLoginUserRequest().copy()
+
+        @Test
+        fun `Test loginUser should return status 404 if user do not exists`() {
+            given(userRepository.findUserByEmail(loginRequest.email)).willReturn(null)
+
+            assertThatCode {
+                authService.loginUser(loginRequest)
+            }.hasMessage("User with email: (${loginRequest.email}) was not found!")
+                .isInstanceOf(NotFoundException::class.java)
+        }
+
+        @Test
+        fun `Test loginUser should return status 400 if user password do not match`() {
+            given(userRepository.findUserByEmail(loginRequest.email)).willReturn(user)
+
+            assertThatCode {
+                authService.loginUser(loginRequest)
+            }.hasMessage("Unfortunately password is not valid. Please try again and check password that you input!")
+                .isInstanceOf(NotValidException::class.java)
+        }
+
+        @Test
+        fun `Test loginUser should `() {
+            val userWithCorrectPassword = user.copy(password = PasswordEncoder.hashPassword("Test123!"))
+            given(userRepository.findUserByEmail(loginRequest.email)).willReturn(userWithCorrectPassword)
+            given(userRepository.saveAndFlush(any())).willAnswer { invocation -> invocation.arguments[0] }
+
+            val response = authService.loginUser(loginRequest)
+
+            verify(
+                userRepository,
+                times(1),
+            ).saveAndFlush(
+                argForWhich {
+                    this.loggedIn
+                },
+            )
+
+            assertThat(response).hasFieldOrProperty("token")
+            assertThat(response).hasFieldOrProperty("user")
         }
     }
 }

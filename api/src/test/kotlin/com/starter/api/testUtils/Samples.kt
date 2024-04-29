@@ -1,5 +1,6 @@
 package com.starter.api.testUtils
 
+import com.starter.api.rest.auth.dtos.LoginUserRequest
 import com.starter.api.rest.auth.dtos.RegisterUserRequest
 import com.starter.api.rest.messages.core.Message
 import com.starter.api.rest.messages.dtos.MessageRequest
@@ -98,6 +99,14 @@ fun sampleRegisterUserRequest(): RegisterUserRequest {
         email = "test@test.com",
     )
 }
+
+fun sampleLoginUserRequest(): LoginUserRequest {
+    return LoginUserRequest(
+        password = "Test123!",
+        email = "test@test.com",
+    )
+}
+
 
 fun <T> createPageObject(
     list: List<T>,
