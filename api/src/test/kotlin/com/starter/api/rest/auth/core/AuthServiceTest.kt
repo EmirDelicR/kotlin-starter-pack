@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
 import org.mockito.BDDMockito.times
 import org.mockito.BDDMockito.verify
+import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.eq
@@ -30,6 +31,8 @@ import org.mockito.kotlin.mock
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.SpyBean
+import java.util.Date
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -133,7 +136,7 @@ class AuthServiceTest {
         }
 
         @Test
-        fun `Test loginUser should `() {
+        fun `Test loginUser should login user successfully`() {
             val userWithCorrectPassword = user.copy(password = PasswordEncoder.hashPassword("Test123!"))
             given(userRepository.findUserByEmail(loginRequest.email)).willReturn(userWithCorrectPassword)
             given(userRepository.saveAndFlush(any())).willAnswer { invocation -> invocation.arguments[0] }
@@ -151,6 +154,121 @@ class AuthServiceTest {
 
             assertThat(response).hasFieldOrProperty("token")
             assertThat(response).hasFieldOrProperty("user")
+        }
+    }
+
+    @Nested
+    @DisplayName("autoLoginUser Function")
+    inner class AutoLoginUser {
+        @Test
+        fun `Test autoLoginUser should return status 400 if token is expired`() {
+            Mockito.`when`(jwtHandler.generateExpirationTime(any())).thenReturn(Date(1615001631))
+            val token = jwtHandler.generateJwtToken("test@test.com")
+
+            assertThatCode {
+                authService.autoLoginUser(token)
+            }.hasMessage("This token is not valid. Please login again!")
+                .isInstanceOf(NotValidException::class.java)
+        }
+
+        @Test
+        fun `Test autoLoginUser should return status 400 if user email is not in token`() {
+            val token = jwtHandler.generateJwtToken("test@test.com")
+            Mockito.`when`(jwtHandler.getUserEmailFromJwtToken(token)).thenReturn(null)
+
+            assertThatCode {
+                authService.autoLoginUser(token)
+            }.hasMessage("This token is not valid. Please login again!")
+                .isInstanceOf(NotValidException::class.java)
+        }
+
+        @Test
+        fun `Test autoLoginUser should return status 404 if user with email is not found`() {
+            val email = "test@test.com"
+            val token = jwtHandler.generateJwtToken(email)
+            given(userRepository.findUserByEmail(email)).willReturn(null)
+
+            assertThatCode {
+                authService.autoLoginUser(token)
+            }.hasMessage("User with email: ($email) was not found!")
+                .isInstanceOf(NotFoundException::class.java)
+        }
+
+        @Test
+        fun `Test autoLoginUser should auto login user successfully`() {
+            val email = "test@test.com"
+            val token = jwtHandler.generateJwtToken(email)
+            given(userRepository.findUserByEmail(email)).willReturn(sampleUser())
+            given(userRepository.saveAndFlush(any())).willAnswer { invocation -> invocation.arguments[0] }
+
+            val response = authService.autoLoginUser(token)
+
+            verify(
+                userRepository,
+                times(1),
+            ).saveAndFlush(
+                argForWhich {
+                    this.loggedIn
+                },
+            )
+
+            assertThat(response).hasFieldOrProperty("token")
+            assertThat(response).hasFieldOrProperty("user")
+        }
+    }
+
+    @Nested
+    @DisplayName("updateToken Function")
+    inner class UpdateToken {
+        @Test
+        fun `Test updateToken should return status 400 if token is expired`() {
+            Mockito.`when`(jwtHandler.generateExpirationTime(any())).thenReturn(Date(1615001631))
+            val token = jwtHandler.generateJwtToken("test@test.com")
+
+            assertThatCode {
+                authService.updateToken(token)
+            }.hasMessage("This token is not valid. Please login again!")
+                .isInstanceOf(NotValidException::class.java)
+        }
+
+        @Test
+        fun `Test updateToken should return status 400 if user email is not in token`() {
+            val token = jwtHandler.generateJwtToken("test@test.com")
+            Mockito.`when`(jwtHandler.getUserEmailFromJwtToken(token)).thenReturn(null)
+
+            assertThatCode {
+                authService.updateToken(token)
+            }.hasMessage("This token is not valid. Please login again!")
+                .isInstanceOf(NotValidException::class.java)
+        }
+
+        @Test
+        fun `Test updateToken should return status 404 if user with email is not found`() {
+            val email = "test@test.com"
+            val token = jwtHandler.generateJwtToken(email)
+            given(userRepository.findUserByEmail(email)).willReturn(null)
+
+            assertThatCode {
+                authService.updateToken(token)
+            }.hasMessage("User with email: ($email) was not found!")
+                .isInstanceOf(NotFoundException::class.java)
+        }
+
+        @Test
+        fun `Test updateToken should update user token successfully`() {
+            val email = "test@test.com"
+            val token = jwtHandler.generateJwtToken(email)
+            given(userRepository.findUserByEmail(email)).willReturn(sampleUser())
+            given(userRepository.saveAndFlush(any())).willAnswer { invocation -> invocation.arguments[0] }
+
+            val response = authService.updateToken(token)
+
+            verify(
+                userRepository,
+                times(1),
+            ).saveAndFlush(any())
+
+            assertThat(response).isNotEmpty()
         }
     }
 }

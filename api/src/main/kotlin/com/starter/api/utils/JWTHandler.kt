@@ -37,7 +37,7 @@ class JWTHandler {
         return Jwts.builder()
             .subject((email))
             .issuedAt(Date())
-            .expiration(Date(Date().time + expiresIn))
+            .expiration(generateExpirationTime(expiresIn))
             .signWith(getSigningKey())
             .compact()
     }
@@ -56,7 +56,12 @@ class JWTHandler {
     }
 
     fun isTokenExpired(token: String?): Boolean {
-        return getAllClaims(token).expiration.before(Date())
+        return try {
+            getAllClaims(token).expiration.before(Date())
+        } catch (ex: Exception){
+            logger().error("Token expired", ex)
+            true
+        }
     }
 
     private fun getSigningKey(): SecretKey {
@@ -70,5 +75,9 @@ class JWTHandler {
             .build()
             .parseSignedClaims(token)
             .payload
+    }
+
+    fun generateExpirationTime(expiresIn: Long): Date {
+        return Date(Date().time + expiresIn)
     }
 }
