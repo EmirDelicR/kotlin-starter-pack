@@ -2,17 +2,27 @@ import { PropsWithChildren, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Navigate, useLocation } from "react-router-dom";
 
-import App from "@/App.tsx";
 import { NavRoutes } from "@/constants";
+import AppLayout from "@/UI/elements/layout/AppLayout";
+import { AuthLayout } from "@/UI/elements/layout/AuthLayout";
 
 const AuthPage = lazy(() => import("@/UI/pages/AuthPage"));
 
+const Home = lazy(() => {
+  return Promise.all([
+    import("@/UI/pages/HomePage"),
+    new Promise((resolve) => setTimeout(resolve, 3000)),
+  ]).then(([moduleExports]) => moduleExports);
+});
+
 function ProtectedRoute({ children }: PropsWithChildren) {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   const location = useLocation();
 
   if (!isLoggedIn) {
-    return <Navigate to="/auth" state={{ from: location }} replace />;
+    return (
+      <Navigate to={`/${NavRoutes.AUTH}`} state={{ from: location }} replace />
+    );
   }
 
   return children;
@@ -32,15 +42,26 @@ export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<div>HomePage </div>} />
-          <Route path={NavRoutes.AUTH} element={<AuthPage />} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route element={<AuthLayout />}>
+          <Route path={`/${NavRoutes.AUTH}`} element={<AuthPage />} />
+        </Route>
+        <Route element={<AppLayout />}>
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path={NavRoutes.WORK}
             element={
-              // <ProtectedRoute>
-              <div> WorkPage </div>
-              // </ProtectedRoute>
+              <ProtectedRoute>
+                <div> WorkPage </div>
+              </ProtectedRoute>
             }
           />
           <Route
@@ -54,9 +75,9 @@ export default function AppRoutes() {
           <Route
             path={NavRoutes.EMAILS}
             element={
-              //   <AdminRoute>
-              <div> MessagePage </div>
-              //   </AdminRoute>
+              <AdminRoute>
+                <div> MessagePage</div>
+              </AdminRoute>
             }
           />
           <Route path="*" element={<div>Not Found</div>} />

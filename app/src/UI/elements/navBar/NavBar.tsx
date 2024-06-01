@@ -15,7 +15,7 @@ const links = [
 ];
 
 export default function NavBar() {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
 
   const items = links.map((item, index) => (
     <NavLink

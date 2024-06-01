@@ -1,8 +1,9 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import AppRoutes from "@/routes/Routes.tsx";
 import { createStore } from "@/store";
 import { Provider } from "react-redux";
+
+import App from "./App";
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container!);
@@ -10,7 +11,7 @@ const root = createRoot(container!);
 root.render(
   <React.StrictMode>
     <Provider store={createStore()}>
-      <AppRoutes />
+      <App />
     </Provider>
   </React.StrictMode>
 );
