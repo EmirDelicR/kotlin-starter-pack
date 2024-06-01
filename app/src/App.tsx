@@ -12,7 +12,7 @@ import { Suspense } from "react";
 
 function App() {
   const [opened, { toggle }] = useDisclosure();
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   return (
     <MantineProvider theme={theme} defaultColorScheme="dark">
       <Suspense fallback={<Loader />}>

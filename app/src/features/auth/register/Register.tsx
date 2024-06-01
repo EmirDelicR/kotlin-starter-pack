@@ -115,7 +115,7 @@ export default function Register() {
             Register
           </Button>
         </form>
-        <Error isError={!isError} error={error} />
+        <Error isError={isError} error={error} />
       </Paper>
     </Container>
   );

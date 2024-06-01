@@ -71,7 +71,7 @@ export default function Login() {
             Login
           </Button>
         </form>
-        <Error isError={!isError} error={error} />
+        <Error isError={isError} error={error} />
       </Paper>
     </Container>
   );
