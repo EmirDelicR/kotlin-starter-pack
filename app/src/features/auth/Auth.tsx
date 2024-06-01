@@ -1,7 +1,8 @@
 import { Tabs } from "@mantine/core";
+import { IconLogin, IconUser } from "@tabler/icons-react";
+
 import Login from "./login/Login.tsx";
 import Register from "./register/Register.tsx";
-import { IconLogin, IconUser } from "@tabler/icons-react";
 
 export default function Auth() {
   return (

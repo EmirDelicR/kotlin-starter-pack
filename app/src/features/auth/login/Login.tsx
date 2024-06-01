@@ -8,9 +8,11 @@ import {
   LoadingOverlay,
 } from "@mantine/core";
 import { isEmail, isNotEmpty, useForm } from "@mantine/form";
+
 import { useLoginMutation } from "../store/authApiSlice";
-import { Error } from "@/UI/components/error/Error";
 import useAuth from "../useAuth";
+
+import { Error } from "@/UI/components/error/Error";
 
 interface FormFields {
   email: string;

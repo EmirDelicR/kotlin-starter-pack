@@ -10,11 +10,13 @@ import {
   LoadingOverlay,
 } from "@mantine/core";
 import { isEmail, isNotEmpty, matches, useForm } from "@mantine/form";
-import { PASSWORD_PATTERNS } from "@/constants";
-import HelpPopover from "@/UI/components/helpPopover/HelpPopover.tsx";
+
 import { useRegisterMutation } from "../store/authApiSlice";
 import useAuth from "../useAuth";
+
+import HelpPopover from "@/UI/components/helpPopover/HelpPopover.tsx";
 import { Error } from "@/UI/components/error/Error";
+import { PASSWORD_PATTERNS } from "@/constants";
 
 interface FormFields {
   email: string;

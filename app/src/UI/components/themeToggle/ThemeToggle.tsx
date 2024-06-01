@@ -1,6 +1,8 @@
 import { useMantineColorScheme } from "@mantine/core";
-import classes from "./ThemeToggle.module.scss";
+
 import { classNameHelper } from "@/utils";
+
+import classes from "./ThemeToggle.module.scss";
 
 export default function ThemeToggle() {
   const { toggleColorScheme, colorScheme } = useMantineColorScheme();

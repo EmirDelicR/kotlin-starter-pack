@@ -2,18 +2,13 @@ import { PropsWithChildren, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Navigate, useLocation } from "react-router-dom";
 
-import { NavRoutes } from "@/constants";
 import AppLayout from "@/UI/elements/layout/AppLayout";
 import { AuthLayout } from "@/UI/elements/layout/AuthLayout";
 
-const AuthPage = lazy(() => import("@/UI/pages/AuthPage"));
+import { NavRoutes } from "@/constants";
 
-const Home = lazy(() => {
-  return Promise.all([
-    import("@/UI/pages/HomePage"),
-    new Promise((resolve) => setTimeout(resolve, 3000)),
-  ]).then(([moduleExports]) => moduleExports);
-});
+const AuthPage = lazy(() => import("@/UI/pages/AuthPage"));
+const Home = lazy(() => import("@/UI/pages/HomePage"));
 
 function ProtectedRoute({ children }: PropsWithChildren) {
   const isLoggedIn = true;
