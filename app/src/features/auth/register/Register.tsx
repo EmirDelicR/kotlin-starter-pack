@@ -7,10 +7,14 @@ import {
   Button,
   Group,
   Box,
+  LoadingOverlay,
 } from "@mantine/core";
 import { isEmail, isNotEmpty, matches, useForm } from "@mantine/form";
-import { PASSWORD_PATTERNS } from "@/constants/patterns.ts";
+import { PASSWORD_PATTERNS } from "@/constants";
 import HelpPopover from "@/UI/components/helpPopover/HelpPopover.tsx";
+import { useRegisterMutation } from "../store/authApiSlice";
+import useAuth from "../useAuth";
+import { Error } from "@/UI/components/error/Error";
 
 interface FormFields {
   email: string;
@@ -29,6 +33,9 @@ const INITIAL_FORM_VALUES: FormFields = {
 };
 
 export default function Register() {
+  const [registerUser, { isLoading, data, isSuccess, isError, error }] =
+    useRegisterMutation();
+
   const form = useForm<FormFields>({
     mode: "uncontrolled",
     initialValues: INITIAL_FORM_VALUES,
@@ -43,16 +50,23 @@ export default function Register() {
     },
   });
 
-  const handleSubmit = (values: FormFields) => {
-    // TODO submit form here
-    console.log(values);
+  useAuth(data, isSuccess);
+
+  const handleSubmit = async (data: FormFields) => {
+    await registerUser(data);
   };
 
   return (
     <Container size={500} my={40}>
       <Title ta="center">Welcome aboard</Title>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md" pos="relative">
+        <LoadingOverlay
+          visible={isLoading}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+          loaderProps={{ color: "var(--mantine-color-blue-6)", type: "bars" }}
+        />
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
             withAsterisk
@@ -97,10 +111,11 @@ export default function Register() {
             </Box>
             <HelpPopover hintText="Password must contain minimum 8 characters,one number and one of this special signs !#$%&()*+,-/:;<=>?" />
           </Group>
-          <Button type="submit" fullWidth mt="md">
+          <Button type="submit" fullWidth mt="my">
             Register
           </Button>
         </form>
+        <Error isError={!isError} error={error} />
       </Paper>
     </Container>
   );

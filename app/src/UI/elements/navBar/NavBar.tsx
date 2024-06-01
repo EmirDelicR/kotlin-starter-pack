@@ -1,10 +1,10 @@
-import { Box, Flex, Stack } from "@mantine/core";
+import { Flex, Stack } from "@mantine/core";
 import ThemeToggle from "@/UI/components/themeToggle/ThemeToggle.tsx";
 import Logo from "@/UI/components/logo/Logo.tsx";
 
 import classes from "./NavBar.module.scss";
 import { CSSProperties, useState } from "react";
-import { classNameHelper } from "@/utils/general/general.ts";
+import { classNameHelper } from "@/utils";
 import { NavRouteNames, NavRoutes } from "@/constants/enums.ts";
 import { NavLink } from "react-router-dom";
 

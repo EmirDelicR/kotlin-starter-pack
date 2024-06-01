@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Navigate, useLocation } from "react-router-dom";
 
 import App from "@/App.tsx";
-import { NavRoutes } from "@/constants/enums.ts";
+import { NavRoutes } from "@/constants";
 
 const AuthPage = lazy(() => import("@/UI/pages/AuthPage"));
 

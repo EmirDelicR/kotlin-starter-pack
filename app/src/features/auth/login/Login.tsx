@@ -5,8 +5,12 @@ import {
   Title,
   Container,
   Button,
+  LoadingOverlay,
 } from "@mantine/core";
 import { isEmail, isNotEmpty, useForm } from "@mantine/form";
+import { useLoginMutation } from "../store/authApiSlice";
+import { Error } from "@/UI/components/error/Error";
+import useAuth from "../useAuth";
 
 interface FormFields {
   email: string;
@@ -19,6 +23,8 @@ const INITIAL_FORM_VALUES: FormFields = {
 };
 
 export default function Login() {
+  const [login, { isLoading, isSuccess, data, isError, error }] =
+    useLoginMutation();
   const form = useForm<FormFields>({
     mode: "uncontrolled",
     initialValues: INITIAL_FORM_VALUES,
@@ -28,16 +34,23 @@ export default function Login() {
     },
   });
 
-  const handleSubmit = (values: FormFields) => {
-    // TODO submit form here
-    console.log(values);
+  useAuth(data, isSuccess);
+
+  const handleSubmit = async (data: FormFields) => {
+    await login(data);
   };
 
   return (
     <Container size={500} my={40}>
       <Title ta="center">Welcome back</Title>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md" pos="relative">
+        <LoadingOverlay
+          visible={isLoading}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+          loaderProps={{ color: "var(--mantine-color-blue-6)", type: "bars" }}
+        />
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
             withAsterisk
@@ -54,10 +67,11 @@ export default function Login() {
             key={form.key("password")}
             {...form.getInputProps("password")}
           />
-          <Button type="submit" fullWidth mt="xl">
+          <Button type="submit" fullWidth my="xl">
             Login
           </Button>
         </form>
+        <Error isError={!isError} error={error} />
       </Paper>
     </Container>
   );

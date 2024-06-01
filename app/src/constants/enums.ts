@@ -1,3 +1,14 @@
+export enum Roles {
+  ADMIN = 1,
+  USER = 2,
+}
+
+export enum SubscriptionType {
+  NEWS = "news",
+  CODE = "code",
+  GENERAL = "general",
+}
+
 export enum NavRoutes {
   HOME = "home",
   AUTH = "auth",
