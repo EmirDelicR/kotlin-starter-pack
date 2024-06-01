@@ -43,7 +43,7 @@ export default function AppRoutes() {
         </Route>
         <Route element={<AppLayout />}>
           <Route
-            path="/home"
+            path={NavRoutes.HOME}
             element={
               <ProtectedRoute>
                 <Home />

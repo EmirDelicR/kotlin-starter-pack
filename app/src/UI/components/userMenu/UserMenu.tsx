@@ -10,12 +10,9 @@ import {
 } from "@mantine/core";
 import {
   IconSettings,
-  IconSearch,
-  IconPhoto,
-  IconMessageCircle,
-  IconTrash,
-  IconArrowsLeftRight,
+  IconLogout,
   IconChevronDown,
+  IconTool,
 } from "@tabler/icons-react";
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
@@ -57,7 +54,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
 
 export default function UserMenu() {
   return (
-    <Menu withArrow>
+    <Menu withArrow shadow="md" width={200}>
       <Menu.Target>
         <UserButton
           image="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
@@ -72,52 +69,24 @@ export default function UserMenu() {
             <IconSettings style={{ width: rem(14), height: rem(14) }} />
           }
         >
-          Settings
+          Edit Profile
         </Menu.Item>
         <Menu.Item
-          leftSection={
-            <IconMessageCircle style={{ width: rem(14), height: rem(14) }} />
-          }
+          leftSection={<IconTool style={{ width: rem(14), height: rem(14) }} />}
         >
-          Messages
-        </Menu.Item>
-        <Menu.Item
-          leftSection={
-            <IconPhoto style={{ width: rem(14), height: rem(14) }} />
-          }
-        >
-          Gallery
-        </Menu.Item>
-        <Menu.Item
-          leftSection={
-            <IconSearch style={{ width: rem(14), height: rem(14) }} />
-          }
-          rightSection={
-            <Text size="xs" c="dimmed">
-              ⌘K
-            </Text>
-          }
-        >
-          Search
+          Work
         </Menu.Item>
 
         <Menu.Divider />
 
         <Menu.Label>Danger zone</Menu.Label>
         <Menu.Item
-          leftSection={
-            <IconArrowsLeftRight style={{ width: rem(14), height: rem(14) }} />
-          }
-        >
-          Transfer my data
-        </Menu.Item>
-        <Menu.Item
           color="red"
           leftSection={
-            <IconTrash style={{ width: rem(14), height: rem(14) }} />
+            <IconLogout style={{ width: rem(14), height: rem(14) }} />
           }
         >
-          Delete my account
+          Logout
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
