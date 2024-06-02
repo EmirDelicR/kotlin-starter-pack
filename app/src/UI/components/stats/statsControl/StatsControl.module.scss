@@ -7,10 +7,13 @@
   padding: var(--mantine-spacing-xl);
   border-radius: var(--mantine-radius-md);
   display: flex;
-  margin-top: var(--mantine-spacing-xl);
 
   @media (max-width: $mantine-breakpoint-xs) {
     flex-direction: column;
+  }
+
+  @media (min-width: $mantine-breakpoint-lg) {
+    margin-top: var(--mantine-spacing-xl);
   }
 }
 
