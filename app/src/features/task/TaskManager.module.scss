@@ -1,0 +1,15 @@
+.item {
+  display: flex;
+  border: 1px solid var(--mantine-color-blue-6);
+  border-radius: var(--mantine-radius-md);
+  padding: rem(10px);
+
+  > div {
+    flex: 1;
+    align-items: center;
+
+    > span:last-child {
+      width: 100%;
+    }
+  }
+}

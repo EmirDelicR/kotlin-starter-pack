@@ -8,7 +8,8 @@ import { AuthLayout } from "@/UI/elements/layout/AuthLayout";
 import { NavRoutes } from "@/constants";
 
 const AuthPage = lazy(() => import("@/UI/pages/AuthPage"));
-const Home = lazy(() => import("@/UI/pages/HomePage"));
+const HomePage = lazy(() => import("@/UI/pages/HomePage"));
+const WorkPage = lazy(() => import("@/UI/pages/WorkPage"));
 
 function ProtectedRoute({ children }: PropsWithChildren) {
   const isLoggedIn = true;
@@ -41,32 +42,17 @@ export default function AppRoutes() {
         <Route element={<AuthLayout />}>
           <Route path={`/${NavRoutes.AUTH}`} element={<AuthPage />} />
         </Route>
-        <Route element={<AppLayout />}>
-          <Route
-            path={NavRoutes.HOME}
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
+        <Route
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path={NavRoutes.HOME} element={<HomePage />} />
 
-          <Route
-            path={NavRoutes.WORK}
-            element={
-              <ProtectedRoute>
-                <div> WorkPage </div>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={NavRoutes.PROFILE}
-            element={
-              <ProtectedRoute>
-                <div>ProfilePage </div>
-              </ProtectedRoute>
-            }
-          />
+          <Route path={NavRoutes.WORK} element={<WorkPage />} />
+          <Route path={NavRoutes.PROFILE} element={<div>ProfilePage </div>} />
           <Route
             path={NavRoutes.EMAILS}
             element={
