@@ -10,6 +10,7 @@ import { NavRoutes } from "@/constants";
 const AuthPage = lazy(() => import("@/UI/pages/AuthPage"));
 const HomePage = lazy(() => import("@/UI/pages/HomePage"));
 const WorkPage = lazy(() => import("@/UI/pages/WorkPage"));
+const ProfilePage = lazy(() => import("@/UI/pages/ProfilePage"));
 
 function ProtectedRoute({ children }: PropsWithChildren) {
   const isLoggedIn = true;
@@ -52,7 +53,7 @@ export default function AppRoutes() {
           <Route path={NavRoutes.HOME} element={<HomePage />} />
 
           <Route path={NavRoutes.WORK} element={<WorkPage />} />
-          <Route path={NavRoutes.PROFILE} element={<div>ProfilePage </div>} />
+          <Route path={NavRoutes.PROFILE} element={<ProfilePage />} />
           <Route
             path={NavRoutes.EMAILS}
             element={
