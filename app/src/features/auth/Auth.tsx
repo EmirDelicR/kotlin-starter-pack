@@ -1,8 +1,8 @@
 import { Tabs } from "@mantine/core";
 import { IconLogin, IconUser } from "@tabler/icons-react";
 
-import Login from "./login/Login.tsx";
-import Register from "./register/Register.tsx";
+import LoginForm from "./login/LoginForm.tsx";
+import RegisterForm from "./register/RegisterForm.tsx";
 
 export default function Auth() {
   return (
@@ -23,10 +23,10 @@ export default function Auth() {
       </Tabs.List>
 
       <Tabs.Panel value="login" pt="xs">
-        <Login />
+        <LoginForm />
       </Tabs.Panel>
       <Tabs.Panel value="register" pt="xs">
-        <Register />
+        <RegisterForm />
       </Tabs.Panel>
     </Tabs>
   );
