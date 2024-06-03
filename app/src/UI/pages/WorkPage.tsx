@@ -3,7 +3,7 @@ import { Container } from "@mantine/core";
 
 export default function WorkPage() {
   return (
-    <Container fluid py="md">
+    <Container size="lg" py="md">
       <TaskManager />
     </Container>
   );

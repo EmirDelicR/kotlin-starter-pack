@@ -9,7 +9,7 @@ import {
 
 export default function HomePage() {
   return (
-    <Container fluid py="md">
+    <Container py="md" size="lg">
       <Grid grow>
         <Grid.Col span={{ base: 12, lg: 6 }}>
           <StatsCard />
