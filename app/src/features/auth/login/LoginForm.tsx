@@ -12,7 +12,7 @@ import { isEmail, isNotEmpty, useForm } from "@mantine/form";
 import { useLoginMutation } from "../store/authApiSlice";
 import useAuth from "../useAuth";
 
-import { Error } from "@/UI/components/error/Error";
+import Error from "@/UI/components/error/Error";
 
 interface FormFields {
   email: string;
@@ -27,12 +27,12 @@ const INITIAL_FORM_VALUES: FormFields = {
 export default function Login() {
   const [login, { isLoading, isSuccess, data, isError, error }] =
     useLoginMutation();
-  const form = useForm<FormFields>({
+  const loginForm = useForm<FormFields>({
     mode: "uncontrolled",
     initialValues: INITIAL_FORM_VALUES,
     validate: {
-      email: isEmail("Your email is not valid!"),
-      password: isNotEmpty("Enter your password!"),
+      email: isEmail("Valid email is required."),
+      password: isNotEmpty("Password field is required."),
     },
   });
 
@@ -48,28 +48,31 @@ export default function Login() {
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md" pos="relative">
         <LoadingOverlay
+          data-testid="login-loading-overlay"
           visible={isLoading}
           zIndex={1000}
           overlayProps={{ radius: "sm", blur: 2 }}
           loaderProps={{ color: "var(--mantine-color-blue-6)", type: "bars" }}
         />
-        <form onSubmit={form.onSubmit(handleSubmit)}>
+        <form onSubmit={loginForm.onSubmit(handleSubmit)}>
           <TextInput
-            withAsterisk
             label="Email"
             placeholder="your@email.com"
-            key={form.key("email")}
-            {...form.getInputProps("email")}
+            data-testid="login-email"
+            withAsterisk
+            key={loginForm.key("email")}
+            {...loginForm.getInputProps("email")}
           />
           <PasswordInput
-            withAsterisk
             label="Password"
             placeholder="Your password"
+            data-testid="login-password"
+            withAsterisk
             mt="md"
-            key={form.key("password")}
-            {...form.getInputProps("password")}
+            key={loginForm.key("password")}
+            {...loginForm.getInputProps("password")}
           />
-          <Button type="submit" fullWidth my="xl">
+          <Button type="submit" fullWidth my="xl" data-testid="login-submit">
             Login
           </Button>
         </form>
