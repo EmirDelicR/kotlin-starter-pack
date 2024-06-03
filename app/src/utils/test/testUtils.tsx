@@ -1,12 +1,14 @@
+import { MantineProvider } from "@mantine/core";
 import React, { PropsWithChildren, ReactElement } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-
 import { render, renderHook, screen } from "@testing-library/react";
 import type { RenderHookOptions, RenderOptions } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { AppStore, RootState, createStore } from "@/store";
+
+import themeConfig from "@/configs/themeConfig";
 
 // https://redux.js.org/usage/writing-tests
 
@@ -28,7 +30,9 @@ export function renderWithProviders(
   }: PropsWithChildren<Record<string, unknown>>): ReactElement {
     return (
       <BrowserRouter>
-        <Provider store={store}>{children}</Provider>
+        <Provider store={store}>
+          <MantineProvider theme={themeConfig}>{children}</MantineProvider>
+        </Provider>
       </BrowserRouter>
     );
   }
@@ -63,6 +67,15 @@ export function renderHookWithProviders<TProps, TResult>(
 /** Helpers */
 export const typeDataInInputField = async (fieldName: string, text: string) => {
   await userEvent.type(screen.getByRole("textbox", { name: fieldName }), text, {
+    delay: 1,
+  });
+};
+
+export const typeDataInFieldByDataTestId = async (
+  dataTestId: string,
+  text: string
+) => {
+  await userEvent.type(screen.getByTestId(dataTestId), text, {
     delay: 1,
   });
 };
