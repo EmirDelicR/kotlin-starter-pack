@@ -10,7 +10,7 @@ interface Props {
   error: FetchBaseQueryError | SerializedError | { error: string } | undefined;
 }
 
-export function Error({ isError, error }: Props) {
+export default function Error({ isError, error }: Props) {
   if (!isError) {
     return null;
   }

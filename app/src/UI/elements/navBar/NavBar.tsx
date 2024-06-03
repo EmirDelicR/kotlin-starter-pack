@@ -37,7 +37,7 @@ export default function NavBar() {
     setActive(
       navItems.findIndex((item) => `/${item.link}` === location.pathname)
     );
-  }, []);
+  }, [location.pathname]);
 
   const items = navItems.map((item, index) => (
     <NavLink

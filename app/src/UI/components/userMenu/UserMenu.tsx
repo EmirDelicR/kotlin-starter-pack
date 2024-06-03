@@ -7,6 +7,7 @@ import {
   Menu,
   UnstyledButton,
   rem,
+  Modal,
 } from "@mantine/core";
 import {
   IconSettings,
@@ -14,6 +15,13 @@ import {
   IconChevronDown,
   IconTool,
 } from "@tabler/icons-react";
+import { NavLink } from "react-router-dom";
+import { useDisclosure } from "@mantine/hooks";
+
+import { NavRouteNames, NavRoutes } from "@/constants";
+
+import EditProfileForm from "@/features/profile/edit/EditProfileForm";
+import useLogout from "@/hooks/useLogout";
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   image: string;
@@ -52,43 +60,72 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
   )
 );
 
-export default function UserMenu() {
+function LogoutItem() {
+  const onUserLogoutHandler = useLogout();
+
   return (
-    <Menu withArrow shadow="md" width={200}>
-      <Menu.Target>
-        <UserButton
-          image="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
-          name="Harriette Spoonlicker"
-          email="hspoonlicker@outlook.com"
-        />
-      </Menu.Target>
-      <Menu.Dropdown>
-        <Menu.Label>Application</Menu.Label>
-        <Menu.Item
-          leftSection={
-            <IconSettings style={{ width: rem(14), height: rem(14) }} />
-          }
-        >
-          Edit Profile
-        </Menu.Item>
-        <Menu.Item
-          leftSection={<IconTool style={{ width: rem(14), height: rem(14) }} />}
-        >
-          Work
-        </Menu.Item>
+    <Menu.Item
+      color="red"
+      leftSection={<IconLogout style={{ width: rem(14), height: rem(14) }} />}
+      onClick={onUserLogoutHandler}
+    >
+      Logout
+    </Menu.Item>
+  );
+}
 
-        <Menu.Divider />
+export default function UserMenu() {
+  const [opened, { open, close }] = useDisclosure(false);
 
-        <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item
-          color="red"
-          leftSection={
-            <IconLogout style={{ width: rem(14), height: rem(14) }} />
-          }
-        >
-          Logout
-        </Menu.Item>
-      </Menu.Dropdown>
-    </Menu>
+  return (
+    <>
+      <Menu withArrow shadow="md" width={200}>
+        <Menu.Target>
+          <UserButton
+            image="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
+            name="Harriette Spoonlicker"
+            email="hspoonlicker@outlook.com"
+          />
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Label>Application</Menu.Label>
+          <Menu.Item
+            leftSection={
+              <IconSettings style={{ width: rem(14), height: rem(14) }} />
+            }
+            onClick={open}
+          >
+            Edit Profile
+          </Menu.Item>
+          <Menu.Item
+            leftSection={
+              <IconTool style={{ width: rem(14), height: rem(14) }} />
+            }
+          >
+            <NavLink
+              to={NavRoutes.WORK}
+              end
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              {NavRouteNames.WORK}
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Divider />
+
+          <Menu.Label>Danger zone</Menu.Label>
+          <LogoutItem />
+        </Menu.Dropdown>
+      </Menu>
+      <Modal
+        opened={opened}
+        centered
+        onClose={close}
+        title="Edit Profile"
+        size="xl"
+      >
+        <EditProfileForm />
+      </Modal>
+    </>
   );
 }
