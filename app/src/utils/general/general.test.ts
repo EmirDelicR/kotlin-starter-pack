@@ -1,5 +1,10 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { classNameHelper, localStorageHelper, normalizeError } from "./general";
+import {
+  classNameHelper,
+  createDynamicArray,
+  localStorageHelper,
+  normalizeError,
+} from "./general";
 
 const RANDOM_ID = "random-id";
 
@@ -24,6 +29,14 @@ describe("General utils test", () => {
       expect(classNameHelper("test", " ", "", "  ", "test_2   ", "")).toEqual(
         "test test_2"
       );
+    });
+  });
+
+  describe("createDynamicArray utils function", () => {
+    it("should return array with elements", () => {
+      expect(createDynamicArray(-1)).toEqual([0]);
+      expect(createDynamicArray(0)).toEqual([]);
+      expect(createDynamicArray(3)).toEqual([0, 1, 2]);
     });
   });
 

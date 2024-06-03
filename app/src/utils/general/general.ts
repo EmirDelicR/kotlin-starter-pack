@@ -6,6 +6,10 @@ export const classNameHelper = (...args: string[]): string => {
   return classes.toString().replaceAll(",", " ").trim();
 };
 
+export const createDynamicArray = (value: number) => {
+  return Array.from(Array(Math.abs(value)).keys()) as number[];
+};
+
 export const localStorageHelper = <T>(key: string) => {
   const getValue = (key: string): string | null => {
     try {
