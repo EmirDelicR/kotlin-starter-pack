@@ -385,7 +385,15 @@ Add es lint config to `.eslintrc`
 }
 ```
 
-Create `cypress.config.ts` file:
+Run:
+
+```console
+npx cypress open
+```
+
+Click on E2E and configure files for cypress. This will also create `cypress.config.ts` file.
+
+In the `cypress.config.ts` file add:
 
 ```js
 import { defineConfig } from "cypress";
@@ -394,6 +402,7 @@ export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/**/*.{ts,tsx}",
+    supportFile: "cypress/support/e2e.ts",
     setupNodeEvents(_on, _config) {
       // implement node event listeners here
     },
