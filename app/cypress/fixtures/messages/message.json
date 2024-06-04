@@ -1,0 +1,10 @@
+{
+  "data": {
+    "id": "dummy-message-id-1",
+    "sender": "John Doe",
+    "message": "Some dummy text that user send.",
+    "email": "john@doe.com",
+    "unread": true,
+    "createdAt": "2024-02-17T09:19:32.712Z"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": "5d807ed5-a46b-4907-a99a-0fb6273d3903",
+      "name": "general"
+    },
+    {
+      "id": "5b807ed5-a46b-4907-a99a-0fb6273d3903",
+      "name": "news"
+    },
+    {
+      "id": "5a807ed5-a46b-4907-a99a-0fb6273d3903",
+      "name": "code"
+    }
+  ]
+}

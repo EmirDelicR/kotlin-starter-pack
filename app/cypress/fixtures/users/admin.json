@@ -1,0 +1,23 @@
+{
+  "data": {
+    "id": "userId",
+    "age": 23,
+    "avatar": "user-avatar",
+    "email": "test@test.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "userName": "Cabal",
+    "loggedIn": true,
+    "profileUpdated": false,
+    "subscribed": false,
+    "subscriptions": [],
+    "token": "dummy-token",
+    "role": {
+      "id": "admin-role-id",
+      "type": 1
+    },
+    "createdAt": "2024-02-24T14:49:32.344Z",
+    "updateAt": "2024-02-24T14:49:32.344Z"
+  },
+  "status": 200
+}

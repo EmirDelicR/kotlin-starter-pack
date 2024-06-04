@@ -1,0 +1,47 @@
+{
+  "data": {
+    "numberOfPages": 1,
+    "messages": [
+      {
+        "id": "dummy-message-id-1",
+        "sender": "John Doe",
+        "message": "Some dummy text that user send.",
+        "email": "john@doe.com",
+        "unread": true,
+        "createdAt": "2024-02-17T09:19:32.712Z"
+      },
+      {
+        "id": "dummy-message-id-2",
+        "sender": "Cleave Jacobi",
+        "message": "Some dummy text that user send for search.",
+        "email": "Cleave@Jacobi.com",
+        "unread": true,
+        "createdAt": "2024-02-17T09:19:32.712Z"
+      },
+      {
+        "id": "dummy-message-id-3",
+        "sender": "Juliet Doe",
+        "message": "Different dummy text that user send.",
+        "email": "Juliet@doe.com",
+        "unread": false,
+        "createdAt": "2024-02-18T09:19:32.712Z"
+      },
+      {
+        "id": "dummy-message-id-4",
+        "sender": "Nikki Rice",
+        "message": "Some dummy text that user send.",
+        "email": "Nikki@Rice.com",
+        "unread": true,
+        "createdAt": "2024-02-19T09:19:32.712Z"
+      },
+      {
+        "id": "dummy-message-id-5",
+        "sender": "Kay Davis",
+        "message": "Some dummy text that user send.",
+        "email": "Kay@Davis.com",
+        "unread": true,
+        "createdAt": "2024-02-21T09:19:32.712Z"
+      }
+    ]
+  }
+}

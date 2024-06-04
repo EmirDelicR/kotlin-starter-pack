@@ -1,0 +1,24 @@
+{
+  "data": {
+    "numberOfPages": 1,
+    "totalCount": 2,
+    "tasks": [
+      {
+        "id": "dummy-task-id-1",
+        "title": "dummy task 1",
+        "completed": false,
+        "createdAt": "2024-02-17T09:19:32.712Z",
+        "userId": "userId"
+      },
+      {
+        "id": "c82dec9e-7d5a-435c-8327-2535b3a5deef",
+        "title": "dummy task 2",
+        "completed": false,
+        "createdAt": "2024-02-17T09:15:29.172Z",
+        "userId": "userId"
+      }
+    ]
+  },
+  "message": "Fetch tasks successful.",
+  "status": 200
+}
