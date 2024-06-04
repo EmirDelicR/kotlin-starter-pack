@@ -5,9 +5,12 @@ import { Outlet } from "react-router-dom";
 
 import Header from "../header/Header";
 import NavBar from "../navBar/NavBar";
+import useAutoLogin from "@/hooks/useAutoLogin";
 
 export default function AppLayout() {
   const [opened, { toggle }] = useDisclosure();
+
+  useAutoLogin();
 
   return (
     <AppShell
