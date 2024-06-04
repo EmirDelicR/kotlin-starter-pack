@@ -5,17 +5,14 @@ import {
   Group,
   List,
   Loader,
-  LoadingOverlay,
   Modal,
   Pagination,
   Paper,
   Stack,
   Text,
-  TextInput,
   Title,
 } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import { hasLength, useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 
 import { useEffect, useMemo, useState } from "react";
@@ -31,77 +28,21 @@ import { selectUserId } from "@/store/userSlice";
 
 import {
   Task,
-  useAddTaskMutation,
   useDeleteTaskMutation,
   useGetPaginatedTasksQuery,
   useUpdateTaskMutation,
-} from "./store";
+} from "./store/taskApiSlice";
 
 import { ITEMS_PER_PAGE, MOBILE } from "@/constants";
 import { normalizeError } from "@/utils";
 
-import { Error } from "@/UI/components/error/Error";
+import Error from "@/UI/components/error/Error";
+import CreateTaskForm from "./form/CreateTaskForm";
 
 import classes from "./TaskManager.module.scss";
 
-type TaskForm = Pick<Task, "title">;
 interface TaskItemProps {
   item: Task;
-}
-const INITIAL_FORM_VALUES: TaskForm = {
-  title: "",
-};
-
-function CreateTaskForm() {
-  const userId = useAppSelector(selectUserId);
-  const [addTask, { isError, error, isSuccess, isLoading }] =
-    useAddTaskMutation();
-  const taskForm = useForm<TaskForm>({
-    mode: "uncontrolled",
-    initialValues: INITIAL_FORM_VALUES,
-    validate: {
-      title: hasLength(
-        { min: 2, max: 80 },
-        "Task title field is required to be between 2 and 80 chars."
-      ),
-    },
-  });
-
-  useEffect(() => {
-    if (isSuccess) {
-      taskForm.reset();
-    }
-  }, [isSuccess]);
-
-  const handleSubmit = async (data: TaskForm) => {
-    await addTask({ userId, ...data });
-  };
-
-  return (
-    <Paper withBorder shadow="md" p="md" my="md" radius="md">
-      <LoadingOverlay
-        visible={isLoading}
-        zIndex={1000}
-        overlayProps={{ radius: "sm", blur: 2 }}
-        loaderProps={{ color: "var(--mantine-color-blue-6)", type: "bars" }}
-      />
-      <form onSubmit={taskForm.onSubmit(handleSubmit)}>
-        <TextInput
-          withAsterisk
-          label="Enter new task"
-          placeholder="Task title"
-          mb="md"
-          key={taskForm.key("title")}
-          {...taskForm.getInputProps("title")}
-        />
-
-        <Button fullWidth type="submit">
-          Submit
-        </Button>
-      </form>
-      <Error isError={isError} error={error} />
-    </Paper>
-  );
 }
 
 function UpdateTaskActionIcon({ item }: TaskItemProps) {
@@ -135,6 +76,7 @@ function UpdateTaskActionIcon({ item }: TaskItemProps) {
       radius="xl"
       loading={isLoading}
       onClick={onUpdateHandler}
+      data-testid="task-update-icon"
     >
       {icon}
     </ActionIcon>
@@ -166,6 +108,7 @@ function DeleteTaskActionIcon({ item }: TaskItemProps) {
       radius="xl"
       onClick={onDeleteHandler}
       loading={isLoading}
+      data-testid="task-delete-icon"
     >
       <IconTrash size={16} />
     </ActionIcon>
@@ -190,6 +133,7 @@ function TaskList() {
   const userId = useAppSelector(selectUserId);
   const [currentPage, setCurrentPage] = useState(0);
   const isMobileView = useMediaQuery(MOBILE);
+
   const { data, isLoading, isSuccess, isError, error } =
     useGetPaginatedTasksQuery({
       userId,
@@ -221,7 +165,7 @@ function TaskList() {
   if ((isLoading || !data) && !isError) {
     return (
       <Center my="lg">
-        <Loader type="bars" />
+        <Loader type="bars" data-testid="task-list-loader" />
       </Center>
     );
   }
@@ -268,6 +212,7 @@ function TaskList() {
 
 export default function TaskManager() {
   const [opened, { close, open }] = useDisclosure(false);
+
   return (
     <>
       <Center>
@@ -288,7 +233,7 @@ export default function TaskManager() {
         onClose={close}
         title="Create task"
       >
-        <CreateTaskForm />
+        <CreateTaskForm onSuccessCallback={close} />
       </Modal>
     </>
   );
