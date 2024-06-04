@@ -1,4 +1,4 @@
-import { Flex } from "@mantine/core";
+import { Box, Flex } from "@mantine/core";
 import Logo from "@/UI/components/logo/Logo";
 import UserMenu from "@/UI/components/userMenu/UserMenu";
 
@@ -12,12 +12,12 @@ export default function Header() {
       lh="1rem"
       mah="10vh"
     >
-      <div>
+      <Box>
         <Logo visibleFrom="sm" />
-      </div>
-      <div>
+      </Box>
+      <Box>
         <UserMenu />
-      </div>
+      </Box>
     </Flex>
   );
 }

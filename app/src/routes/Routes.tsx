@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Navigate, useLocation } from "react-router-dom";
 
 import AppLayout from "@/UI/elements/layout/AppLayout";
-import { AuthLayout } from "@/UI/elements/layout/AuthLayout";
+import DefaultLayout from "@/UI/elements/layout/DefaultLayout";
 
 import { NavRoutes } from "@/constants";
 
@@ -40,7 +40,7 @@ export default function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
-        <Route element={<AuthLayout />}>
+        <Route element={<DefaultLayout />}>
           <Route path={`/${NavRoutes.AUTH}`} element={<AuthPage />} />
         </Route>
         <Route

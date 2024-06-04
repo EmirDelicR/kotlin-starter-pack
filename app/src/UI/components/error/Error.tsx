@@ -23,6 +23,7 @@ export default function Error({ isError, error }: Props) {
       color="red"
       title="Error occurred"
       icon={<IconAlertTriangle />}
+      data-testid="error-log-message"
     >
       {message}
     </Alert>

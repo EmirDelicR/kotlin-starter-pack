@@ -6,7 +6,7 @@ import RegisterForm from "./register/RegisterForm.tsx";
 
 export default function Auth() {
   return (
-    <Tabs variant="outline" defaultValue="login">
+    <Tabs variant="outline" defaultValue="login" keepMounted={false}>
       <Tabs.List grow justify="center">
         <Tabs.Tab
           value="login"
