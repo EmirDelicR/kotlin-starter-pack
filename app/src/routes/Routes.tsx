@@ -6,14 +6,18 @@ import AppLayout from "@/UI/elements/layout/AppLayout";
 import DefaultLayout from "@/UI/elements/layout/DefaultLayout";
 
 import { NavRoutes } from "@/constants";
+import { useAppSelector } from "@/store";
+import { selectIsUserAdmin, selectIsUserLoggedIn } from "@/store/userSlice";
 
 const AuthPage = lazy(() => import("@/UI/pages/AuthPage"));
 const HomePage = lazy(() => import("@/UI/pages/HomePage"));
 const WorkPage = lazy(() => import("@/UI/pages/WorkPage"));
 const ProfilePage = lazy(() => import("@/UI/pages/ProfilePage"));
+const MessagePage = lazy(() => import("@/UI/pages/MessagePage"));
+const NotFoundPage = lazy(() => import("@/UI/pages/NotFoundPage"));
 
 function ProtectedRoute({ children }: PropsWithChildren) {
-  const isLoggedIn = true;
+  const isLoggedIn = true; // useAppSelector(selectIsUserLoggedIn);
   const location = useLocation();
 
   if (!isLoggedIn) {
@@ -26,7 +30,7 @@ function ProtectedRoute({ children }: PropsWithChildren) {
 }
 
 function AdminRoute({ children }: PropsWithChildren) {
-  const isAdminUser = false;
+  const isAdminUser = useAppSelector(selectIsUserAdmin);
   const location = useLocation();
 
   if (!isAdminUser) {
@@ -58,11 +62,13 @@ export default function AppRoutes() {
             path={NavRoutes.EMAILS}
             element={
               <AdminRoute>
-                <div> MessagePage</div>
+                <MessagePage />
               </AdminRoute>
             }
           />
-          <Route path="*" element={<div>Not Found</div>} />
+        </Route>
+        <Route element={<DefaultLayout />}>
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
