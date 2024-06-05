@@ -9,7 +9,6 @@ import useAutoLogin from "@/hooks/useAutoLogin";
 
 export default function AppLayout() {
   const [opened, { toggle }] = useDisclosure();
-
   useAutoLogin();
 
   return (
