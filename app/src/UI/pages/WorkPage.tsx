@@ -1,5 +1,6 @@
-import TaskManager from "@/features/task/TaskManager";
 import { Container } from "@mantine/core";
+
+import TaskManager from "@/features/task/TaskManager";
 
 export default function WorkPage() {
   return (
