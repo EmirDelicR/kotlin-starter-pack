@@ -432,6 +432,33 @@ Run:
 npm run cypress:open
 ```
 
+To resolve issue that custom command from cypress are not recognized do following:
+
+in root folder file tsconfig.ts add this line:
+
+```js
+{
+  "compilerOptions": {
+    ...
+  },
+  ...
+  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
+}
+```
+
+After this add to cypress folder tsconfig.ts file with this configuration:
+
+```js
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*.ts"]
+}
+```
+
 [Back to TOP](#documentation)
 
 ## mantine
