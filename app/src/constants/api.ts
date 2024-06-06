@@ -26,3 +26,4 @@ enum HTTP_PORT {
 export const API_URL = `${HTTP_PROTOCOL.HTTP}://0.0.0.0:${HTTP_PORT.HTTP}/api/v1`;
 
 export const ITEMS_PER_PAGE = 5;
+export const POOL_INTERVAL_5_MINUTES = 1000 * 60 * 5;
