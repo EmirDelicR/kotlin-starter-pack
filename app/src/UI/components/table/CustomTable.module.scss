@@ -1,0 +1,12 @@
+.sort-header {
+  cursor: pointer;
+
+  &:before {
+    content: "↕️";
+    font-size: 1rem;
+    position: relative;
+    margin-right: 0.5em;
+    top: -1px;
+    color: var(--mantine-color-blue-5);
+  }
+}
