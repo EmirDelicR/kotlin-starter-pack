@@ -1,6 +1,8 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
+import { ITEMS_PER_PAGE } from "@/constants";
+
 export const classNameHelper = (...args: string[]): string => {
   const classes = args.filter((entry) => entry && entry.trim() !== "");
   return classes.toString().replaceAll(",", " ").trim();
@@ -8,6 +10,15 @@ export const classNameHelper = (...args: string[]): string => {
 
 export const createDynamicArray = (value: number) => {
   return Array.from(Array(Math.abs(value)).keys()) as number[];
+};
+
+export const createPaginationShowList = (numberOfItems: number) => {
+  return createDynamicArray(
+    Math.ceil(Math.abs(numberOfItems) / ITEMS_PER_PAGE) + 1
+  ).map((i) => {
+    const value = (i + 1) * ITEMS_PER_PAGE;
+    return { label: `Show ${value}`, value: `${value}` };
+  });
 };
 
 export const localStorageHelper = <T>(key: string) => {
@@ -69,4 +80,8 @@ export const normalizeError = (
   }
 
   return { id: crypto.randomUUID(), message: message.trim() };
+};
+
+export const formatDate = (date: string | Date) => {
+  return new Intl.DateTimeFormat("de-AT").format(new Date(date));
 };
