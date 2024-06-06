@@ -35,7 +35,7 @@ export interface User {
   token: string | null;
   role?: Role | null;
   createdAt?: Date;
-  updateAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface UserState {

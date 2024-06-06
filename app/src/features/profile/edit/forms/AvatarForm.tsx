@@ -23,6 +23,7 @@ export default function AvatarForm() {
         data={AVATAR_IMAGES}
         key={form.key("image")}
         {...form.getInputProps("image")}
+        onChange={(value) => form.setFieldValue("image", value)}
       />
     </Stack>
   );

@@ -20,11 +20,10 @@ export const [ProfileFormProvider, useProfileFormContext, useProfileForm] =
   createFormContext<ProfileFormData>();
 
 export const setFormDataDefaultValues = (user: User) => ({
-  image: null,
+  image: user.avatar,
   firstName: user.firstName,
   lastName: user.lastName,
   age: user.age || 0,
-  preview: user.avatar,
   subscribed: user.subscribed,
   subscriptions: user.subscriptions.map((subscription) => subscription.name),
 });

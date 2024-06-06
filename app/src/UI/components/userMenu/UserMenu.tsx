@@ -18,6 +18,9 @@ import {
 import { NavLink } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 
+import { useAppSelector } from "@/store";
+import { selectUser } from "@/store/userSlice";
+
 import { NavRouteNames, NavRoutes } from "@/constants";
 
 import EditProfileForm from "@/features/profile/edit/EditProfileForm";
@@ -75,6 +78,7 @@ function LogoutItem() {
 }
 
 export default function UserMenu() {
+  const user = useAppSelector(selectUser);
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -82,9 +86,9 @@ export default function UserMenu() {
       <Menu withArrow shadow="md" width={200}>
         <Menu.Target>
           <UserButton
-            image="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
-            name="Harriette Spoonlicker"
-            email="hspoonlicker@outlook.com"
+            image={user.avatar}
+            name={`${user.firstName} ${user.lastName}`}
+            email={user.email}
           />
         </Menu.Target>
         <Menu.Dropdown>
