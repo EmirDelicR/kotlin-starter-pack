@@ -11,10 +11,10 @@ export default function HomePage() {
   return (
     <Container py="md" size="lg">
       <Grid grow>
-        <Grid.Col span={{ base: 12, lg: 6 }}>
+        <Grid.Col span={{ base: 12, xl: 6 }}>
           <StatsCard />
         </Grid.Col>
-        <Grid.Col span={{ base: 12, lg: 6 }}>
+        <Grid.Col span={{ base: 12, xl: 6 }}>
           <StatsControl />
         </Grid.Col>
         <Grid.Col span={12}>
