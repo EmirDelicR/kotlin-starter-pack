@@ -1,61 +1,66 @@
-import { Avatar, Button, Group, Modal, Paper, Text, rem } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { IconLogout, IconUser } from "@tabler/icons-react";
+import { Badge, Grid, Paper } from "@mantine/core";
 
-import EditProfileForm from "../edit/EditProfileForm";
-import useLogout from "@/hooks/useLogout";
+import { useAppSelector } from "@/store";
+import { selectUser } from "@/store/userSlice";
+
+import { formatDate } from "@/utils";
+import { Roles } from "@/constants";
 
 export default function ProfileDetails() {
-  const [opened, { open, close }] = useDisclosure(false);
-  const onUserLogoutHandler = useLogout();
+  const user = useAppSelector(selectUser);
 
   return (
-    <>
-      <Paper radius="md" withBorder p="lg" bg="var(--mantine-color-body)">
-        <Avatar
-          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png"
-          size={120}
-          radius={120}
-          mx="auto"
-        />
-        <Text ta="center" fz="lg" fw={500} mt="md">
-          Jane Fingerlicker
-        </Text>
-        <Text ta="center" c="dimmed" fz="sm">
-          jfingerlicker@me.io • Art director
-        </Text>
-
-        <Group grow>
-          <Button
-            onClick={open}
-            mt="md"
-            leftSection={
-              <IconUser style={{ width: rem(14), height: rem(14) }} />
-            }
-          >
-            Edit Profile
-          </Button>
-          <Button
-            variant="default"
-            mt="md"
-            leftSection={
-              <IconLogout style={{ width: rem(14), height: rem(14) }} />
-            }
-            onClick={onUserLogoutHandler}
-          >
-            Logout
-          </Button>
-        </Group>
-      </Paper>
-      <Modal
-        opened={opened}
-        centered
-        onClose={close}
-        title="Edit Profile"
-        size="xl"
-      >
-        <EditProfileForm />
-      </Modal>
-    </>
+    <Paper radius="md" withBorder p="lg">
+      <Grid gutter={{ base: "xs", lg: "md" }}>
+        <Grid.Col span={{ base: 12, lg: 6 }} fw="bold">
+          Full name:
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }}>
+          <Badge w="100%" color="blue">
+            {user.firstName} {user.lastName}
+          </Badge>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }} fw="bold">
+          User name:
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }}>
+          <Badge w="100%" color="blue">
+            {user.userName}
+          </Badge>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }} fw="bold">
+          Email:
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }}>
+          <Badge w="100%" color="blue">
+            {user.email}
+          </Badge>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }} fw="bold">
+          Age:
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }}>
+          <Badge w="100%" color="blue">
+            {user.age}
+          </Badge>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }} fw="bold">
+          Initial login:
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }}>
+          <Badge w="100%" color="blue">
+            {formatDate(user?.createdAt || new Date())}
+          </Badge>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }} fw="bold">
+          Role:
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, lg: 6 }}>
+          <Badge w="100%" color="blue">
+            {Roles[user.role?.type || 2]}
+          </Badge>
+        </Grid.Col>
+      </Grid>
+    </Paper>
   );
 }
