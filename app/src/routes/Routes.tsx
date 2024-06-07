@@ -17,7 +17,7 @@ const MessagePage = lazy(() => import("@/UI/pages/MessagePage"));
 const NotFoundPage = lazy(() => import("@/UI/pages/NotFoundPage"));
 
 function ProtectedRoute({ children }: PropsWithChildren) {
-  const isLoggedIn = true; // useAppSelector(selectIsUserLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsUserLoggedIn);
   const location = useLocation();
 
   if (!isLoggedIn) {
@@ -30,7 +30,7 @@ function ProtectedRoute({ children }: PropsWithChildren) {
 }
 
 function AdminRoute({ children }: PropsWithChildren) {
-  const isAdminUser = true; // useAppSelector(selectIsUserAdmin);
+  const isAdminUser = useAppSelector(selectIsUserAdmin);
   const location = useLocation();
 
   if (!isAdminUser) {
@@ -43,19 +43,12 @@ export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="/" element={<Navigate to="/auth" replace />} />
         <Route element={<DefaultLayout />}>
           <Route path={`/${NavRoutes.AUTH}`} element={<AuthPage />} />
         </Route>
-        <Route
-          element={
-            <ProtectedRoute>
-              <AppLayout />
-            </ProtectedRoute>
-          }
-        >
+        <Route element={<AppLayout />}>
           <Route path={NavRoutes.HOME} element={<HomePage />} />
-
           <Route path={NavRoutes.WORK} element={<WorkPage />} />
           <Route path={NavRoutes.PROFILE} element={<ProfilePage />} />
           <Route
