@@ -9,8 +9,8 @@ interface Error {
 interface Role {
   id: string;
   type: Roles;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: String;
+  updatedAt: String;
 }
 
 export interface Subscription {
@@ -34,8 +34,8 @@ export interface User {
   subscriptions: Subscription[];
   token: string | null;
   role?: Role | null;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: String;
+  updatedAt?: String;
 }
 
 export interface UserState {

@@ -1,8 +1,9 @@
-import { Box, Center, Loader, Table, Text } from "@mantine/core";
+import { Alert, Box, Center, Loader, Table, Text } from "@mantine/core";
 import { ReactNode } from "react";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { Table as TableType, flexRender } from "@tanstack/react-table";
+import { IconInfoCircle } from "@tabler/icons-react";
 
 import Error from "@/UI/components/error/Error";
 
@@ -55,11 +56,18 @@ function TableBody<T>({ tableData }: Pick<Props<T>, "tableData">) {
           {row.getVisibleCells().map((cell) => {
             return (
               <Table.Td key={cell.id}>
-                <Box maw={200}>
-                  <Text truncate="end">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Text>
-                </Box>
+                {cell.column.getIsLastColumn() ? (
+                  flexRender(cell.column.columnDef.cell, cell.getContext())
+                ) : (
+                  <Box maw={200}>
+                    <Text truncate="end">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Text>
+                  </Box>
+                )}
               </Table.Td>
             );
           })}
@@ -78,17 +86,25 @@ export default function CustomTable<T>({
   footerElement,
 }: Props<T>) {
   const renderTableData = () => {
-    if (isLoading || isError) {
+    if (isLoading || isError || tableData.getRowModel().rows.length === 0) {
       return (
         <Table.Tbody>
           <Table.Tr>
             <Table.Td colSpan={tableData.getAllColumns().length}>
               {isLoading ? (
                 <Center p="md">
-                  <Loader size="lg" type="bars" />
+                  <Loader
+                    size="lg"
+                    type="bars"
+                    data-testid="custom-table-loader"
+                  />
                 </Center>
-              ) : (
+              ) : isError ? (
                 <Error isError={isError} error={error} />
+              ) : (
+                <Alert variant="light" color="blue" icon={<IconInfoCircle />}>
+                  There is no data for this message
+                </Alert>
               )}
             </Table.Td>
           </Table.Tr>

@@ -21,12 +21,12 @@ export const INITIAL_USER_DATA: UserState = {
     token: null,
     userName: "",
     role: null,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: "2024-02-17T09:19:32.712Z",
+    updatedAt: "2024-02-17T09:19:32.712Z",
   },
 };
 
-export const INITIAL_USER_DATA_POPULATE: UserState = {
+const INITIAL_USER_DATA_POPULATE: UserState = {
   data: {
     id: "userId",
     age: 23,
@@ -51,17 +51,17 @@ export const INITIAL_USER_DATA_POPULATE: UserState = {
     role: {
       id: "user-role-id",
       type: 2,
-      createdAt: new Date("2024-02-24T14:49:32.344Z"),
-      updatedAt: new Date("2024-02-24T14:49:32.344Z"),
+      createdAt: "2024-02-24T14:49:32.344Z",
+      updatedAt: "2024-02-24T14:49:32.344Z",
     },
-    createdAt: new Date("2024-02-24T14:49:32.344Z"),
-    updatedAt: new Date("2024-02-24T14:49:32.344Z"),
+    createdAt: "2024-02-24T14:49:32.344Z",
+    updatedAt: "2024-02-24T14:49:32.344Z",
   },
 };
 
 export const userStoreSlice = createSlice({
   name: "user",
-  initialState: INITIAL_USER_DATA_POPULATE,
+  initialState: INITIAL_USER_DATA,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
       const [setToken] = localStorageHelper<string | null>("token");
