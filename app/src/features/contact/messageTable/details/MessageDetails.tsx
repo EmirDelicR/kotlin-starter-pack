@@ -26,13 +26,15 @@ export default function MessageDetails({ id }: { id: string }) {
     messageId: id,
   });
 
-  const [updateMessage, { isError: isUpdateError, error: updateError }] =
-    useUpdateMessageMutation();
+  const [
+    updateMessage,
+    { isError: isUpdateError, error: updateError, isLoading: isUpdateLoading },
+  ] = useUpdateMessageMutation();
 
   if (isLoading) {
     return (
       <Center py="lg">
-        <Loader type="bars" />
+        <Loader type="bars" data-testid="message-details-loader" />
       </Center>
     );
   }
@@ -43,10 +45,9 @@ export default function MessageDetails({ id }: { id: string }) {
 
   if (!data) {
     return (
-      <Error
-        isError={true}
-        error={{ error: "There is no data for this message" }}
-      />
+      <Alert variant="light" color="blue" icon={<IconInfoCircle />}>
+        There is no data for this message
+      </Alert>
     );
   }
 
@@ -59,7 +60,7 @@ export default function MessageDetails({ id }: { id: string }) {
       color="blue"
       icon={<IconInfoCircle />}
       mt="md"
-      cite={`Message from ${data.sender}`}
+      cite={`Message from ${data?.sender}`}
     >
       <Box p="md">
         <Grid gutter={{ base: "xs", lg: "md" }}>
@@ -68,7 +69,7 @@ export default function MessageDetails({ id }: { id: string }) {
           </Grid.Col>
           <Grid.Col span={{ base: 12, lg: 6 }}>
             <Badge w="100%" color="blue">
-              {formatDate(data!.createdAt)}
+              {formatDate(data?.createdAt)}
             </Badge>
           </Grid.Col>
           <Grid.Col span={{ base: 12, lg: 6 }} fw="bold">
@@ -102,6 +103,8 @@ export default function MessageDetails({ id }: { id: string }) {
               id={data?.id}
               name={data?.id}
               onChange={onCheckboxChange}
+              disabled={isUpdateLoading}
+              variant="outline"
             />
           </Grid.Col>
         </Grid>

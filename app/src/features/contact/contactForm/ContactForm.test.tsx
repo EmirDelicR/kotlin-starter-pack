@@ -1,5 +1,6 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { notifications } from "@mantine/notifications";
 import { vi } from "vitest";
 
 import {
@@ -8,7 +9,6 @@ import {
 } from "@/utils/test/testUtils";
 
 import ContactForm from "./ContactForm";
-import { notifications } from "@mantine/notifications";
 
 const mockSendMessage = vi.fn();
 
@@ -51,10 +51,6 @@ describe("<ContactForm/>", () => {
   });
 
   describe("Layout test", () => {
-    beforeEach(() => {
-      mockSendMessage.mockReset();
-    });
-
     it("should render element", () => {
       renderWithProviders(<ContactForm />);
 
