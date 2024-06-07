@@ -53,7 +53,7 @@ Cypress.Commands.add(
     cy.fixture<T>(fixturePath).then((fixtureData) => {
       const getData = (): T => {
         const data = structuredClone(fixtureData);
-        const modifiedData = fixtureHook(data); // may mutate `data`
+        const modifiedData = fixtureHook(data) as T; // may mutate `data`
         return modifiedData ?? data;
       };
       cy.intercept(url, (req) => {
