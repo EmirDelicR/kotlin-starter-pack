@@ -1,7 +1,10 @@
 import { createDynamicArray } from "@/utils";
-import { Avatar, Select, Stack } from "@mantine/core";
-import { useState } from "react";
+import { Avatar, Container, Image, Select, Stack } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+
 import { useProfileFormContext } from "./FormContext";
+
+import classes from "./AvatarForm.module.scss";
 
 const AVATAR_IMAGES = createDynamicArray(10).map((index) => {
   const idx = index + 1;
@@ -13,18 +16,43 @@ const AVATAR_IMAGES = createDynamicArray(10).map((index) => {
 
 export default function AvatarForm() {
   const form = useProfileFormContext();
+  const isFitContentView = useMediaQuery("(max-width: 870px)");
+
+  if (isFitContentView) {
+    return (
+      <Stack p="md" align="center">
+        <Avatar size="xl" src={form.getValues().image} alt="User avatar" />
+        <Select
+          label="Your avatar"
+          placeholder="Pick value"
+          data={AVATAR_IMAGES}
+          key={form.key("image")}
+          {...form.getInputProps("image")}
+          onChange={(value) => form.setFieldValue("image", value)}
+        />
+      </Stack>
+    );
+  }
 
   return (
-    <Stack p="md" align="center">
-      <Avatar size="xl" src={form.getValues().image} alt="User avatar" />
-      <Select
-        label="Your avatar"
-        placeholder="Pick value"
-        data={AVATAR_IMAGES}
-        key={form.key("image")}
-        {...form.getInputProps("image")}
-        onChange={(value) => form.setFieldValue("image", value)}
+    <Container display="flex" my="md" pos="relative" className={classes.cont}>
+      <div className={classes.gallery}>
+        {AVATAR_IMAGES.map((avatar) => {
+          return (
+            <Image
+              alt={avatar.label}
+              src={avatar.value}
+              onClick={() => form.setFieldValue("image", avatar.value)}
+            />
+          );
+        })}
+      </div>
+      <Avatar
+        src={form.getValues().image}
+        alt="User avatar"
+        pos="absolute"
+        className={classes.avt}
       />
-    </Stack>
+    </Container>
   );
 }

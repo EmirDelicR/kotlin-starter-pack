@@ -1,0 +1,76 @@
+.cont {
+  --size: 75px;
+  --gap: 5px;
+  // This two values must match, also you need to update clip path there is formula, just css debug it and update values
+  //   --path-size: 75;
+  //   --path-minus-10: calc(var(--path-size) - 10);
+  //   --path-plus-10: calc(var(--path-size) + 10);
+  //   --path-double: calc(var(--path-size) * 2);
+  //   --path-double-minus-10: calc(var(--path-double) - 10);
+  //   --path-double-plus-10: calc(var(--path-double) + 10);
+  //   --clip-path: "M" var(--path-minus-10) ",10 C" var(--path-size) ",0 "
+  //     var(--path-size) ",0 " var(--path-plus-10) ",10" var(--path-double-minus-10)
+  //     "," var(--path-minus-10) var(--path-double-minus-10) ","
+  //     var(--path-minus-10) var(--path-double-minus-10) "," var(--path-minus-10)
+  //     var(--path-double) "," var(--path-double-plus-10) var(--path-double) ","
+  //     var(--path-double-plus-10) var(--path-double-minus-10) ","
+  //     var(--path-plus-10) var(--path-double-minus-10) "," var(--path-plus-10)
+  //     var(--path-plus-10) "," var(--path-double-minus-10) var(--path-plus-10) ","
+  //     var(--path-double-minus-10) var(--path-size) "," var(--path-double)
+  //     var(--path-size) "," var(--path-double) var(--path-minus-10) ","
+  //     var(--path-double-minus-10) var(--path-minus-10) ","
+  //     var(--path-double-minus-10) "10," var(--path-plus-10) "10,"
+  //     var(--path-plus-10) "0," var(--path-size) "0," var(--path-size) "10,"
+  //     var(--path-minus-10) "Z";
+  --clip-path: "M65,10 C75,0 75,0 85,10 140,65 140,65 140,65 150,75 150,75 140,85 140,85 85,140 85,140 75,150 75,150 65,140 65,140 10,85 10,85 0,75 0,75 10,65Z";
+  // TODO update this with path-size and double path size check the pattern
+  --clip-path-hover: "M0,0 C0,0 150,0 150,0 150,0 150,75 150,75 150,75 150,150 150,150 150,150 75,150 75,150 75,150 75,150 0,150 0,150 0,75 0,75 0,75 0,75 0,75Z";
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(8, var(--size));
+    grid-auto-rows: var(--size);
+    margin-bottom: var(--size);
+    place-items: start center;
+    gap: var(--gap);
+
+    &:has(:hover) img:not(:hover),
+    &:has(:focus) img:not(:focus) {
+      filter: brightness(0.5) contrast(0.5);
+    }
+
+    & img {
+      object-fit: cover;
+      width: calc(var(--size) * 2);
+      height: calc(var(--size) * 2);
+      clip-path: path(var(--clip-path));
+      transition: clip-path 0.25s, filter 0.75s;
+      grid-column: auto / span 2;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:nth-of-type(5) {
+        grid-column: 2 / span 2;
+      }
+
+      &:nth-of-type(6) {
+        grid-column: 6 / span 2;
+      }
+
+      &:hover,
+      &:focus {
+        clip-path: path(var(--clip-path-hover));
+        z-index: 1;
+        transition: clip-path 0.25s, filter 0.25s;
+      }
+    }
+  }
+
+  .avt {
+    --avt-size: calc(var(--size) * 1.5);
+    width: var(--avt-size);
+    height: var(--avt-size);
+    left: calc(calc(50% - calc(var(--avt-size) / 2)) - 23px);
+    top: calc(50% - calc(var(--avt-size) / 2));
+  }
+}
