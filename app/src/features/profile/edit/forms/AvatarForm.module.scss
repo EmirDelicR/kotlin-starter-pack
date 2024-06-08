@@ -72,5 +72,6 @@
     height: var(--avt-size);
     left: calc(calc(50% - calc(var(--avt-size) / 2)) - 23px);
     top: calc(50% - calc(var(--avt-size) / 2));
+    border: 2px solid var(--mantine-color-blue-6);
   }
 }
