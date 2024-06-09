@@ -58,6 +58,7 @@ export default function SubscriptionForm() {
               color="green"
               variant="light"
               onClick={onChipClickHandler}
+              data-testid="subscription-chip"
             >
               Subscription alerts {!isUserSubscribed && "not"} activated
             </Chip>
@@ -109,6 +110,7 @@ export default function SubscriptionForm() {
                 onChange={(event) =>
                   onSwitchClickHandler(event.currentTarget.checked, name)
                 }
+                data-testid={`subscription-switch-${name}`}
               />
             </Flex>
           ))}

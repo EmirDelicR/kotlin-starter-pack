@@ -43,6 +43,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
         borderRadius: "var(--mantine-radius-sm)",
       }}
       {...others}
+      data-testid="user-menu-button"
     >
       <Group>
         <Avatar src={image} radius="xl" />
@@ -98,6 +99,7 @@ export default function UserMenu() {
               <IconSettings style={{ width: rem(14), height: rem(14) }} />
             }
             onClick={open}
+            data-testid="user-menu-update-button"
           >
             Edit Profile
           </Menu.Item>

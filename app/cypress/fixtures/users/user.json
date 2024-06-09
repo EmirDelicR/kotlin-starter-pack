@@ -2,7 +2,7 @@
   "data": {
     "id": "userId",
     "age": 23,
-    "avatar": "user-avatar",
+    "avatar": null,
     "email": "test@test.com",
     "firstName": "John",
     "lastName": "Doe",
