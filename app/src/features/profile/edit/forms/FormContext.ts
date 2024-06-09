@@ -3,6 +3,12 @@ import { createFormContext } from "@mantine/form";
 import { SubscriptionType } from "@/constants";
 import { User } from "@/store/userSlice";
 
+export enum STEPS {
+  FIRST_STEP = 0,
+  SECOND_STEP = 1,
+  LAST_STEP = 2,
+}
+
 type AccountFormData = Pick<User, "firstName" | "lastName" | "age">;
 type SubscriptionFormData = Pick<User, "subscribed"> & {
   subscriptions: SubscriptionType[];
@@ -18,6 +24,19 @@ export type ProfileFormData = AccountFormData &
 
 export const [ProfileFormProvider, useProfileFormContext, useProfileForm] =
   createFormContext<ProfileFormData>();
+
+type ProfileFormType = ReturnType<typeof useProfileForm>;
+
+export const validateFirstStep = (form: ProfileFormType) => {
+  return (
+    form.validateField("firstName").hasError ||
+    form.validateField("lastName").hasError ||
+    form.validateField("age").hasError
+  );
+};
+
+export const validateSecondStep = (form: ProfileFormType) =>
+  form.validateField("image").hasError;
 
 export const setFormDataDefaultValues = (user: User) => ({
   image: user.avatar,

@@ -13,13 +13,34 @@ import { selectUser } from "@/store/userSlice";
 
 import {
   ProfileFormProvider,
+  STEPS,
   setFormDataDefaultValues,
   useProfileForm,
+  validateFirstStep,
+  validateSecondStep,
 } from "./forms/FormContext";
 
 import AccountForm from "./forms/AccountForm";
 import AvatarForm from "./forms/AvatarForm";
 import SubscriptionForm from "./forms/SubscriptionForm";
+
+const FORM_STEPS = [
+  {
+    description: "Data",
+    icon: <IconUserCheck style={{ width: rem(18), height: rem(18) }} />,
+    form: <AccountForm />,
+  },
+  {
+    description: "Avatar",
+    icon: <IconImageInPicture style={{ width: rem(18), height: rem(18) }} />,
+    form: <AvatarForm />,
+  },
+  {
+    description: "Subscriptions",
+    icon: <IconMailOpened style={{ width: rem(18), height: rem(18) }} />,
+    form: <SubscriptionForm />,
+  },
+];
 
 export default function EditProfileForm() {
   const user = useAppSelector(selectUser);
@@ -36,67 +57,74 @@ export default function EditProfileForm() {
     },
   });
 
-  const validateFirstStep = () => {
-    return (
-      form.validateField("firstName").hasError ||
-      form.validateField("lastName").hasError ||
-      form.validateField("age").hasError
-    );
-  };
+  const onStepIconClick = (stepIndex: number) => {
+    setActive((current) => {
+      if (current > stepIndex) {
+        return stepIndex;
+      }
 
-  const validateSecondStep = () => form.validateField("image").hasError;
+      if (current === STEPS.FIRST_STEP && validateFirstStep(form)) {
+        return STEPS.FIRST_STEP;
+      }
+
+      if (current === STEPS.SECOND_STEP && validateSecondStep(form)) {
+        return STEPS.SECOND_STEP;
+      }
+
+      return stepIndex;
+    });
+  };
 
   const nextStep = () => {
     setActive((current) => {
-      if (current === 0 && validateFirstStep()) {
-        return 0;
+      if (current === STEPS.FIRST_STEP && validateFirstStep(form)) {
+        return STEPS.FIRST_STEP;
       }
 
-      if (current === 1 && validateSecondStep()) {
-        return 1;
+      if (current === STEPS.SECOND_STEP && validateSecondStep(form)) {
+        return STEPS.SECOND_STEP;
       }
-      return current < 2 ? current + 1 : current;
+
+      return current < STEPS.LAST_STEP ? current + 1 : current;
     });
   };
+
   const prevStep = () =>
-    setActive((current) => (current > 0 ? current - 1 : current));
+    setActive((current) =>
+      current > STEPS.FIRST_STEP ? current - 1 : current
+    );
+
+  const handleSubmit = async (data: any) => {
+    console.log("Data in handle: ", data);
+  };
 
   return (
     <Paper withBorder shadow="md" p="md">
       <ProfileFormProvider form={form}>
-        <form onSubmit={form.onSubmit(() => {})}>
-          <Stepper active={active} onStepClick={setActive}>
-            <Stepper.Step
-              description="Data"
-              icon={
-                <IconUserCheck style={{ width: rem(18), height: rem(18) }} />
-              }
-            >
-              <AccountForm />
-            </Stepper.Step>
-            <Stepper.Step
-              description="Avatar"
-              icon={
-                <IconImageInPicture
-                  style={{ width: rem(18), height: rem(18) }}
-                />
-              }
-            >
-              <AvatarForm />
-            </Stepper.Step>
-            <Stepper.Step
-              description="Subscriptions"
-              icon={
-                <IconMailOpened style={{ width: rem(18), height: rem(18) }} />
-              }
-            >
-              <SubscriptionForm />
-            </Stepper.Step>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+          <Stepper active={active} onStepClick={onStepIconClick}>
+            {FORM_STEPS.map((item) => (
+              <Stepper.Step
+                description={item.description}
+                icon={item.icon}
+                key={item.description}
+              >
+                {item.form}
+              </Stepper.Step>
+            ))}
+            <Stepper.Completed>
+              Completed, click back button to get to previous step
+            </Stepper.Completed>
           </Stepper>
           <Group justify="center" mt="xl">
             <Button variant="default" onClick={prevStep}>
               Back
             </Button>
+            {/* {active === STEPS.LAST_STEP ? (
+              <Button type="submit">Submit</Button>
+            ) : (
+              <Button onClick={nextStep}>Next step</Button>
+            )} */}
             <Button onClick={nextStep}>Next step</Button>
           </Group>
         </form>
