@@ -7,6 +7,7 @@ export enum STEPS {
   FIRST_STEP = 0,
   SECOND_STEP = 1,
   LAST_STEP = 2,
+  COMPLEAT_STEP = 3,
 }
 
 type AccountFormData = Pick<User, "firstName" | "lastName" | "age">;
