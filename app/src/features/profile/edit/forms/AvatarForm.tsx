@@ -40,6 +40,7 @@ export default function AvatarForm() {
         {AVATAR_IMAGES.map((avatar) => {
           return (
             <Image
+              key={avatar.label}
               alt={avatar.label}
               src={avatar.value}
               onClick={() => form.setFieldValue("image", avatar.value)}
