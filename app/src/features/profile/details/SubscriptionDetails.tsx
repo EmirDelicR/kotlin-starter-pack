@@ -34,7 +34,7 @@ export default function SubscriptionDetails() {
         color="blue"
         cite={
           <Chip defaultChecked={user.subscribed} color="green" variant="light">
-            Subscription alerts {!user.subscribed && "not"} activated
+            Subscription alerts {!user.subscribed && "not "}activated
           </Chip>
         }
         icon={<IconMessage2 />}
