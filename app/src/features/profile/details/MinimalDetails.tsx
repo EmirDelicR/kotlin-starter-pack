@@ -52,7 +52,7 @@ export default function MinimalDetails() {
         title="Edit Profile"
         size="xl"
       >
-        <EditProfileForm />
+        <EditProfileForm onSuccessCallback={close} />
       </Modal>
     </>
   );

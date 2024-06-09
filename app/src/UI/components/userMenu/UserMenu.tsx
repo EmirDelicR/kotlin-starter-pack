@@ -128,7 +128,7 @@ export default function UserMenu() {
         title="Edit Profile"
         size="xl"
       >
-        <EditProfileForm />
+        <EditProfileForm onSuccessCallback={close} />
       </Modal>
     </>
   );

@@ -1,5 +1,14 @@
-import { useState } from "react";
-import { Button, Group, Paper, Stepper, rem } from "@mantine/core";
+import { useEffect, useState } from "react";
+import {
+  Button,
+  Group,
+  Loader,
+  Paper,
+  Stack,
+  Stepper,
+  Title,
+  rem,
+} from "@mantine/core";
 import { isInRange, isNotEmpty } from "@mantine/form";
 
 import {
@@ -8,10 +17,12 @@ import {
   IconImageInPicture,
 } from "@tabler/icons-react";
 
-import { useAppSelector } from "@/store";
-import { selectUser } from "@/store/userSlice";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { selectUser, setUser } from "@/store/userSlice";
+import { useUpdateUserMutation } from "@/store/userSlice/userApiSlice";
 
 import {
+  ProfileFormData,
   ProfileFormProvider,
   STEPS,
   setFormDataDefaultValues,
@@ -23,6 +34,7 @@ import {
 import AccountForm from "./forms/AccountForm";
 import AvatarForm from "./forms/AvatarForm";
 import SubscriptionForm from "./forms/SubscriptionForm";
+import Error from "@/UI/components/error/Error";
 
 const FORM_STEPS = [
   {
@@ -42,9 +54,17 @@ const FORM_STEPS = [
   },
 ];
 
-export default function EditProfileForm() {
+interface Props {
+  onSuccessCallback: () => void;
+}
+
+export default function EditProfileForm({ onSuccessCallback }: Props) {
   const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
   const [active, setActive] = useState(0);
+
+  const [updateUser, { isLoading, data, isError, error, isSuccess }] =
+    useUpdateUserMutation();
 
   const form = useProfileForm({
     mode: "uncontrolled",
@@ -56,6 +76,13 @@ export default function EditProfileForm() {
       image: isNotEmpty("Avatar must be set"),
     },
   });
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      dispatch(setUser(data));
+      onSuccessCallback();
+    }
+  }, [isSuccess]);
 
   const onStepIconClick = (stepIndex: number) => {
     setActive((current) => {
@@ -85,7 +112,7 @@ export default function EditProfileForm() {
         return STEPS.SECOND_STEP;
       }
 
-      return current < STEPS.LAST_STEP ? current + 1 : current;
+      return current < STEPS.COMPLEAT_STEP ? current + 1 : current;
     });
   };
 
@@ -94,8 +121,8 @@ export default function EditProfileForm() {
       current > STEPS.FIRST_STEP ? current - 1 : current
     );
 
-  const handleSubmit = async (data: any) => {
-    console.log("Data in handle: ", data);
+  const handleSubmit = async (formData: ProfileFormData) => {
+    await updateUser({ formData, userId: user.id });
   };
 
   return (
@@ -113,19 +140,30 @@ export default function EditProfileForm() {
               </Stepper.Step>
             ))}
             <Stepper.Completed>
-              Completed, click back button to get to previous step
+              <Stack align="center" my="md" w="100%">
+                <Title order={4}>Updating profile</Title>
+                {isLoading && <Loader type="bars" />}
+                <Error isError={isError} error={error} />
+              </Stack>
             </Stepper.Completed>
           </Stepper>
           <Group justify="center" mt="xl">
-            <Button variant="default" onClick={prevStep}>
+            <Button
+              variant="default"
+              onClick={prevStep}
+              disabled={active === STEPS.FIRST_STEP || isLoading}
+            >
               Back
             </Button>
-            {/* {active === STEPS.LAST_STEP ? (
-              <Button type="submit">Submit</Button>
+            {active === STEPS.COMPLEAT_STEP ? (
+              <Button disabled={isLoading} type="submit">
+                Submit
+              </Button>
             ) : (
-              <Button onClick={nextStep}>Next step</Button>
-            )} */}
-            <Button onClick={nextStep}>Next step</Button>
+              <Button onClick={nextStep}>
+                {active === STEPS.LAST_STEP ? "Submit" : "Next step"}
+              </Button>
+            )}
           </Group>
         </form>
       </ProfileFormProvider>
