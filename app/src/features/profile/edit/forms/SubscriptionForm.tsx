@@ -98,7 +98,7 @@ export default function SubscriptionForm() {
                   )
                 }
               >
-                <Text>{name}</Text>
+                <Text tt="capitalize">{name}</Text>
               </List.Item>
               <Switch
                 size="md"

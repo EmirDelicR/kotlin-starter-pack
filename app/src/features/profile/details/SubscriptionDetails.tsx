@@ -1,4 +1,12 @@
-import { Blockquote, Chip, List, Paper, ThemeIcon, rem } from "@mantine/core";
+import {
+  Blockquote,
+  Chip,
+  List,
+  Paper,
+  Text,
+  ThemeIcon,
+  rem,
+} from "@mantine/core";
 import { useMemo } from "react";
 import { IconCircleCheck, IconForbid, IconMessage2 } from "@tabler/icons-react";
 
@@ -11,9 +19,9 @@ export default function SubscriptionDetails() {
   const user = useAppSelector(selectUser);
 
   const getSubscriptions = useMemo(() => {
-    return Object.keys(SubscriptionType).map((subscription: any) => {
+    return Object.values(SubscriptionType).map((subscription) => {
       return user.subscriptions
-        .map((subscriptionItem) => subscriptionItem.name.toUpperCase())
+        .map((subscriptionItem) => subscriptionItem.name)
         .includes(subscription)
         ? { name: subscription, isSubscribed: true }
         : { name: subscription, isSubscribed: false };
@@ -50,7 +58,7 @@ export default function SubscriptionDetails() {
                 )
               }
             >
-              {name}
+              <Text tt="capitalize">{name}</Text>
             </List.Item>
           ))}
         </List>
