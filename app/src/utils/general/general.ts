@@ -13,9 +13,8 @@ export const createDynamicArray = (value: number) => {
 };
 
 export const createPaginationShowList = (numberOfItems: number) => {
-  return createDynamicArray(
-    Math.ceil(Math.abs(numberOfItems) / ITEMS_PER_PAGE) + 1
-  ).map((i) => {
+  const items = numberOfItems < 0 ? 0 : numberOfItems;
+  return createDynamicArray(Math.floor(items / ITEMS_PER_PAGE) + 1).map((i) => {
     const value = (i + 1) * ITEMS_PER_PAGE;
     return { label: `Show ${value}`, value: `${value}` };
   });
@@ -83,5 +82,10 @@ export const normalizeError = (
 };
 
 export const formatDate = (date: string | Date) => {
-  return new Intl.DateTimeFormat("de-AT").format(new Date(date));
+  if (typeof date === "string") {
+    const dateObject = Date.parse(date) > 0 ? new Date(date) : new Date();
+    return new Intl.DateTimeFormat("de-AT").format(dateObject);
+  }
+
+  return new Intl.DateTimeFormat("de-AT").format(date);
 };
