@@ -180,6 +180,36 @@ describe("Profile form test", () => {
     });
   });
 
+  it("should persist data on going back", () => {
+    cy.navigateTo("Profile");
+    cy.get("button:contains(Edit Profile)").click();
+    cy.get("h2:contains(Edit Profile)").should("exist");
+
+    checkFirstStep();
+
+    cy.get("button:contains(Back)").click();
+
+    cy.get('[data-testid="profile-first-name"]')
+      .should("have.prop", "value")
+      .should("eq", UPDATED_DATA.name);
+
+    cy.get('[data-testid="profile-last-name"]')
+      .should("have.prop", "value")
+      .should("eq", UPDATED_DATA.lastName);
+
+    cy.get('[data-testid="profile-age"]')
+      .should("have.prop", "value")
+      .should("eq", UPDATED_DATA.age);
+  });
+
+  it("should logout user on profile page", () => {
+    cy.navigateTo("Profile");
+    cy.get("button:contains(Logout)").click();
+
+    cy.location("pathname").should("match", /\/auth$/);
+    cy.get("h1:contains(Welcome back)").should("exist");
+  });
+
   it("should open modal and update user on user menu", () => {
     cy.navigateTo("Profile");
     cy.get('[data-testid="user-menu-button"').click();
@@ -241,5 +271,14 @@ describe("Profile form test", () => {
       cy.get("h2:contains(Edit Profile)").should("exist");
       cy.get("span:contains(Error occurred)").should("exist");
     });
+  });
+
+  it("should logout user on user menu", () => {
+    cy.navigateTo("Profile");
+    cy.get('[data-testid="user-menu-button"').click();
+    cy.get('[data-testid="user-menu-logout-button"').click();
+
+    cy.location("pathname").should("match", /\/auth$/);
+    cy.get("h1:contains(Welcome back)").should("exist");
   });
 });

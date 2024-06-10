@@ -196,7 +196,7 @@ describe("Message table test", () => {
       .click();
 
     cy.wait("@interceptRequest");
-    cy.get('[data-testid="table"] tbody tr').should("have.length", 4);
+    cy.get('[data-testid="table"] tbody tr').should("have.length", 5);
   });
 
   it("should filer messages", () => {
@@ -223,6 +223,7 @@ describe("Message table test", () => {
 
   it("should change number of items on page", () => {
     cy.navigateTo("Emails");
+
     cy.wait("@getPaginatedMessages").then(() => {
       cy.interceptWithFixtureHook<{
         data: { totalCount: number; messages: Message[] };
@@ -233,7 +234,6 @@ describe("Message table test", () => {
         },
         "messages/messages.json",
         (items) => {
-          items.data.messages;
           items.data.messages = [
             ...items.data.messages,
             ...items.data.messages,
@@ -250,7 +250,7 @@ describe("Message table test", () => {
       });
 
     cy.wait("@interceptRequest").then(() => {
-      cy.get('[data-testid="table"] tbody tr').should("have.length", 10);
+      cy.get('[data-testid="table"] tbody tr').should("have.length", 12);
     });
   });
 });
