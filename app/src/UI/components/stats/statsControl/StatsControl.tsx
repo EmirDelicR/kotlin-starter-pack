@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UnstyledButton, Text, Paper, Group, rem } from "@mantine/core";
+import { UnstyledButton, Text, Paper, Group, rem, Title } from "@mantine/core";
 import {
   IconBug,
   IconTool,
@@ -56,29 +56,34 @@ export function StatsControl() {
   ));
 
   return (
-    <div className={classes.root}>
-      <div className={classes.controls}>
-        <UnstyledButton className={classes.control} onClick={increaseDay}>
-          <IconChevronUp
-            style={{ width: rem(16), height: rem(16) }}
-            className={classes.controlIcon}
-            stroke={1.5}
-          />
-        </UnstyledButton>
+    <>
+      <Title order={3} ta="center">
+        Work pre week
+      </Title>
+      <div className={classes.root}>
+        <div className={classes.controls}>
+          <UnstyledButton className={classes.control} onClick={increaseDay}>
+            <IconChevronUp
+              style={{ width: rem(16), height: rem(16) }}
+              className={classes.controlIcon}
+              stroke={1.5}
+            />
+          </UnstyledButton>
 
-        <div className={classes.date}>
-          <Text className={classes.day}>{day}</Text>
+          <div className={classes.date}>
+            <Text className={classes.day}>{day}</Text>
+          </div>
+
+          <UnstyledButton className={classes.control} onClick={decreaseDay}>
+            <IconChevronDown
+              style={{ width: rem(16), height: rem(16) }}
+              className={classes.controlIcon}
+              stroke={1.5}
+            />
+          </UnstyledButton>
         </div>
-
-        <UnstyledButton className={classes.control} onClick={decreaseDay}>
-          <IconChevronDown
-            style={{ width: rem(16), height: rem(16) }}
-            className={classes.controlIcon}
-            stroke={1.5}
-          />
-        </UnstyledButton>
+        <Group style={{ flex: 1 }}>{stats}</Group>
       </div>
-      <Group style={{ flex: 1 }}>{stats}</Group>
-    </div>
+    </>
   );
 }

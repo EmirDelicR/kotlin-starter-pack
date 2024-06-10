@@ -11,10 +11,6 @@
   @media (max-width: $mantine-breakpoint-xs) {
     flex-direction: column;
   }
-
-  @media (min-width: $mantine-breakpoint-lg) {
-    margin-top: var(--mantine-spacing-xl);
-  }
 }
 
 .icon {
