@@ -1,4 +1,6 @@
 import { renderHook } from "@testing-library/react";
+import { expect, vi } from "vitest";
+
 import useLogout from "../useLogout";
 
 import { NavRoutes } from "@/constants";

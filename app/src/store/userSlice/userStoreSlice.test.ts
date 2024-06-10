@@ -1,4 +1,4 @@
-import { vi } from "vitest";
+import { expect, vi } from "vitest";
 
 import { createStore } from "@/store";
 import { setUser } from "@/store/userSlice";

@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from "@testing-library/react";
-import { vi } from "vitest";
+import { expect, vi } from "vitest";
 
 import useAsyncEffect from "@/hooks/useAsyncEffect";
 

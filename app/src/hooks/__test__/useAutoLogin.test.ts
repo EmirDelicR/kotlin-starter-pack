@@ -1,5 +1,5 @@
 import { waitFor } from "@testing-library/react";
-import { vi } from "vitest";
+import { expect, vi } from "vitest";
 
 import useAutoLogin from "@/hooks/useAutoLogin";
 import { renderHookWithProviders } from "@/utils/test/testUtils";

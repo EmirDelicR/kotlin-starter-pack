@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { vi } from "vitest";
+import { expect, vi } from "vitest";
 
 import { User, UserResponse } from "@/store/userSlice";
 
