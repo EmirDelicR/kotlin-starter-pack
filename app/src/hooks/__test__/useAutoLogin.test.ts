@@ -56,6 +56,7 @@ describe("useAutoLogin hook test", () => {
       expect(mockGetData).toHaveBeenCalledTimes(1);
       expect(mockAutoLogin).toHaveBeenCalledTimes(0);
       expect(mockDispatch).toHaveBeenCalledTimes(0);
+      expect(mockNavigate).toHaveBeenCalledWith("/auth");
     });
   });
 
@@ -67,7 +68,7 @@ describe("useAutoLogin hook test", () => {
       expect(mockGetData).toHaveBeenCalledTimes(1);
       expect(mockAutoLogin).toHaveBeenCalledTimes(1);
       expect(mockDispatch).toHaveBeenCalledTimes(0);
-      expect(mockNavigate).toHaveBeenCalledWith("/home");
+      expect(mockNavigate).toHaveBeenCalledTimes(0);
     });
   });
 

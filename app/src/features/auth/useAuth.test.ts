@@ -37,7 +37,7 @@ describe("useAuth hook test", () => {
     renderHook(() => useAuth(MOCK_DATA, true));
 
     expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith("/");
+    expect(mockNavigate).toHaveBeenCalledWith("/home");
   });
 
   it("should not call dispatch and navigate if request is successfully done and data is not present", () => {
