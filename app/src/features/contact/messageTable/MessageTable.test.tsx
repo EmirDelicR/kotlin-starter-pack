@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { vi } from "vitest";
+import { expect, vi } from "vitest";
 
 import { renderWithProviders } from "@/utils/test/testUtils";
 
@@ -152,9 +152,7 @@ describe("<MessageTable/>", () => {
       };
       renderWithProviders(<MessageTable />);
 
-      expect(
-        screen.getByText("There is no data for this message")
-      ).toBeInTheDocument();
+      expect(screen.getByText("There is no data.")).toBeInTheDocument();
     });
 
     it("should render 30 cell + 1 with pagination", () => {

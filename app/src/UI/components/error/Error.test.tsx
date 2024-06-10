@@ -2,6 +2,7 @@ import { renderWithProviders } from "@/utils/test/testUtils";
 import { screen } from "@testing-library/react";
 
 import Error from "./Error";
+import { expect } from "vitest";
 
 const ERROR = {
   error: "Test error occurred",

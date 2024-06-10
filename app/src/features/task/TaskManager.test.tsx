@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { vi } from "vitest";
+import { expect, vi } from "vitest";
 
 import { INITIAL_USER_DATA } from "@/store/userSlice";
 import { renderWithProviders } from "@/utils/test/testUtils";

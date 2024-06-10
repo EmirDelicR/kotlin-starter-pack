@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import { notifications } from "@mantine/notifications";
 import userEvent from "@testing-library/user-event";
-import { vi } from "vitest";
+import { expect, vi } from "vitest";
 
 import { renderWithProviders } from "@/utils/test/testUtils";
 

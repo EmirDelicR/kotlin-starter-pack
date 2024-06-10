@@ -2,9 +2,12 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import {
   classNameHelper,
   createDynamicArray,
+  createPaginationShowList,
+  formatDate,
   localStorageHelper,
   normalizeError,
 } from "./general";
+import { expect } from "vitest";
 
 const RANDOM_ID = "random-id";
 
@@ -37,6 +40,39 @@ describe("General utils test", () => {
       expect(createDynamicArray(-1)).toEqual([0]);
       expect(createDynamicArray(0)).toEqual([]);
       expect(createDynamicArray(3)).toEqual([0, 1, 2]);
+    });
+  });
+
+  describe("createPaginationShowList utils function", () => {
+    it("should return array with elements that have label and name", () => {
+      expect(createPaginationShowList(-10)).toEqual([
+        { label: "Show 5", value: "5" },
+      ]);
+      expect(createPaginationShowList(-1)).toEqual([
+        { label: "Show 5", value: "5" },
+      ]);
+      expect(createPaginationShowList(0)).toEqual([
+        { label: "Show 5", value: "5" },
+      ]);
+      expect(createPaginationShowList(1)).toEqual([
+        { label: "Show 5", value: "5" },
+      ]);
+      expect(createPaginationShowList(4)).toEqual([
+        { label: "Show 5", value: "5" },
+      ]);
+      expect(createPaginationShowList(5)).toEqual([
+        { label: "Show 5", value: "5" },
+        { label: "Show 10", value: "10" },
+      ]);
+      expect(createPaginationShowList(5)).toEqual([
+        { label: "Show 5", value: "5" },
+        { label: "Show 10", value: "10" },
+      ]);
+      expect(createPaginationShowList(9)).toEqual([
+        { label: "Show 5", value: "5" },
+        { label: "Show 10", value: "10" },
+      ]);
+      expect(createPaginationShowList(35).length).toEqual(35 / 5 + 1);
     });
   });
 
@@ -108,6 +144,22 @@ describe("General utils test", () => {
         id: RANDOM_ID,
         message: "Unknown Error Happen no additional data!",
       });
+    });
+  });
+
+  describe("formatDate utils function", () => {
+    it("should return formate date", () => {
+      const dateString = "1995-12-17T03:24:00";
+      const date = new Date(dateString);
+      const currentFormattedDate = new Intl.DateTimeFormat("de-AT").format(
+        new Date()
+      );
+
+      expect(formatDate(dateString)).toEqual("17.12.1995");
+      expect(formatDate(date)).toEqual("17.12.1995");
+      expect(formatDate("")).toEqual(currentFormattedDate);
+      expect(formatDate("     ")).toEqual(currentFormattedDate);
+      expect(formatDate("some not valid date")).toEqual(currentFormattedDate);
     });
   });
 });

@@ -6,6 +6,7 @@ import { INITIAL_USER_DATA } from "@/store/userSlice";
 import { NavRouteNames, Roles } from "@/constants";
 
 import NavBar from "./NavBar";
+import { expect } from "vitest";
 
 const USER_ID = "user-id";
 const PRELOADED_STATE = {
