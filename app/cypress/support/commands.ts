@@ -10,18 +10,34 @@
 // ***********************************************
 //
 //
-
 type Routes = "Home" | "Work" | "Profile" | "Emails";
 
 Cypress.Commands.add("login", (asAdmin: boolean = false) => {
   window.localStorage.setItem("token", JSON.stringify("dummy-token"));
-  cy.wait(500);
-
   let fixture = "users/user.json";
-
+  let user = null;
   if (asAdmin) {
     fixture = "users/admin.json";
   }
+
+  cy.fixture(fixture).then((data) => {
+    user = data.data;
+  });
+  // https://www.cypress.io/blog/2018/11/14/testing-redux-store#:~:text=Access%20Redux%20store&text=We%20just%20need%20to%20get,get%20the%20current%20state%20object.
+  // https://dev.to/rashidshamloo/testing-the-redux-store-using-cypress-in-nextjs-typescript-1k6o
+  // https://www.cypress.io/blog/2018/11/14/testing-redux-store
+  cy.wait(500);
+  cy.visit("/home", {
+    onBeforeLoad: () => {
+      cy.window()
+        .its("Cypress")
+        .its("store")
+        .invoke("dispatch", {
+          type: "user/setUser",
+          payload: { data: user, status: 200 },
+        });
+    },
+  });
 
   cy.intercept(
     {
@@ -32,9 +48,16 @@ Cypress.Commands.add("login", (asAdmin: boolean = false) => {
       statusCode: 200,
       fixture: fixture,
     }
-  ).as("autoLoginUsers");
+  ).as("autoLoginUser");
   cy.intercept({ method: "GET", url: "api/v1/refresh" }).as("refreshToken");
-  cy.visit("/home");
+  cy.wait("@autoLoginUser").then(() => {
+    cy.window()
+      .its("Cypress")
+      .its("store")
+      .invoke("getState")
+      .its("user")
+      .should("deep.equal", { data: user });
+  });
 });
 
 Cypress.Commands.add("navigateTo", (route: Routes) => {

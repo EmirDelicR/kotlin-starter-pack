@@ -41,6 +41,14 @@
         "email": "Kay@Davis.com",
         "unread": true,
         "createdAt": "2024-02-21T09:19:32.712Z"
+      },
+      {
+        "id": "dummy-message-id-6",
+        "sender": "Kay Davis",
+        "message": "Some dummy text that user send.",
+        "email": "Kay@Davis.com",
+        "unread": true,
+        "createdAt": "2024-02-21T09:19:32.712Z"
       }
     ]
   }
