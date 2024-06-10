@@ -31,7 +31,9 @@ export default function DebounceInput({
       {...props}
       value={value}
       onChange={handleChange}
-      rightSection={loading && <Loader size={20} />}
+      rightSection={
+        loading && <Loader size={20} data-testid="debounce-input-loader" />
+      }
     />
   );
 }

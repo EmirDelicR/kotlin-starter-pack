@@ -43,14 +43,35 @@ export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/auth" replace />} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
         <Route element={<DefaultLayout />}>
           <Route path={`/${NavRoutes.AUTH}`} element={<AuthPage />} />
         </Route>
         <Route element={<AppLayout />}>
-          <Route path={NavRoutes.HOME} element={<HomePage />} />
-          <Route path={NavRoutes.WORK} element={<WorkPage />} />
-          <Route path={NavRoutes.PROFILE} element={<ProfilePage />} />
+          <Route
+            path={NavRoutes.HOME}
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={NavRoutes.WORK}
+            element={
+              <ProtectedRoute>
+                <WorkPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={NavRoutes.PROFILE}
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path={NavRoutes.EMAILS}
             element={

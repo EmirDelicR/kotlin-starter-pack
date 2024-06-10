@@ -116,11 +116,11 @@ export default function MessageTable() {
     manualPagination: true,
   });
 
-  const totalPages = table.getPageCount();
+  const totalItems = data?.messages.length || 0;
 
   const selectValues = useMemo(
-    () => createPaginationShowList(totalPages),
-    [totalPages]
+    () => createPaginationShowList(totalItems),
+    [totalItems]
   );
   const onSelectChange = (value: string | null) => {
     setSelectValue(value);
@@ -149,7 +149,7 @@ export default function MessageTable() {
     <Center py="lg" miw="100%">
       <Pagination
         value={pageSize}
-        total={totalPages}
+        total={table.getPageCount()}
         onChange={table.setPageIndex}
       />
     </Center>
