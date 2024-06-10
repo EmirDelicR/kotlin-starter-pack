@@ -1,18 +1,14 @@
 import { Container, Grid } from "@mantine/core";
 
-import {
-  StatsCard,
-  StatsControl,
-  StatsGrid,
-  StatsSegment,
-} from "@/UI/components/stats/";
+import { StatsControl, StatsGrid, StatsSegment } from "@/UI/components/stats/";
+import { TaskStatistics } from "@/features/task/statistics/TaskStatistics";
 
 export default function HomePage() {
   return (
     <Container py="md" size="lg">
       <Grid grow>
         <Grid.Col span={{ base: 12, xl: 6 }}>
-          <StatsCard />
+          <TaskStatistics />
         </Grid.Col>
         <Grid.Col span={{ base: 12, xl: 6 }}>
           <StatsControl />

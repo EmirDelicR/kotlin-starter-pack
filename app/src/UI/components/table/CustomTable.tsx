@@ -103,7 +103,7 @@ export default function CustomTable<T>({
                 <Error isError={isError} error={error} />
               ) : (
                 <Alert variant="light" color="blue" icon={<IconInfoCircle />}>
-                  There is no data for this message
+                  There is no data.
                 </Alert>
               )}
             </Table.Td>

@@ -72,6 +72,7 @@ function LogoutItem() {
       color="red"
       leftSection={<IconLogout style={{ width: rem(14), height: rem(14) }} />}
       onClick={onUserLogoutHandler}
+      data-testid="user-menu-logout-button"
     >
       Logout
     </Menu.Item>
