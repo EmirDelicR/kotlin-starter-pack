@@ -24,6 +24,12 @@ interface ApiPaginatedTaskResponse {
   status: number;
 }
 
+interface ApiTaskStatisticsResponse {
+  data: { total: number; done: number; open: number };
+  message: string;
+  status: number;
+}
+
 const baseApiWithTag = baseApi.enhanceEndpoints({ addTagTypes: ["Task"] });
 
 export const taskSlice = baseApiWithTag.injectEndpoints({
@@ -31,6 +37,15 @@ export const taskSlice = baseApiWithTag.injectEndpoints({
     getTasks: builder.query<Task[], null>({
       query: () => "/tasks",
       transformResponse: (res: ApiTaskResponse) => res.data,
+      providesTags: ["Task"],
+    }),
+
+    getTasksStatistics: builder.query<
+      { total: number; done: number; open: number },
+      { userId: string }
+    >({
+      query: ({ userId }) => `/tasks/statistics/${userId}`,
+      transformResponse: (res: ApiTaskStatisticsResponse) => res.data,
       providesTags: ["Task"],
     }),
 
@@ -82,6 +97,7 @@ export const taskSlice = baseApiWithTag.injectEndpoints({
 
 export const {
   useGetTasksQuery,
+  useGetTasksStatisticsQuery,
   useGetPaginatedTasksQuery,
   useAddTaskMutation,
   useUpdateTaskMutation,

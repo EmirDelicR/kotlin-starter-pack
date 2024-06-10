@@ -21,14 +21,12 @@ export default function useAutoLogin() {
     const token = getToken("token");
 
     if (!token) {
-      return;
+      return navigate("/auth");
     }
 
     const response = (await autoLogin(token)) as { data: UserResponse };
     if (response?.data && response?.data?.status === 200) {
       dispatch(setUser(response.data));
-    } else {
-      navigate("/home");
     }
   }, []);
 

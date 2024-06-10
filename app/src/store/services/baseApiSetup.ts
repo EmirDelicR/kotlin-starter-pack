@@ -7,7 +7,7 @@ import {
 
 import { API_URL } from "@/constants";
 import { RootState } from "@/store";
-// import { UserResponse, logoutUser, setUser } from "@/store/userSlice";
+import { UserResponse, logoutUser, setUser } from "../userSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
@@ -32,24 +32,24 @@ async function baseQueryWithReAuth(
     /** Get new token from endpoint */
     const refreshData = await baseQuery("/refresh", api, extraOptions);
 
-    // if (refreshData?.data) {
-    //   const { data } = refreshData.data as UserResponse;
-    //   const userData = (api.getState() as RootState).user.data;
-    //   /** Update token in state */
-    //   api.dispatch(
-    //     setUser({
-    //       data: {
-    //         ...userData,
-    //         ...data,
-    //       },
-    //     })
-    //   );
+    if (refreshData?.data) {
+      const { data } = refreshData.data as UserResponse;
+      const userData = (api.getState() as RootState).user.data;
+      /** Update token in state */
+      api.dispatch(
+        setUser({
+          data: {
+            ...userData,
+            ...data,
+          },
+        })
+      );
 
-    //   result = await baseQuery(args, api, extraOptions);
-    // } else {
-    //   /** Logout user */
-    //   api.dispatch(logoutUser());
-    // }
+      result = await baseQuery(args, api, extraOptions);
+    } else {
+      /** Logout user */
+      api.dispatch(logoutUser());
+    }
   }
 
   return result;
