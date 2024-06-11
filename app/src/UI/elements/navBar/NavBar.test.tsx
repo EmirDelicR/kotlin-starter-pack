@@ -1,39 +1,38 @@
-import { renderWithProviders } from "@/utils/test/testUtils";
-import { screen } from "@testing-library/react";
+import { screen } from '@testing-library/react';
+import { expect } from 'vitest';
 
-import { INITIAL_USER_DATA } from "@/store/userSlice";
+import { NavRouteNames, Roles } from '@/constants';
+import { INITIAL_USER_DATA } from '@/store/userSlice';
+import { renderWithProviders } from '@/utils/test/testUtils';
 
-import { NavRouteNames, Roles } from "@/constants";
+import NavBar from './NavBar';
 
-import NavBar from "./NavBar";
-import { expect } from "vitest";
-
-const USER_ID = "user-id";
+const USER_ID = 'user-id';
 const PRELOADED_STATE = {
   user: {
     data: {
       ...INITIAL_USER_DATA.data,
-      id: USER_ID,
-    },
-  },
+      id: USER_ID
+    }
+  }
 };
 
-let location = {
-  pathname: "/work",
+const location = {
+  pathname: '/work'
 };
 
-vi.mock("react-router-dom", async () => ({
-  ...(await vi.importActual<Record<string, unknown>>("react-router-dom")),
-  useLocation: () => location,
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual<Record<string, unknown>>('react-router-dom')),
+  useLocation: () => location
 }));
 
-describe("<NavBar/>", () => {
+describe('<NavBar/>', () => {
   afterAll(() => {
     vi.restoreAllMocks();
   });
 
-  describe("Layout test", () => {
-    it("should render only user routes", () => {
+  describe('Layout test', () => {
+    it('should render only user routes', () => {
       renderWithProviders(<NavBar />, { preloadedState: PRELOADED_STATE });
 
       expect(screen.getByText(NavRouteNames.HOME)).toBeInTheDocument();
@@ -41,18 +40,18 @@ describe("<NavBar/>", () => {
       expect(screen.getByText(NavRouteNames.PROFILE)).toBeInTheDocument();
     });
 
-    it("should render only admin routes if user is admin", () => {
+    it('should render only admin routes if user is admin', () => {
       const PRELOADED_STATE_ADMIN = {
         user: {
           data: {
             ...INITIAL_USER_DATA.data,
             id: USER_ID,
-            role: { type: Roles.ADMIN },
-          },
-        },
+            role: { type: Roles.ADMIN }
+          }
+        }
       };
       renderWithProviders(<NavBar />, {
-        preloadedState: PRELOADED_STATE_ADMIN,
+        preloadedState: PRELOADED_STATE_ADMIN
       });
 
       expect(screen.getByText(NavRouteNames.HOME)).toBeInTheDocument();
@@ -61,12 +60,12 @@ describe("<NavBar/>", () => {
       expect(screen.getByText(NavRouteNames.EMAILS)).toBeInTheDocument();
     });
 
-    it("should set active link depend on location", () => {
+    it('should set active link depend on location', () => {
       renderWithProviders(<NavBar />, { preloadedState: PRELOADED_STATE });
 
       const workLink = screen.getByText(NavRouteNames.WORK).parentElement!;
 
-      expect(workLink.classList.contains("linkActive")).toBeTruthy();
+      expect(workLink.classList.contains('linkActive')).toBeTruthy();
     });
   });
 });

@@ -1,26 +1,27 @@
 import {
-  ThemeIcon,
+  Badge,
+  Center,
+  Group,
+  Loader,
+  Paper,
   Progress,
   Text,
-  Group,
-  Badge,
-  Paper,
-  rem,
-  Loader,
-  Center,
-} from "@mantine/core";
-import { IconTools } from "@tabler/icons-react";
+  ThemeIcon,
+  rem
+} from '@mantine/core';
+import { IconTools } from '@tabler/icons-react';
 
-import classes from "./TaskStatistics.module.scss";
-import { useGetTasksStatisticsQuery } from "../store/taskApiSlice";
-import { useAppSelector } from "@/store";
-import { selectUserId } from "@/store/userSlice";
-import Error from "@/UI/components/error/Error";
+import Error from '@/UI/components/error/Error';
+import { useAppSelector } from '@/store';
+import { selectUserId } from '@/store/userSlice';
+
+import { useGetTasksStatisticsQuery } from '../store/taskApiSlice';
+import classes from './TaskStatistics.module.scss';
 
 function TaskStatisticsData() {
   const userId = useAppSelector(selectUserId);
   const { data, isLoading, isError, error } = useGetTasksStatisticsQuery({
-    userId,
+    userId
   });
 
   if (isLoading) {

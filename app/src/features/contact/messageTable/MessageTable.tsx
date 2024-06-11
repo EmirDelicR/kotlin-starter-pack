@@ -1,5 +1,6 @@
-import { Center, Flex, Pagination, Select } from "@mantine/core";
-import { useMemo, useState } from "react";
+import { useMemo, useState } from 'react';
+
+import { Center, Flex, Pagination, Select } from '@mantine/core';
 import {
   PaginationState,
   SortingState,
@@ -8,75 +9,74 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+  useReactTable
+} from '@tanstack/react-table';
 
-import { ITEMS_PER_PAGE, POOL_INTERVAL_5_MINUTES } from "@/constants";
-import { createPaginationShowList, formatDate } from "@/utils";
+import DebounceInput from '@/UI/components/debounceInput/DebounceInput';
+import CustomTable from '@/UI/components/table/CustomTable';
+import { ITEMS_PER_PAGE, POOL_INTERVAL_5_MINUTES } from '@/constants';
+import { createPaginationShowList, formatDate } from '@/utils';
 
 import {
   Message,
-  useGetPaginatedMessagesQuery,
-} from "../store/contactApiSlice";
-
-import DebounceInput from "@/UI/components/debounceInput/DebounceInput";
-import CustomTable from "@/UI/components/table/CustomTable";
-import Actions from "./actions/Actions";
+  useGetPaginatedMessagesQuery
+} from '../store/contactApiSlice';
+import Actions from './actions/Actions';
 
 type Columns = Message & { actions?: string };
 
 const columnHelper = createColumnHelper<Columns>();
 
 const columns = [
-  columnHelper.accessor("id", {
-    header: () => "ID",
+  columnHelper.accessor('id', {
+    header: () => 'ID',
     cell: (info) => info.getValue(),
-    enableSorting: false,
+    enableSorting: false
   }),
-  columnHelper.accessor("email", {
-    header: () => "Email",
+  columnHelper.accessor('email', {
+    header: () => 'Email',
+    cell: (info) => info.getValue()
+  }),
+  columnHelper.accessor('message', {
+    header: () => 'Message',
     cell: (info) => info.getValue(),
+    enableSorting: false
   }),
-  columnHelper.accessor("message", {
-    header: () => "Message",
-    cell: (info) => info.getValue(),
-    enableSorting: false,
+  columnHelper.accessor('sender', {
+    header: () => 'Sender',
+    cell: (info) => info.getValue()
   }),
-  columnHelper.accessor("sender", {
-    header: () => "Sender",
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('createdAt', {
+    header: () => 'Created At',
+    cell: (info) => formatDate(info.getValue())
   }),
-  columnHelper.accessor("createdAt", {
-    header: () => "Created At",
-    cell: (info) => formatDate(info.getValue()),
-  }),
-  columnHelper.accessor("unread", {
-    header: () => "Actions",
+  columnHelper.accessor('unread', {
+    header: () => 'Actions',
     cell: (info) => (
-      <Actions id={info.row.getValue("id")} unread={info.getValue()} />
+      <Actions id={info.row.getValue('id')} unread={info.getValue()} />
     ),
-    enableSorting: false,
-  }),
+    enableSorting: false
+  })
 ];
 
 export default function MessageTable() {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = useState("");
+  const [globalFilter, setGlobalFilter] = useState('');
   const [selectValue, setSelectValue] = useState<string | null>(
     `${ITEMS_PER_PAGE}`
   );
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: ITEMS_PER_PAGE,
+    pageSize: ITEMS_PER_PAGE
   });
 
   const { data, isLoading, isError, error } = useGetPaginatedMessagesQuery(
     {
-      columnId: sorting[0]?.id || "createdAt",
+      columnId: sorting[0]?.id || 'createdAt',
       currentPage: pageIndex,
       pageSize: pageSize,
-      desc: sorting[0]?.desc ? "DESC" : "ASC",
-      filter: globalFilter,
+      desc: sorting[0]?.desc ? 'DESC' : 'ASC',
+      filter: globalFilter
     },
     { pollingInterval: POOL_INTERVAL_5_MINUTES }
   );
@@ -84,7 +84,7 @@ export default function MessageTable() {
   const pagination = useMemo(
     () => ({
       pageIndex,
-      pageSize,
+      pageSize
     }),
     [pageIndex, pageSize]
   );
@@ -92,7 +92,7 @@ export default function MessageTable() {
   const onSortingChangeHandler = (sortOptions: Updater<SortingState>) => {
     setPagination({
       pageIndex: 0,
-      pageSize: pageSize,
+      pageSize: pageSize
     });
 
     setSorting(sortOptions);
@@ -105,7 +105,7 @@ export default function MessageTable() {
     state: {
       pagination,
       sorting,
-      globalFilter,
+      globalFilter
     },
     onSortingChange: onSortingChangeHandler,
     onGlobalFilterChange: setGlobalFilter,
@@ -113,7 +113,7 @@ export default function MessageTable() {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    manualPagination: true,
+    manualPagination: true
   });
 
   const totalItems = data?.messages.length || 0;
@@ -130,7 +130,7 @@ export default function MessageTable() {
   const CaptionElement = (
     <Flex justify="space-between" mb="md">
       <DebounceInput
-        initialValue={globalFilter ?? ""}
+        initialValue={globalFilter ?? ''}
         onChange={setGlobalFilter}
         placeholder="Search..."
         data-testid="search-input"

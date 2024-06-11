@@ -1,20 +1,21 @@
+import { useMemo } from 'react';
+
 import {
   Blockquote,
   Chip,
-  List,
-  Grid,
-  ThemeIcon,
-  rem,
-  Text,
-  Switch,
   Flex,
-} from "@mantine/core";
-import { useMemo } from "react";
-import { IconCircleCheck, IconForbid, IconMessage2 } from "@tabler/icons-react";
+  Grid,
+  List,
+  Switch,
+  Text,
+  ThemeIcon,
+  rem
+} from '@mantine/core';
+import { IconCircleCheck, IconForbid, IconMessage2 } from '@tabler/icons-react';
 
-import { SubscriptionType } from "@/constants";
+import { SubscriptionType } from '@/constants';
 
-import { useProfileFormContext } from "./FormContext";
+import { useProfileFormContext } from './FormContext';
 
 export default function SubscriptionForm() {
   const form = useProfileFormContext();
@@ -31,24 +32,24 @@ export default function SubscriptionForm() {
 
   const onSwitchClickHandler = (checked: boolean, name: SubscriptionType) => {
     if (checked) {
-      form.setFieldValue("subscriptions", [...userSubscriptions, name]);
+      form.setFieldValue('subscriptions', [...userSubscriptions, name]);
     } else {
       form.setFieldValue(
-        "subscriptions",
+        'subscriptions',
         userSubscriptions.filter((sub) => sub !== name)
       );
     }
   };
 
   const onChipClickHandler = () => {
-    form.setFieldValue("subscribed", !isUserSubscribed);
+    form.setFieldValue('subscribed', !isUserSubscribed);
     if (isUserSubscribed) {
-      form.setFieldValue("subscriptions", []);
+      form.setFieldValue('subscriptions', []);
     }
   };
 
   return (
-    <Grid gutter={{ base: "xs", lg: "md" }} grow p="md">
+    <Grid gutter={{ base: 'xs', lg: 'md' }} grow p="md">
       <Grid.Col span={{ base: 8 }}>
         <Blockquote
           color="blue"
@@ -60,7 +61,7 @@ export default function SubscriptionForm() {
               onClick={onChipClickHandler}
               data-testid="subscription-chip"
             >
-              Subscription alerts {!isUserSubscribed && "not"} activated
+              Subscription alerts {!isUserSubscribed && 'not'} activated
             </Chip>
           }
           icon={<IconMessage2 />}
@@ -70,7 +71,7 @@ export default function SubscriptionForm() {
             size="xl"
             fw={900}
             variant="gradient"
-            gradient={{ from: "blue", to: "cyan", deg: 90 }}
+            gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
           >
             Stop taking advice from the dark side.
           </Text>

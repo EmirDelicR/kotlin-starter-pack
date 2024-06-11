@@ -1,1 +1,1 @@
-export * from "./general/general";
+export * from './general/general';

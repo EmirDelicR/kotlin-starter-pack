@@ -1,23 +1,22 @@
 import {
-  TextInput,
-  PasswordInput,
-  Paper,
-  Title,
-  Container,
-  Button,
-  Group,
   Box,
+  Button,
+  Container,
+  Group,
   LoadingOverlay,
-} from "@mantine/core";
-import { isEmail, isNotEmpty, matches, useForm } from "@mantine/form";
+  Paper,
+  PasswordInput,
+  TextInput,
+  Title
+} from '@mantine/core';
+import { isEmail, isNotEmpty, matches, useForm } from '@mantine/form';
 
-import { useRegisterMutation } from "../store/authApiSlice";
-import useAuth from "../useAuth";
+import Error from '@/UI/components/error/Error';
+import HelpPopover from '@/UI/components/helpPopover/HelpPopover.tsx';
+import { PASSWORD_PATTERNS } from '@/constants';
 
-import { PASSWORD_PATTERNS } from "@/constants";
-
-import HelpPopover from "@/UI/components/helpPopover/HelpPopover.tsx";
-import Error from "@/UI/components/error/Error";
+import { useRegisterMutation } from '../store/authApiSlice';
+import useAuth from '../useAuth';
 
 interface FormFields {
   email: string;
@@ -28,11 +27,11 @@ interface FormFields {
 }
 
 const INITIAL_FORM_VALUES: FormFields = {
-  firstName: "",
-  lastName: "",
-  userName: "",
-  email: "",
-  password: "",
+  firstName: '',
+  lastName: '',
+  userName: '',
+  email: '',
+  password: ''
 };
 
 export default function Register() {
@@ -40,17 +39,17 @@ export default function Register() {
     useRegisterMutation();
 
   const registerForm = useForm<FormFields>({
-    mode: "uncontrolled",
+    mode: 'uncontrolled',
     initialValues: INITIAL_FORM_VALUES,
     validate: {
-      email: isEmail("Valid email is required."),
+      email: isEmail('Valid email is required.'),
       password: matches(
         PASSWORD_PATTERNS,
-        "Your password is not strong enough."
+        'Your password is not strong enough.'
       ),
-      firstName: isNotEmpty("First name is required."),
-      lastName: isNotEmpty("Last name is required."),
-    },
+      firstName: isNotEmpty('First name is required.'),
+      lastName: isNotEmpty('Last name is required.')
+    }
   });
 
   useAuth(data, isSuccess);
@@ -68,8 +67,8 @@ export default function Register() {
           data-testid="register-loading-overlay"
           visible={isLoading}
           zIndex={1000}
-          overlayProps={{ radius: "sm", blur: 2 }}
-          loaderProps={{ color: "var(--mantine-color-blue-6)", type: "bars" }}
+          overlayProps={{ radius: 'sm', blur: 2 }}
+          loaderProps={{ color: 'var(--mantine-color-blue-6)', type: 'bars' }}
         />
         <form onSubmit={registerForm.onSubmit(handleSubmit)}>
           <TextInput
@@ -78,8 +77,8 @@ export default function Register() {
             data-testid="register-first-name"
             withAsterisk
             mb="md"
-            key={registerForm.key("firstName")}
-            {...registerForm.getInputProps("firstName")}
+            key={registerForm.key('firstName')}
+            {...registerForm.getInputProps('firstName')}
           />
           <TextInput
             label="Surname"
@@ -87,16 +86,16 @@ export default function Register() {
             data-testid="register-last-name"
             withAsterisk
             mb="md"
-            key={registerForm.key("lastName")}
-            {...registerForm.getInputProps("lastName")}
+            key={registerForm.key('lastName')}
+            {...registerForm.getInputProps('lastName')}
           />
           <TextInput
             label="Username"
             placeholder="Your user name"
             data-testid="register-user-name"
             mb="md"
-            key={registerForm.key("userName")}
-            {...registerForm.getInputProps("userName")}
+            key={registerForm.key('userName')}
+            {...registerForm.getInputProps('userName')}
           />
           <TextInput
             label="Email"
@@ -104,18 +103,18 @@ export default function Register() {
             data-testid="register-email"
             withAsterisk
             mb="md"
-            key={registerForm.key("email")}
-            {...registerForm.getInputProps("email")}
+            key={registerForm.key('email')}
+            {...registerForm.getInputProps('email')}
           />
-          <Group justify="space-between" gap="sm" align={"center"}>
+          <Group justify="space-between" gap="sm" align={'center'}>
             <Box flex={1} mih="85px">
               <PasswordInput
                 label="Password"
                 placeholder="Your password"
                 data-testid="register-password"
                 withAsterisk
-                key={registerForm.key("password")}
-                {...registerForm.getInputProps("password")}
+                key={registerForm.key('password')}
+                {...registerForm.getInputProps('password')}
               />
             </Box>
             <HelpPopover hintText="Password must contain minimum 8 characters,one number and one of this special signs !#$%&()*+,-/:;<=>?" />

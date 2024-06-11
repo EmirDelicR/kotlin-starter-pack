@@ -1,19 +1,19 @@
-import { ActionIcon, Flex, Modal } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { notifications } from "@mantine/notifications";
-import { IconEye, IconTrash } from "@tabler/icons-react";
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import { useDeleteMessageMutation } from "../../store/contactApiSlice";
+import { ActionIcon, Flex, Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import { IconEye, IconTrash } from '@tabler/icons-react';
 
-import { normalizeError } from "@/utils";
+import { normalizeError } from '@/utils';
 
-import MessageDetails from "../details/MessageDetails";
+import { useDeleteMessageMutation } from '../../store/contactApiSlice';
+import MessageDetails from '../details/MessageDetails';
 
 function DeleteMessageActionIcon({ messageId }: { messageId: string }) {
   const [deleteMessage, { isError, error, isLoading }] =
     useDeleteMessageMutation();
-  const { message = "Unknown Error occurred!" } = normalizeError(error);
+  const { message = 'Unknown Error occurred!' } = normalizeError(error);
 
   const onDeleteHandler = async () => {
     await deleteMessage(messageId);
@@ -22,9 +22,9 @@ function DeleteMessageActionIcon({ messageId }: { messageId: string }) {
   useEffect(() => {
     if (isError) {
       notifications.show({
-        title: "Error deleting message",
+        title: 'Error deleting message',
         message: message,
-        color: "red",
+        color: 'red'
       });
     }
   }, [isError]);
@@ -45,7 +45,7 @@ function DeleteMessageActionIcon({ messageId }: { messageId: string }) {
 
 export default function Actions({
   id,
-  unread,
+  unread
 }: {
   id: string;
   unread: boolean;
@@ -55,7 +55,7 @@ export default function Actions({
     <Flex gap="sm">
       <DeleteMessageActionIcon messageId={id} />
       <ActionIcon
-        color={unread ? "blue" : "green"}
+        color={unread ? 'blue' : 'green'}
         size={24}
         radius="xl"
         onClick={open}

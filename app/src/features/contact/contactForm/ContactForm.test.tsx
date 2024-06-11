@@ -1,14 +1,14 @@
-import { screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { notifications } from "@mantine/notifications";
-import { expect, vi } from "vitest";
+import { notifications } from '@mantine/notifications';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { expect, vi } from 'vitest';
 
 import {
   renderWithProviders,
-  typeDataInInputField,
-} from "@/utils/test/testUtils";
+  typeDataInInputField
+} from '@/utils/test/testUtils';
 
-import ContactForm from "./ContactForm";
+import ContactForm from './ContactForm';
 
 const mockSendMessage = vi.fn();
 
@@ -16,28 +16,28 @@ let mockUseSendMessageMutationData = {
   isLoading: false,
   isSuccess: false,
   isError: false,
-  error: {},
+  error: {}
 };
 
-vi.mock("@/features/contact/store/contactApiSlice", async () => ({
+vi.mock('@/features/contact/store/contactApiSlice', async () => ({
   ...(await vi.importActual<Record<string, unknown>>(
-    "@/features/contact/store/contactApiSlice"
+    '@/features/contact/store/contactApiSlice'
   )),
   useSendMessageMutation: () => [
     mockSendMessage,
-    mockUseSendMessageMutationData,
-  ],
+    mockUseSendMessageMutationData
+  ]
 }));
 
-describe("<ContactForm/>", () => {
-  const notificationShowSpy = vi.spyOn(notifications, "show");
+describe('<ContactForm/>', () => {
+  const notificationShowSpy = vi.spyOn(notifications, 'show');
 
   beforeEach(() => {
     mockUseSendMessageMutationData = {
       isLoading: false,
       isSuccess: false,
       isError: false,
-      error: {},
+      error: {}
     };
   });
 
@@ -50,90 +50,90 @@ describe("<ContactForm/>", () => {
     vi.restoreAllMocks();
   });
 
-  describe("Layout test", () => {
-    it("should render element", () => {
+  describe('Layout test', () => {
+    it('should render element', () => {
       renderWithProviders(<ContactForm />);
 
-      expect(screen.getByText("Email")).toBeInTheDocument();
-      expect(screen.getByText("Full Name")).toBeInTheDocument();
+      expect(screen.getByText('Email')).toBeInTheDocument();
+      expect(screen.getByText('Full Name')).toBeInTheDocument();
       expect(
-        screen.getByRole("textbox", { name: "Your Message" })
+        screen.getByRole('textbox', { name: 'Your Message' })
       ).toBeInTheDocument();
-      expect(screen.getByText("Send message")).toBeInTheDocument();
+      expect(screen.getByText('Send message')).toBeInTheDocument();
     });
 
-    it("should render loader if is loading state", () => {
+    it('should render loader if is loading state', () => {
       mockUseSendMessageMutationData = {
         ...mockUseSendMessageMutationData,
-        isLoading: true,
+        isLoading: true
       };
       renderWithProviders(<ContactForm />);
 
-      expect(screen.getByTestId("contact-loading-overlay")).toBeInTheDocument();
+      expect(screen.getByTestId('contact-loading-overlay')).toBeInTheDocument();
     });
 
-    it("should render error if is error state", () => {
+    it('should render error if is error state', () => {
       mockUseSendMessageMutationData = {
         ...mockUseSendMessageMutationData,
         isError: true,
         error: {
-          data: "Error occurred",
-        },
+          data: 'Error occurred'
+        }
       };
       renderWithProviders(<ContactForm />);
 
-      expect(screen.getByText("Error occurred.")).toBeInTheDocument();
+      expect(screen.getByText('Error occurred.')).toBeInTheDocument();
     });
   });
 
-  describe("Handling submit test", () => {
+  describe('Handling submit test', () => {
     beforeEach(() => {
       mockSendMessage.mockReset();
       notificationShowSpy.mockReset();
     });
 
     const data = {
-      email: "test@test.com",
-      fullName: "John Doe",
-      message: "Some text",
+      email: 'test@test.com',
+      fullName: 'John Doe',
+      message: 'Some text'
     };
 
-    it("should not send message if no input data and it will show errors", async () => {
+    it('should not send message if no input data and it will show errors', async () => {
       renderWithProviders(<ContactForm />);
 
-      const button = screen.getByText("Send message");
+      const button = screen.getByText('Send message');
       await userEvent.click(button);
 
       expect(mockSendMessage).not.toHaveBeenCalled();
-      expect(screen.getByText("Valid email is required.")).toBeInTheDocument();
-      expect(screen.getByText("Full name is required.")).toBeInTheDocument();
-      expect(screen.getByText("Message is required.")).toBeInTheDocument();
+      expect(screen.getByText('Valid email is required.')).toBeInTheDocument();
+      expect(screen.getByText('Full name is required.')).toBeInTheDocument();
+      expect(screen.getByText('Message is required.')).toBeInTheDocument();
     });
 
-    it("should not send message if email is set and have invalid pattern", async () => {
+    it('should not send message if email is set and have invalid pattern', async () => {
       renderWithProviders(<ContactForm />);
 
-      const button = screen.getByText("Send message");
-      await typeDataInInputField("Email", "invalid");
+      const button = screen.getByText('Send message');
+      await typeDataInInputField('Email', 'invalid');
       await userEvent.click(button);
 
       expect(mockSendMessage).not.toHaveBeenCalled();
-      expect(screen.getByText("Valid email is required.")).toBeInTheDocument();
+      expect(screen.getByText('Valid email is required.')).toBeInTheDocument();
     });
 
-    it("should send message if fullName, message and email is set", async () => {
+    it('should send message if fullName, message and email is set', async () => {
       mockUseSendMessageMutationData = {
         ...mockUseSendMessageMutationData,
-        isSuccess: true,
+        isSuccess: true
       };
 
       renderWithProviders(<ContactForm />);
 
-      const message = screen.getByRole("textbox", { name: "Your Message" });
-      const button = screen.getByText("Send message");
+      const message = screen.getByRole('textbox', { name: 'Your Message' });
+      const button = screen.getByText('Send message');
 
-      await typeDataInInputField("Email", data.email);
-      await typeDataInInputField("Full Name", data.fullName);
+      await typeDataInInputField('Email', data.email);
+      await typeDataInInputField('Full Name', data.fullName);
       await userEvent.type(message, data.message);
 
       await userEvent.click(button);
@@ -142,30 +142,30 @@ describe("<ContactForm/>", () => {
       expect(notificationShowSpy).toHaveBeenCalledTimes(1);
     });
 
-    it("should not call on submit callback if request fails", async () => {
+    it('should not call on submit callback if request fails', async () => {
       mockUseSendMessageMutationData = {
         ...mockUseSendMessageMutationData,
         isSuccess: false,
         isError: true,
         error: {
-          data: "Error occurred",
-        },
+          data: 'Error occurred'
+        }
       };
 
       renderWithProviders(<ContactForm />);
 
-      const message = screen.getByRole("textbox", { name: "Your Message" });
-      const button = screen.getByText("Send message");
+      const message = screen.getByRole('textbox', { name: 'Your Message' });
+      const button = screen.getByText('Send message');
 
-      await typeDataInInputField("Email", data.email);
-      await typeDataInInputField("Full Name", data.fullName);
+      await typeDataInInputField('Email', data.email);
+      await typeDataInInputField('Full Name', data.fullName);
       await userEvent.type(message, data.message);
 
       await userEvent.click(button);
 
       expect(mockSendMessage).toHaveBeenCalledWith(data);
       expect(notificationShowSpy).toHaveBeenCalledTimes(0);
-      expect(screen.getByText("Error occurred.")).toBeInTheDocument();
+      expect(screen.getByText('Error occurred.')).toBeInTheDocument();
     });
   });
 });

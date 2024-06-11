@@ -1,18 +1,18 @@
-import { MantineProvider } from "@mantine/core";
-import React, { PropsWithChildren, ReactElement } from "react";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-import { render, renderHook, screen } from "@testing-library/react";
-import type { RenderHookOptions, RenderOptions } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import React, { PropsWithChildren, ReactElement } from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
-import { AppStore, RootState, createStore } from "@/store";
+import { MantineProvider } from '@mantine/core';
+import { render, renderHook, screen } from '@testing-library/react';
+import type { RenderHookOptions, RenderOptions } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import themeConfig from "@/configs/themeConfig";
+import themeConfig from '@/configs/themeConfig';
+import { AppStore, RootState, createStore } from '@/store';
 
 // https://redux.js.org/usage/writing-tests
 
-interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
+interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState | Record<string, unknown>>;
   store?: AppStore;
 }
@@ -26,7 +26,7 @@ export function renderWithProviders(
   }: ExtendedRenderOptions = {}
 ) {
   function Wrapper({
-    children,
+    children
   }: PropsWithChildren<Record<string, unknown>>): ReactElement {
     return (
       <BrowserRouter>
@@ -53,21 +53,21 @@ export function renderHookWithProviders<TProps, TResult>(
   }: ExtendedRenderHookOptions<TProps> = {}
 ) {
   function Wrapper({
-    children,
+    children
   }: PropsWithChildren<Record<string, unknown>>): ReactElement {
     return <Provider store={store}>{children}</Provider>;
   }
 
   return {
     store,
-    ...renderHook(hook, { wrapper: Wrapper, ...renderHookOptions }),
+    ...renderHook(hook, { wrapper: Wrapper, ...renderHookOptions })
   };
 }
 
 /** Helpers */
 export const typeDataInInputField = async (fieldName: string, text: string) => {
-  await userEvent.type(screen.getByRole("textbox", { name: fieldName }), text, {
-    delay: 1,
+  await userEvent.type(screen.getByRole('textbox', { name: fieldName }), text, {
+    delay: 1
   });
 };
 
@@ -76,6 +76,6 @@ export const typeDataInFieldByDataTestId = async (
   text: string
 ) => {
   await userEvent.type(screen.getByTestId(dataTestId), text, {
-    delay: 1,
+    delay: 1
   });
 };

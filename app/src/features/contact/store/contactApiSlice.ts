@@ -1,5 +1,5 @@
-import { ITEMS_PER_PAGE } from "@/constants";
-import baseApi from "@/store/services/baseApiSetup";
+import { ITEMS_PER_PAGE } from '@/constants';
+import baseApi from '@/store/services/baseApiSetup';
 
 export interface ContactFormMessage {
   email: string;
@@ -32,17 +32,17 @@ interface ApiMessageResponse {
   status: number;
 }
 
-const baseApiWithTag = baseApi.enhanceEndpoints({ addTagTypes: ["Message"] });
+const baseApiWithTag = baseApi.enhanceEndpoints({ addTagTypes: ['Message'] });
 
-export const contactSlice = baseApiWithTag.injectEndpoints({
+const contactSlice = baseApiWithTag.injectEndpoints({
   endpoints: (builder) => ({
     sendMessage: builder.mutation({
       query: (data: ContactFormMessage) => ({
-        url: "/messages",
-        method: "POST",
-        body: data,
+        url: '/messages',
+        method: 'POST',
+        body: data
       }),
-      invalidatesTags: ["Message"],
+      invalidatesTags: ['Message']
     }),
 
     getPaginatedMessages: builder.query<
@@ -51,44 +51,44 @@ export const contactSlice = baseApiWithTag.injectEndpoints({
         currentPage?: number;
         pageSize?: number;
         columnId: string;
-        desc: "DESC" | "ASC";
+        desc: 'DESC' | 'ASC';
         filter: string;
       }
     >({
       query: ({
-        columnId = "createdAt",
+        columnId = 'createdAt',
         currentPage = 0,
         pageSize = ITEMS_PER_PAGE,
-        desc = "DESC",
-        filter = "",
+        desc = 'DESC',
+        filter = ''
       }) =>
         `/messages/paginated?page=${currentPage}&pageSize=${pageSize}&columnId=${columnId}&desc=${desc}&filter=${filter}`,
       transformResponse: (res: ApiPaginatedMessageResponse) => res.data,
-      providesTags: ["Message"],
+      providesTags: ['Message']
     }),
 
     getMessage: builder.query<Message, { messageId: string }>({
       query: ({ messageId }) => `/messages/${messageId}`,
       transformResponse: (res: ApiMessageResponse) => res.data,
-      providesTags: ["Message"],
+      providesTags: ['Message']
     }),
 
     updateMessage: builder.mutation({
       query: (messageId: string) => ({
         url: `/messages/${messageId}`,
-        method: "PUT",
+        method: 'PUT'
       }),
-      invalidatesTags: ["Message"],
+      invalidatesTags: ['Message']
     }),
 
     deleteMessage: builder.mutation({
       query: (messageId: string) => ({
         url: `/messages/${messageId}`,
-        method: "DELETE",
+        method: 'DELETE'
       }),
-      invalidatesTags: ["Message"],
-    }),
-  }),
+      invalidatesTags: ['Message']
+    })
+  })
 });
 
 export const {
@@ -96,5 +96,5 @@ export const {
   useGetPaginatedMessagesQuery,
   useDeleteMessageMutation,
   useGetMessageQuery,
-  useUpdateMessageMutation,
+  useUpdateMessageMutation
 } = contactSlice;

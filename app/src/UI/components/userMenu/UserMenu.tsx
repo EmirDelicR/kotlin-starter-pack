@@ -1,32 +1,31 @@
-import { forwardRef } from "react";
+import { forwardRef } from 'react';
+import { NavLink } from 'react-router-dom';
+
 import {
+  Avatar,
   Flex,
   Group,
-  Avatar,
-  Text,
   Menu,
-  UnstyledButton,
-  rem,
   Modal,
-} from "@mantine/core";
+  Text,
+  UnstyledButton,
+  rem
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import {
-  IconSettings,
-  IconLogout,
   IconChevronDown,
-  IconTool,
-} from "@tabler/icons-react";
-import { NavLink } from "react-router-dom";
-import { useDisclosure } from "@mantine/hooks";
+  IconLogout,
+  IconSettings,
+  IconTool
+} from '@tabler/icons-react';
 
-import { useAppSelector } from "@/store";
-import { selectUser } from "@/store/userSlice";
+import { NavRouteNames, NavRoutes } from '@/constants';
+import EditProfileForm from '@/features/profile/edit/EditProfileForm';
+import useLogout from '@/hooks/useLogout';
+import { useAppSelector } from '@/store';
+import { selectUser } from '@/store/userSlice';
 
-import { NavRouteNames, NavRoutes } from "@/constants";
-
-import EditProfileForm from "@/features/profile/edit/EditProfileForm";
-import useLogout from "@/hooks/useLogout";
-
-interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
+interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   image: string;
   name: string;
   email: string;
@@ -38,9 +37,9 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
     <UnstyledButton
       ref={ref}
       style={{
-        padding: "var(--mantine-spacing-md)",
-        color: "var(--mantine-color-text)",
-        borderRadius: "var(--mantine-radius-sm)",
+        padding: 'var(--mantine-spacing-md)',
+        color: 'var(--mantine-color-text)',
+        borderRadius: 'var(--mantine-radius-sm)'
       }}
       {...others}
       data-testid="user-menu-button"
@@ -63,6 +62,8 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
     </UnstyledButton>
   )
 );
+
+UserButton.displayName = 'UserButton';
 
 function LogoutItem() {
   const onUserLogoutHandler = useLogout();
@@ -112,7 +113,7 @@ export default function UserMenu() {
             <NavLink
               to={NavRoutes.WORK}
               end
-              style={{ textDecoration: "none", color: "inherit" }}
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
               {NavRouteNames.WORK}
             </NavLink>

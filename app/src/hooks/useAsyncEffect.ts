@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 type AsyncFunction<T> = () => Promise<T>;
 
@@ -29,7 +29,7 @@ export default function useAsyncEffect<T>(
       try {
         await action();
       } catch (error) {
-        console.log("useAsyncEffect Error: ", error);
+        console.log('useAsyncEffect Error: ', error);
       }
     }
 

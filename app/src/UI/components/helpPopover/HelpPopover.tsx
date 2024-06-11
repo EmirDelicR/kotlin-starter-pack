@@ -1,7 +1,8 @@
-import { useDisclosure } from "@mantine/hooks";
-import { Button, Popover, Text } from "@mantine/core";
-import { IconHelpCircle } from "@tabler/icons-react";
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
+
+import { Button, Popover, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { IconHelpCircle } from '@tabler/icons-react';
 
 interface Props {
   buttonText?: string | ReactNode;
@@ -10,7 +11,7 @@ interface Props {
 
 export default function HelpPopover({
   hintText,
-  buttonText = <IconHelpCircle />,
+  buttonText = <IconHelpCircle />
 }: Props) {
   const [opened, { close, open }] = useDisclosure(false);
 
@@ -32,7 +33,7 @@ export default function HelpPopover({
           {buttonText}
         </Button>
       </Popover.Target>
-      <Popover.Dropdown style={{ pointerEvents: "none" }}>
+      <Popover.Dropdown style={{ pointerEvents: 'none' }}>
         <Text size="sm">{hintText}</Text>
       </Popover.Dropdown>
     </Popover>

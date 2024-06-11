@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch } from "@/store";
-import { UserResponse, setUser } from "@/store/userSlice";
-import { NavRoutes } from "@/constants";
+import { NavRoutes } from '@/constants';
+import { useAppDispatch } from '@/store';
+import { UserResponse, setUser } from '@/store/userSlice';
 
 const useAuth = (response: UserResponse | undefined, isSuccess: boolean) => {
   const dispatch = useAppDispatch();

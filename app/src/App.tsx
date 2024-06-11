@@ -1,11 +1,10 @@
-import { MantineProvider } from "@mantine/core";
-import { Notifications } from "@mantine/notifications";
+import { MantineProvider } from '@mantine/core';
+import '@mantine/core/styles.css';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 
-import theme from "@/configs/themeConfig";
-import AppRoutes from "@/routes/Routes";
-
-import "@mantine/core/styles.css";
-import "@mantine/notifications/styles.css";
+import theme from '@/configs/themeConfig';
+import AppRoutes from '@/routes/Routes';
 
 function App() {
   return (

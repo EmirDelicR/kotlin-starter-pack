@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useState } from 'react';
+
 import {
   ActionIcon,
   Button,
@@ -10,36 +12,30 @@ import {
   Paper,
   Stack,
   Text,
-  Title,
-} from "@mantine/core";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import { notifications } from "@mantine/notifications";
-
-import { useEffect, useMemo, useState } from "react";
-
+  Title
+} from '@mantine/core';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
 import {
   IconCircleCheck,
   IconCircleDashed,
-  IconTrash,
-} from "@tabler/icons-react";
+  IconTrash
+} from '@tabler/icons-react';
 
-import { useAppSelector } from "@/store";
-import { selectUserId } from "@/store/userSlice";
+import Error from '@/UI/components/error/Error';
+import { ITEMS_PER_PAGE, MOBILE } from '@/constants';
+import { useAppSelector } from '@/store';
+import { selectUserId } from '@/store/userSlice';
+import { normalizeError } from '@/utils';
 
+import classes from './TaskManager.module.scss';
+import CreateTaskForm from './form/CreateTaskForm';
 import {
   Task,
   useDeleteTaskMutation,
   useGetPaginatedTasksQuery,
-  useUpdateTaskMutation,
-} from "./store/taskApiSlice";
-
-import { ITEMS_PER_PAGE, MOBILE } from "@/constants";
-import { normalizeError } from "@/utils";
-
-import Error from "@/UI/components/error/Error";
-import CreateTaskForm from "./form/CreateTaskForm";
-
-import classes from "./TaskManager.module.scss";
+  useUpdateTaskMutation
+} from './store/taskApiSlice';
 
 interface TaskItemProps {
   item: Task;
@@ -47,13 +43,13 @@ interface TaskItemProps {
 
 function UpdateTaskActionIcon({ item }: TaskItemProps) {
   const [updateTask, { isError, error, isLoading }] = useUpdateTaskMutation();
-  const { message = "Unknown Error occurred!" } = normalizeError(error);
+  const { message = 'Unknown Error occurred!' } = normalizeError(error);
   const icon = item.completed ? (
     <IconCircleCheck size={16} />
   ) : (
     <IconCircleDashed size={16} />
   );
-  const iconColor = item.completed ? "teal" : "blue";
+  const iconColor = item.completed ? 'teal' : 'blue';
 
   const onUpdateHandler = async () => {
     await updateTask({ ...item, completed: !item.completed });
@@ -62,9 +58,9 @@ function UpdateTaskActionIcon({ item }: TaskItemProps) {
   useEffect(() => {
     if (isError) {
       notifications.show({
-        title: "Error updating task",
+        title: 'Error updating task',
         message: message,
-        color: "red",
+        color: 'red'
       });
     }
   }, [isError]);
@@ -85,7 +81,7 @@ function UpdateTaskActionIcon({ item }: TaskItemProps) {
 
 function DeleteTaskActionIcon({ item }: TaskItemProps) {
   const [deleteTask, { isError, error, isLoading }] = useDeleteTaskMutation();
-  const { message = "Unknown Error occurred!" } = normalizeError(error);
+  const { message = 'Unknown Error occurred!' } = normalizeError(error);
 
   const onDeleteHandler = async () => {
     await deleteTask({ taskId: item.id, userId: item.userId });
@@ -94,9 +90,9 @@ function DeleteTaskActionIcon({ item }: TaskItemProps) {
   useEffect(() => {
     if (isError) {
       notifications.show({
-        title: "Error deleting task",
+        title: 'Error deleting task',
         message: message,
-        color: "red",
+        color: 'red'
       });
     }
   }, [isError]);
@@ -139,7 +135,7 @@ function TaskList() {
       userId,
       page: currentPage,
       pageSize: ITEMS_PER_PAGE,
-      isMobile: isMobileView,
+      isMobile: isMobileView
     });
 
   const content = useMemo(() => {

@@ -1,18 +1,18 @@
 import {
-  TextInput,
-  PasswordInput,
-  Paper,
-  Title,
-  Container,
   Button,
+  Container,
   LoadingOverlay,
-} from "@mantine/core";
-import { isEmail, isNotEmpty, useForm } from "@mantine/form";
+  Paper,
+  PasswordInput,
+  TextInput,
+  Title
+} from '@mantine/core';
+import { isEmail, isNotEmpty, useForm } from '@mantine/form';
 
-import { useLoginMutation } from "../store/authApiSlice";
-import useAuth from "../useAuth";
+import Error from '@/UI/components/error/Error';
 
-import Error from "@/UI/components/error/Error";
+import { useLoginMutation } from '../store/authApiSlice';
+import useAuth from '../useAuth';
 
 interface FormFields {
   email: string;
@@ -20,20 +20,20 @@ interface FormFields {
 }
 
 const INITIAL_FORM_VALUES: FormFields = {
-  email: "",
-  password: "",
+  email: '',
+  password: ''
 };
 
 export default function Login() {
   const [login, { isLoading, isSuccess, data, isError, error }] =
     useLoginMutation();
   const loginForm = useForm<FormFields>({
-    mode: "uncontrolled",
+    mode: 'uncontrolled',
     initialValues: INITIAL_FORM_VALUES,
     validate: {
-      email: isEmail("Valid email is required."),
-      password: isNotEmpty("Password field is required."),
-    },
+      email: isEmail('Valid email is required.'),
+      password: isNotEmpty('Password field is required.')
+    }
   });
 
   useAuth(data, isSuccess);
@@ -51,8 +51,8 @@ export default function Login() {
           data-testid="login-loading-overlay"
           visible={isLoading}
           zIndex={1000}
-          overlayProps={{ radius: "sm", blur: 2 }}
-          loaderProps={{ color: "var(--mantine-color-blue-6)", type: "bars" }}
+          overlayProps={{ radius: 'sm', blur: 2 }}
+          loaderProps={{ color: 'var(--mantine-color-blue-6)', type: 'bars' }}
         />
         <form onSubmit={loginForm.onSubmit(handleSubmit)}>
           <TextInput
@@ -60,8 +60,8 @@ export default function Login() {
             placeholder="your@email.com"
             data-testid="login-email"
             withAsterisk
-            key={loginForm.key("email")}
-            {...loginForm.getInputProps("email")}
+            key={loginForm.key('email')}
+            {...loginForm.getInputProps('email')}
           />
           <PasswordInput
             label="Password"
@@ -69,8 +69,8 @@ export default function Login() {
             data-testid="login-password"
             withAsterisk
             mt="md"
-            key={loginForm.key("password")}
-            {...loginForm.getInputProps("password")}
+            key={loginForm.key('password')}
+            {...loginForm.getInputProps('password')}
           />
           <Button type="submit" fullWidth my="xl" data-testid="login-submit">
             Login

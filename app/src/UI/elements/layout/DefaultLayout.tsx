@@ -1,6 +1,7 @@
-import { Center, Loader } from "@mantine/core";
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
+import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+
+import { Center, Loader } from '@mantine/core';
 
 export default function DefaultLayout() {
   return (

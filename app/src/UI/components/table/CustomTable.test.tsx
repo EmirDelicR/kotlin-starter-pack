@@ -1,38 +1,38 @@
-import { renderHook, screen } from "@testing-library/react";
-import { expect, vi } from "vitest";
-import userEvent from "@testing-library/user-event";
-
-import { renderWithProviders } from "@/utils/test/testUtils";
-
-import CustomTable from "./CustomTable";
 import {
   createColumnHelper,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+  useReactTable
+} from '@tanstack/react-table';
+import { renderHook, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { expect, vi } from 'vitest';
+
+import { renderWithProviders } from '@/utils/test/testUtils';
+
+import CustomTable from './CustomTable';
 
 const mockOnSortingChangeHandler = vi.fn();
 
 const columnHelper = createColumnHelper<{ id: string; email: string }>();
 
 const COLUMNS = [
-  columnHelper.accessor("id", {
-    header: () => "ID",
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('id', {
+    header: () => 'ID',
+    cell: (info) => info.getValue()
   }),
-  columnHelper.accessor("email", {
-    header: () => "Email",
+  columnHelper.accessor('email', {
+    header: () => 'Email',
     cell: (info) => info.getValue(),
-    enableSorting: false,
-  }),
+    enableSorting: false
+  })
 ];
 
 const TABLE_DATA = {
   data: [
-    { id: "1", email: "test@test.com" },
-    { id: "2", email: "test2@test.com" },
+    { id: '1', email: 'test@test.com' },
+    { id: '2', email: 'test2@test.com' }
   ],
   columns: COLUMNS,
   pageCount: 1,
@@ -41,10 +41,10 @@ const TABLE_DATA = {
   getCoreRowModel: getCoreRowModel(),
   getSortedRowModel: getSortedRowModel(),
   getFilteredRowModel: getFilteredRowModel(),
-  manualPagination: true,
+  manualPagination: true
 };
 
-describe("<CustomTable/>", () => {
+describe('<CustomTable/>', () => {
   beforeEach(() => {
     mockOnSortingChangeHandler.mockReset();
   });
@@ -53,8 +53,8 @@ describe("<CustomTable/>", () => {
     vi.restoreAllMocks();
   });
 
-  describe("Layout test", () => {
-    it("should render data in table", () => {
+  describe('Layout test', () => {
+    it('should render data in table', () => {
       const { result } = renderHook(() => useReactTable(TABLE_DATA));
       renderWithProviders(
         <CustomTable
@@ -65,13 +65,13 @@ describe("<CustomTable/>", () => {
         />
       );
 
-      expect(screen.getByText("ID")).toBeInTheDocument();
-      expect(screen.getByText("Email")).toBeInTheDocument();
-      expect(screen.getByText("test@test.com")).toBeInTheDocument();
-      expect(screen.getByText("test2@test.com")).toBeInTheDocument();
+      expect(screen.getByText('ID')).toBeInTheDocument();
+      expect(screen.getByText('Email')).toBeInTheDocument();
+      expect(screen.getByText('test@test.com')).toBeInTheDocument();
+      expect(screen.getByText('test2@test.com')).toBeInTheDocument();
     });
 
-    it("should render loader if is loading", () => {
+    it('should render loader if is loading', () => {
       const { result } = renderHook(() => useReactTable(TABLE_DATA));
       renderWithProviders(
         <CustomTable
@@ -82,24 +82,24 @@ describe("<CustomTable/>", () => {
         />
       );
 
-      expect(screen.getByTestId("custom-table-loader")).toBeInTheDocument();
+      expect(screen.getByTestId('custom-table-loader')).toBeInTheDocument();
     });
 
-    it("should render error message if error happen", () => {
+    it('should render error message if error happen', () => {
       const { result } = renderHook(() => useReactTable(TABLE_DATA));
       renderWithProviders(
         <CustomTable
           tableData={result.current}
           isError={true}
           isLoading={false}
-          error={{ data: "Custom error ocurred", status: 404 }}
+          error={{ data: 'Custom error ocurred', status: 404 }}
         />
       );
 
-      expect(screen.getByText("Custom error ocurred.")).toBeInTheDocument();
+      expect(screen.getByText('Custom error ocurred.')).toBeInTheDocument();
     });
 
-    it("should render message for no date if data is not set", () => {
+    it('should render message for no date if data is not set', () => {
       const { result } = renderHook(() =>
         useReactTable({ ...TABLE_DATA, data: [] })
       );
@@ -112,10 +112,10 @@ describe("<CustomTable/>", () => {
         />
       );
 
-      expect(screen.getByText("There is no data.")).toBeInTheDocument();
+      expect(screen.getByText('There is no data.')).toBeInTheDocument();
     });
 
-    it("should render caption and footer if passed", () => {
+    it('should render caption and footer if passed', () => {
       const { result } = renderHook(() =>
         useReactTable({ ...TABLE_DATA, data: [] })
       );
@@ -125,18 +125,18 @@ describe("<CustomTable/>", () => {
           isError={false}
           isLoading={false}
           error={undefined}
-          captionElement={"Caption"}
-          footerElement={"Footer"}
+          captionElement={'Caption'}
+          footerElement={'Footer'}
         />
       );
 
-      expect(screen.getByText("Caption")).toBeInTheDocument();
-      expect(screen.getByText("Footer")).toBeInTheDocument();
+      expect(screen.getByText('Caption')).toBeInTheDocument();
+      expect(screen.getByText('Footer')).toBeInTheDocument();
     });
   });
 
-  describe("Sorting test", () => {
-    it("should sort data if sorting is enabled on column", async () => {
+  describe('Sorting test', () => {
+    it('should sort data if sorting is enabled on column', async () => {
       const { result } = renderHook(() => useReactTable(TABLE_DATA));
       renderWithProviders(
         <CustomTable
@@ -147,12 +147,12 @@ describe("<CustomTable/>", () => {
         />
       );
 
-      await userEvent.click(screen.getByText("ID"));
+      await userEvent.click(screen.getByText('ID'));
 
       expect(mockOnSortingChangeHandler).toBeCalledTimes(1);
     });
 
-    it("should not sort data if sorting is not enabled on column", async () => {
+    it('should not sort data if sorting is not enabled on column', async () => {
       const { result } = renderHook(() => useReactTable(TABLE_DATA));
       renderWithProviders(
         <CustomTable
@@ -163,7 +163,7 @@ describe("<CustomTable/>", () => {
         />
       );
 
-      await userEvent.click(screen.getByText("Email"));
+      await userEvent.click(screen.getByText('Email'));
 
       expect(mockOnSortingChangeHandler).toBeCalledTimes(0);
     });

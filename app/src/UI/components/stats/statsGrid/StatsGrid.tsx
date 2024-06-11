@@ -1,10 +1,10 @@
-import { Group, Paper, Text, ThemeIcon, SimpleGrid, Box } from "@mantine/core";
-import { IconArrowUpRight, IconArrowDownRight } from "@tabler/icons-react";
+import { Box, Group, Paper, SimpleGrid, Text, ThemeIcon } from '@mantine/core';
+import { IconArrowDownRight, IconArrowUpRight } from '@tabler/icons-react';
 
 const data = [
-  { title: "Revenue", value: "$13,456", diff: 34 },
-  { title: "Profit", value: "$4,145", diff: -13 },
-  { title: "Coupons usage", value: "745", diff: 18 },
+  { title: 'Revenue', value: '$13,456', diff: 34 },
+  { title: 'Profit', value: '$4,145', diff: -13 },
+  { title: 'Coupons usage', value: '745', diff: 18 }
 ];
 
 export function StatsGrid() {
@@ -28,8 +28,8 @@ export function StatsGrid() {
             style={{
               color:
                 stat.diff > 0
-                  ? "var(--mantine-color-teal-6)"
-                  : "var(--mantine-color-red-6)",
+                  ? 'var(--mantine-color-teal-6)'
+                  : 'var(--mantine-color-red-6)'
             }}
             size={38}
             radius="md"
@@ -38,10 +38,10 @@ export function StatsGrid() {
           </ThemeIcon>
         </Group>
         <Text c="dimmed" fz="sm" mt="md">
-          <Text component="span" c={stat.diff > 0 ? "teal" : "red"} fw={700}>
+          <Text component="span" c={stat.diff > 0 ? 'teal' : 'red'} fw={700}>
             {stat.diff}%
-          </Text>{" "}
-          {stat.diff > 0 ? "increase" : "decrease"} compared to last month
+          </Text>{' '}
+          {stat.diff > 0 ? 'increase' : 'decrease'} compared to last month
         </Text>
       </Paper>
     );

@@ -6,7 +6,7 @@ $animation-items-time: 10s;
 $item-size: calc($toggle-height - 12.5px);
 
 @mixin crater($top, $left, $size) {
-  content: "";
+  content: '';
   position: absolute;
   top: $top;
   left: $left;
@@ -18,7 +18,7 @@ $item-size: calc($toggle-height - 12.5px);
 }
 
 @mixin cloudBubble($top, $right, $width, $height, $deg) {
-  content: "";
+  content: '';
   display: block;
   position: relative;
   top: $top;
@@ -58,7 +58,7 @@ $item-size: calc($toggle-height - 12.5px);
     opacity: 0;
     cursor: pointer;
 
-    &[aria-checked="true"] ~ {
+    &[aria-checked='true'] ~ {
       .toggle-bg {
         background-color: #484848;
         border-color: #202020;
@@ -186,73 +186,143 @@ $item-size: calc($toggle-height - 12.5px);
 
 @keyframes star-blink {
   0% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #484848, 25px -10px 0 -2px #484848,
-      23px 10px 0 -2px #484848, 35px 0px 0 -3px #484848, 22px 0px 0 -3px #484848;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #484848,
+      25px -10px 0 -2px #484848,
+      23px 10px 0 -2px #484848,
+      35px 0px 0 -3px #484848,
+      22px 0px 0 -3px #484848;
   }
   8% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #484848, 25px -10px 0 -2px #484848,
-      23px 10px 0 -2px #fcfcfc, 35px 0px 0 -3px #484848, 22px 0px 0 -3px #484848;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #484848,
+      25px -10px 0 -2px #484848,
+      23px 10px 0 -2px #fcfcfc,
+      35px 0px 0 -3px #484848,
+      22px 0px 0 -3px #484848;
   }
   16% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #484848, 25px -10px 0 -2px #484848,
-      23px 10px 0 -2px #fcfcfc, 35px 0px 0 -3px #484848, 22px 0px 0 -3px #fcfcfc;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #484848,
+      25px -10px 0 -2px #484848,
+      23px 10px 0 -2px #fcfcfc,
+      35px 0px 0 -3px #484848,
+      22px 0px 0 -3px #fcfcfc;
   }
   24% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #fcfcfc, 25px -10px 0 -2px #484848,
-      23px 10px 0 -2px #fcfcfc, 35px 0px 0 -3px #484848, 22px 0px 0 -3px #fcfcfc;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #fcfcfc,
+      25px -10px 0 -2px #484848,
+      23px 10px 0 -2px #fcfcfc,
+      35px 0px 0 -3px #484848,
+      22px 0px 0 -3px #fcfcfc;
   }
   32% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #fcfcfc, 25px -10px 0 -2px #484848,
-      23px 10px 0 -2px #fcfcfc, 35px 0px 0 -3px #fcfcfc, 22px 0px 0 -3px #fcfcfc;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #fcfcfc,
+      25px -10px 0 -2px #484848,
+      23px 10px 0 -2px #fcfcfc,
+      35px 0px 0 -3px #fcfcfc,
+      22px 0px 0 -3px #fcfcfc;
   }
   40% {
-    box-shadow: -25px 0px 0 -2.5px #fcfcfc, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #fcfcfc, 25px -10px 0 -2px #484848,
-      23px 10px 0 -2px #fcfcfc, 35px 0px 0 -3px #fcfcfc, 22px 0px 0 -3px #fcfcfc;
+    box-shadow:
+      -25px 0px 0 -2.5px #fcfcfc,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #fcfcfc,
+      25px -10px 0 -2px #484848,
+      23px 10px 0 -2px #fcfcfc,
+      35px 0px 0 -3px #fcfcfc,
+      22px 0px 0 -3px #fcfcfc;
   }
   48% {
-    box-shadow: -25px 0px 0 -2.5px #fcfcfc, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #fcfcfc, 25px -10px 0 -2px #fcfcfc,
-      23px 10px 0 -2px #fcfcfc, 35px 0px 0 -3px #fcfcfc, 22px 0px 0 -3px #fcfcfc;
+    box-shadow:
+      -25px 0px 0 -2.5px #fcfcfc,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #fcfcfc,
+      25px -10px 0 -2px #fcfcfc,
+      23px 10px 0 -2px #fcfcfc,
+      35px 0px 0 -3px #fcfcfc,
+      22px 0px 0 -3px #fcfcfc;
   }
   56% {
-    box-shadow: -25px 0px 0 -2.5px #fcfcfc, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #fcfcfc, 25px -10px 0 -2px #fcfcfc,
-      23px 10px 0 -2px #484848, 35px 0px 0 -3px #fcfcfc, 22px 0px 0 -3px #fcfcfc;
+    box-shadow:
+      -25px 0px 0 -2.5px #fcfcfc,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #fcfcfc,
+      25px -10px 0 -2px #fcfcfc,
+      23px 10px 0 -2px #484848,
+      35px 0px 0 -3px #fcfcfc,
+      22px 0px 0 -3px #fcfcfc;
   }
   64% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #fcfcfc, 25px -10px 0 -2px #fcfcfc,
-      23px 10px 0 -2px #484848, 35px 0px 0 -3px #fcfcfc, 22px 0px 0 -3px #fcfcfc;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #fcfcfc,
+      25px -10px 0 -2px #fcfcfc,
+      23px 10px 0 -2px #484848,
+      35px 0px 0 -3px #fcfcfc,
+      22px 0px 0 -3px #fcfcfc;
   }
   72% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #fcfcfc, 25px -10px 0 -2px #fcfcfc,
-      23px 10px 0 -2px #484848, 35px 0px 0 -3px #fcfcfc, 22px 0px 0 -3px #484848;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #fcfcfc,
+      25px -10px 0 -2px #fcfcfc,
+      23px 10px 0 -2px #484848,
+      35px 0px 0 -3px #fcfcfc,
+      22px 0px 0 -3px #484848;
   }
   80% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #fcfcfc,
-      -14px 10px 0 -3px #fcfcfc, 25px -10px 0 -2px #484848,
-      23px 10px 0 -2px #484848, 35px 0px 0 -3px #fcfcfc, 22px 0px 0 -3px #484848;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #fcfcfc,
+      -14px 10px 0 -3px #fcfcfc,
+      25px -10px 0 -2px #484848,
+      23px 10px 0 -2px #484848,
+      35px 0px 0 -3px #fcfcfc,
+      22px 0px 0 -3px #484848;
   }
   88% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #484848,
-      -14px 10px 0 -3px #fcfcfc, 25px -10px 0 -2px #484848,
-      23px 10px 0 -2px #484848, 35px 0px 0 -3px #fcfcfc, 22px 0px 0 -3px #484848;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #484848,
+      -14px 10px 0 -3px #fcfcfc,
+      25px -10px 0 -2px #484848,
+      23px 10px 0 -2px #484848,
+      35px 0px 0 -3px #fcfcfc,
+      22px 0px 0 -3px #484848;
   }
   96% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #484848,
-      -14px 10px 0 -3px #fcfcfc, 25px -10px 0 -2px #484848,
-      23px 10px 0 -2px #484848, 35px 0px 0 -3px #484848, 22px 0px 0 -3px #484848;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #484848,
+      -14px 10px 0 -3px #fcfcfc,
+      25px -10px 0 -2px #484848,
+      23px 10px 0 -2px #484848,
+      35px 0px 0 -3px #484848,
+      22px 0px 0 -3px #484848;
   }
   100% {
-    box-shadow: -25px 0px 0 -2.5px #484848, -15px -10px 0 -2.5px #484848,
-      -14px 10px 0 -3px #484848, 25px -10px 0 -2px #484848,
-      23px 10px 0 -2px #484848, 35px 0px 0 -3px #484848, 22px 0px 0 -3px #484848;
+    box-shadow:
+      -25px 0px 0 -2.5px #484848,
+      -15px -10px 0 -2.5px #484848,
+      -14px 10px 0 -3px #484848,
+      25px -10px 0 -2px #484848,
+      23px 10px 0 -2px #484848,
+      35px 0px 0 -3px #484848,
+      22px 0px 0 -3px #484848;
   }
 }

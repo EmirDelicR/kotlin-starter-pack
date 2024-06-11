@@ -1,11 +1,11 @@
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
-import { ITEMS_PER_PAGE } from "@/constants";
+import { ITEMS_PER_PAGE } from '@/constants';
 
 export const classNameHelper = (...args: string[]): string => {
-  const classes = args.filter((entry) => entry && entry.trim() !== "");
-  return classes.toString().replaceAll(",", " ").trim();
+  const classes = args.filter((entry) => entry && entry.trim() !== '');
+  return classes.toString().replaceAll(',', ' ').trim();
 };
 
 export const createDynamicArray = (value: number) => {
@@ -32,11 +32,11 @@ export const localStorageHelper = <T>(key: string) => {
 
   const setValue = (value: T) => {
     try {
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         window.localStorage.setItem(key, JSON.stringify(value));
       }
     } catch (error) {
-      console.log(error);
+      console.log('localStorageHelper.setValue: ', error);
     }
   };
   return [setValue, getValue] as const;
@@ -50,42 +50,42 @@ export const normalizeError = (
     | undefined
 ) => {
   if (error === undefined) {
-    return { id: "-1", message: "Undefined Error occurred!" };
+    return { id: '-1', message: 'Undefined Error occurred!' };
   }
-  let message = "";
+  let message = '';
 
-  if ("status" in error && typeof error.status === "string") {
+  if ('status' in error && typeof error.status === 'string') {
     message = `${error.status} | `;
   }
 
-  if ("error" in error) {
+  if ('error' in error) {
     message += `${error.error} | `;
   }
 
-  if ("data" in error && typeof error.data === "string") {
+  if ('data' in error && typeof error.data === 'string') {
     message += `${error.data}.`;
   }
 
   if (
-    "data" in error &&
-    typeof error.data === "object" &&
-    "message" in (error.data as { message: "string" })
+    'data' in error &&
+    typeof error.data === 'object' &&
+    'message' in (error.data as { message: 'string' })
   ) {
-    message += `${(error.data as { message: "string" }).message}.`;
+    message += `${(error.data as { message: 'string' }).message}.`;
   }
 
   if (message.trim().length === 0) {
-    message = "Unknown Error Happen no additional data!";
+    message = 'Unknown Error Happen no additional data!';
   }
 
   return { id: crypto.randomUUID(), message: message.trim() };
 };
 
 export const formatDate = (date: string | Date) => {
-  if (typeof date === "string") {
+  if (typeof date === 'string') {
     const dateObject = Date.parse(date) > 0 ? new Date(date) : new Date();
-    return new Intl.DateTimeFormat("de-AT").format(dateObject);
+    return new Intl.DateTimeFormat('de-AT').format(dateObject);
   }
 
-  return new Intl.DateTimeFormat("de-AT").format(date);
+  return new Intl.DateTimeFormat('de-AT').format(date);
 };

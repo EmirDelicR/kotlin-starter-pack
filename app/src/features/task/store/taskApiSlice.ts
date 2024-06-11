@@ -1,5 +1,5 @@
-import { ITEMS_PER_PAGE } from "@/constants/api";
-import baseApi from "@/store/services/baseApiSetup";
+import { ITEMS_PER_PAGE } from '@/constants/api';
+import baseApi from '@/store/services/baseApiSetup';
 
 export interface Task {
   userId: string;
@@ -30,14 +30,14 @@ interface ApiTaskStatisticsResponse {
   status: number;
 }
 
-const baseApiWithTag = baseApi.enhanceEndpoints({ addTagTypes: ["Task"] });
+const baseApiWithTag = baseApi.enhanceEndpoints({ addTagTypes: ['Task'] });
 
-export const taskSlice = baseApiWithTag.injectEndpoints({
+const taskSlice = baseApiWithTag.injectEndpoints({
   endpoints: (builder) => ({
     getTasks: builder.query<Task[], null>({
-      query: () => "/tasks",
+      query: () => '/tasks',
       transformResponse: (res: ApiTaskResponse) => res.data,
-      providesTags: ["Task"],
+      providesTags: ['Task']
     }),
 
     getTasksStatistics: builder.query<
@@ -46,7 +46,7 @@ export const taskSlice = baseApiWithTag.injectEndpoints({
     >({
       query: ({ userId }) => `/tasks/statistics/${userId}`,
       transformResponse: (res: ApiTaskStatisticsResponse) => res.data,
-      providesTags: ["Task"],
+      providesTags: ['Task']
     }),
 
     getPaginatedTasks: builder.query<
@@ -57,49 +57,48 @@ export const taskSlice = baseApiWithTag.injectEndpoints({
         userId,
         page = 0,
         pageSize = ITEMS_PER_PAGE,
-        isMobile = false,
+        isMobile = false
       }) =>
         `/tasks/paginated/${userId}?page=${page}&pageSize=${pageSize}&isMobile=${isMobile}`,
       transformResponse: (res: ApiPaginatedTaskResponse) => res.data,
-      providesTags: ["Task"],
+      providesTags: ['Task']
     }),
 
     addTask: builder.mutation({
       query: (task: Partial<Task>) => ({
-        url: "/tasks",
-        method: "POST",
-        body: task,
+        url: '/tasks',
+        method: 'POST',
+        body: task
       }),
-      invalidatesTags: ["Task"],
+      invalidatesTags: ['Task']
     }),
 
     updateTask: builder.mutation({
       query: (task: Task) => ({
         url: `/tasks/${task.id}`,
-        method: "PUT",
-        body: task,
+        method: 'PUT',
+        body: task
       }),
-      invalidatesTags: ["Task"],
+      invalidatesTags: ['Task']
     }),
 
     deleteTask: builder.mutation({
       query: ({ taskId, userId }: { taskId: string; userId: string }) => ({
         url: `/tasks/${taskId}`,
-        method: "DELETE",
+        method: 'DELETE',
         body: {
-          userId,
-        },
+          userId
+        }
       }),
-      invalidatesTags: ["Task"],
-    }),
-  }),
+      invalidatesTags: ['Task']
+    })
+  })
 });
 
 export const {
-  useGetTasksQuery,
   useGetTasksStatisticsQuery,
   useGetPaginatedTasksQuery,
   useAddTaskMutation,
   useUpdateTaskMutation,
-  useDeleteTaskMutation,
+  useDeleteTaskMutation
 } = taskSlice;

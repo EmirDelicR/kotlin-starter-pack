@@ -1,17 +1,16 @@
-import { Badge, Grid, Paper } from "@mantine/core";
+import { Badge, Grid, Paper } from '@mantine/core';
 
-import { useAppSelector } from "@/store";
-import { selectUser } from "@/store/userSlice";
-
-import { formatDate } from "@/utils";
-import { Roles } from "@/constants";
+import { Roles } from '@/constants';
+import { useAppSelector } from '@/store';
+import { selectUser } from '@/store/userSlice';
+import { formatDate } from '@/utils';
 
 export default function ProfileDetails() {
   const user = useAppSelector(selectUser);
 
   return (
     <Paper radius="md" withBorder p="lg">
-      <Grid gutter={{ base: "xs", lg: "md" }}>
+      <Grid gutter={{ base: 'xs', lg: 'md' }}>
         <Grid.Col span={{ base: 12, lg: 6 }} fw="bold">
           Full name:
         </Grid.Col>

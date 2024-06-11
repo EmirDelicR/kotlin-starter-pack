@@ -1,7 +1,7 @@
-import { Container, Grid } from "@mantine/core";
+import { Container, Grid } from '@mantine/core';
 
-import { StatsControl, StatsGrid, StatsSegment } from "@/UI/components/stats/";
-import { TaskStatistics } from "@/features/task/statistics/TaskStatistics";
+import { StatsControl, StatsGrid, StatsSegment } from '@/UI/components/stats/';
+import { TaskStatistics } from '@/features/task/statistics/TaskStatistics';
 
 export default function HomePage() {
   return (

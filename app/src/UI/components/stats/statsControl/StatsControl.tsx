@@ -1,19 +1,20 @@
-import { useState } from "react";
-import { UnstyledButton, Text, Paper, Group, rem, Title } from "@mantine/core";
+import { useState } from 'react';
+
+import { Group, Paper, Text, Title, UnstyledButton, rem } from '@mantine/core';
 import {
   IconBug,
-  IconTool,
-  IconClockPause,
   IconChevronDown,
   IconChevronUp,
-} from "@tabler/icons-react";
+  IconClockPause,
+  IconTool
+} from '@tabler/icons-react';
 
-import classes from "./StatsControl.module.scss";
+import classes from './StatsControl.module.scss';
 
 const data = [
-  { icon: IconTool, label: "Working" },
-  { icon: IconBug, label: "Debugging" },
-  { icon: IconClockPause, label: "Break" },
+  { icon: IconTool, label: 'Working' },
+  { icon: IconBug, label: 'Debugging' },
+  { icon: IconClockPause, label: 'Break' }
 ];
 
 const MAX_DAY = 5;
@@ -48,7 +49,7 @@ export function StatsControl() {
         <Text fz="xs" className={classes.count}>
           <span className={classes.value}>
             {Math.floor(Math.random() * 3 + 1)}h
-          </span>{" "}
+          </span>{' '}
           / 10h
         </Text>
       </div>

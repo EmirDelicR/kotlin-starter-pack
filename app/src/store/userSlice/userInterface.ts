@@ -1,4 +1,4 @@
-import { HTTP_CODE, Roles, SubscriptionType } from "@/constants";
+import { HTTP_CODE, Roles, SubscriptionType } from '@/constants';
 
 interface Error {
   name?: string;
@@ -13,7 +13,7 @@ interface Role {
   updatedAt: string;
 }
 
-export interface Subscription {
+interface Subscription {
   createdAt: string;
   updateAt: string;
   name: SubscriptionType;

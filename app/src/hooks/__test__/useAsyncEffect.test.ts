@@ -1,9 +1,9 @@
-import { renderHook, waitFor } from "@testing-library/react";
-import { expect, vi } from "vitest";
+import { renderHook, waitFor } from '@testing-library/react';
+import { expect, vi } from 'vitest';
 
-import useAsyncEffect from "@/hooks/useAsyncEffect";
+import useAsyncEffect from '@/hooks/useAsyncEffect';
 
-describe("useAsyncEffect hook test", () => {
+describe('useAsyncEffect hook test', () => {
   const actionFunction = vi.fn().mockResolvedValue(Promise.resolve());
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe("useAsyncEffect hook test", () => {
     vi.restoreAllMocks();
   });
 
-  it("Should call passed function", async () => {
+  it('Should call passed function', async () => {
     renderHook(() => useAsyncEffect(actionFunction));
 
     await waitFor(() => {

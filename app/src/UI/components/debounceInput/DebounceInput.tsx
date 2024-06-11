@@ -1,8 +1,9 @@
-import { Loader, TextInput, TextInputProps } from "@mantine/core";
-import { useDebouncedCallback } from "@mantine/hooks";
-import { useState } from "react";
+import { useState } from 'react';
 
-interface Props extends Omit<TextInputProps, "onChange"> {
+import { Loader, TextInput, TextInputProps } from '@mantine/core';
+import { useDebouncedCallback } from '@mantine/hooks';
+
+interface Props extends Omit<TextInputProps, 'onChange'> {
   initialValue: string;
   onChange: (value: string) => void;
 }

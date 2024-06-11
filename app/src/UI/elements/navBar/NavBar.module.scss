@@ -3,8 +3,9 @@
   --indicator-size: rem(10px);
   --indicator-offset: calc((var(--link-height) - var(--indicator-size)) / 2);
   --indicator-initial-position: calc(
-    calc(var(--mantine-spacing-md) + calc(var(--link-height) / 2)) -
-      calc(var(--indicator-size) / 2)
+    calc(var(--mantine-spacing-md) + calc(var(--link-height) / 2)) - calc(
+        var(--indicator-size) / 2
+      )
   );
   --indicator-position: 0;
 }
@@ -16,7 +17,7 @@
     light-dark(var(--mantine-color-blue-1), var(--mantine-color-blue-7));
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     height: var(--indicator-size);
     width: var(--indicator-size);

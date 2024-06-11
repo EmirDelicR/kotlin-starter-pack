@@ -1,9 +1,9 @@
-import baseApi from "@/store/services/baseApiSetup";
+import { ProfileFormData } from '@/features/profile/edit/forms/FormContext';
+import baseApi from '@/store/services/baseApiSetup';
 
-import { UserResponse } from "./userInterface";
-import { ProfileFormData } from "@/features/profile/edit/forms/FormContext";
+import { UserResponse } from './userInterface';
 
-export const userApiSlice = baseApi.injectEndpoints({
+const userApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     updateUser: builder.mutation<
       UserResponse,
@@ -11,11 +11,11 @@ export const userApiSlice = baseApi.injectEndpoints({
     >({
       query: ({ formData, userId }) => ({
         url: `/users/${userId}`,
-        method: "PUT",
-        body: formData,
-      }),
-    }),
-  }),
+        method: 'PUT',
+        body: formData
+      })
+    })
+  })
 });
 
 export const { useUpdateUserMutation } = userApiSlice;

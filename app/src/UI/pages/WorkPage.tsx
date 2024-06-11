@@ -1,7 +1,7 @@
-import { Container, Grid } from "@mantine/core";
+import { Container, Grid } from '@mantine/core';
 
-import TaskManager from "@/features/task/TaskManager";
-import { TaskStatistics } from "@/features/task/statistics/TaskStatistics";
+import TaskManager from '@/features/task/TaskManager';
+import { TaskStatistics } from '@/features/task/statistics/TaskStatistics';
 
 export default function WorkPage() {
   return (

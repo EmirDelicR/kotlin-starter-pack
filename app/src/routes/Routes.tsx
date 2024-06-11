@@ -1,20 +1,19 @@
-import { PropsWithChildren, lazy } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Navigate, useLocation } from "react-router-dom";
+import { PropsWithChildren, lazy } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
-import AppLayout from "@/UI/elements/layout/AppLayout";
-import DefaultLayout from "@/UI/elements/layout/DefaultLayout";
+import AppLayout from '@/UI/elements/layout/AppLayout';
+import DefaultLayout from '@/UI/elements/layout/DefaultLayout';
+import { NavRoutes } from '@/constants';
+import { useAppSelector } from '@/store';
+import { selectIsUserAdmin, selectIsUserLoggedIn } from '@/store/userSlice';
 
-import { NavRoutes } from "@/constants";
-import { useAppSelector } from "@/store";
-import { selectIsUserAdmin, selectIsUserLoggedIn } from "@/store/userSlice";
-
-const AuthPage = lazy(() => import("@/UI/pages/AuthPage"));
-const HomePage = lazy(() => import("@/UI/pages/HomePage"));
-const WorkPage = lazy(() => import("@/UI/pages/WorkPage"));
-const ProfilePage = lazy(() => import("@/UI/pages/ProfilePage"));
-const MessagePage = lazy(() => import("@/UI/pages/MessagePage"));
-const NotFoundPage = lazy(() => import("@/UI/pages/NotFoundPage"));
+const AuthPage = lazy(() => import('@/UI/pages/AuthPage'));
+const HomePage = lazy(() => import('@/UI/pages/HomePage'));
+const WorkPage = lazy(() => import('@/UI/pages/WorkPage'));
+const ProfilePage = lazy(() => import('@/UI/pages/ProfilePage'));
+const MessagePage = lazy(() => import('@/UI/pages/MessagePage'));
+const NotFoundPage = lazy(() => import('@/UI/pages/NotFoundPage'));
 
 function ProtectedRoute({ children }: PropsWithChildren) {
   const isLoggedIn = useAppSelector(selectIsUserLoggedIn);

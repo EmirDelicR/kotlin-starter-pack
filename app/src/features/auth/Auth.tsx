@@ -1,8 +1,8 @@
-import { Tabs } from "@mantine/core";
-import { IconLogin, IconUser } from "@tabler/icons-react";
+import { Tabs } from '@mantine/core';
+import { IconLogin, IconUser } from '@tabler/icons-react';
 
-import LoginForm from "./login/LoginForm.tsx";
-import RegisterForm from "./register/RegisterForm.tsx";
+import LoginForm from './login/LoginForm.tsx';
+import RegisterForm from './register/RegisterForm.tsx';
 
 export default function Auth() {
   return (
@@ -10,13 +10,13 @@ export default function Auth() {
       <Tabs.List grow justify="center">
         <Tabs.Tab
           value="login"
-          leftSection={<IconLogin style={{ stroke: "orange" }} />}
+          leftSection={<IconLogin style={{ stroke: 'orange' }} />}
         >
           Login
         </Tabs.Tab>
         <Tabs.Tab
           value="register"
-          leftSection={<IconUser style={{ stroke: "orange" }} />}
+          leftSection={<IconUser style={{ stroke: 'orange' }} />}
         >
           Register
         </Tabs.Tab>

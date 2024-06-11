@@ -1,89 +1,85 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { Roles, SubscriptionType } from "@/constants";
-import { RootState } from "@/store";
-import { localStorageHelper } from "@/utils";
+import { Roles, SubscriptionType } from '@/constants';
+import { RootState } from '@/store';
+import { localStorageHelper } from '@/utils';
 
-import { UserState } from "./userInterface";
+import { UserState } from './userInterface';
 
 export const INITIAL_USER_DATA: UserState = {
   data: {
     age: null,
-    avatar: "",
-    email: "",
-    firstName: "",
-    id: "",
+    avatar: '',
+    email: '',
+    firstName: '',
+    id: '',
     loggedIn: false,
     profileUpdated: false,
     subscribed: false,
-    lastName: "",
+    lastName: '',
     subscriptions: [],
     token: null,
-    userName: "",
+    userName: '',
     role: null,
-    createdAt: "2024-02-17T09:19:32.712Z",
-    updatedAt: "2024-02-17T09:19:32.712Z",
-  },
+    createdAt: '2024-02-17T09:19:32.712Z',
+    updatedAt: '2024-02-17T09:19:32.712Z'
+  }
 };
 
 const INITIAL_USER_DATA_POPULATE: UserState = {
   data: {
-    id: "userId",
+    id: 'userId',
     age: 23,
     avatar:
-      "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png",
-    email: "test@test.com",
-    firstName: "John",
-    lastName: "Doe",
-    userName: "Cabal",
+      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
+    email: 'test@test.com',
+    firstName: 'John',
+    lastName: 'Doe',
+    userName: 'Cabal',
     loggedIn: true,
     profileUpdated: true,
     subscribed: true,
     subscriptions: [
       {
-        id: "sub-uuid-1",
-        createdAt: "2024-02-24T14:49:32.344Z",
+        id: 'sub-uuid-1',
+        createdAt: '2024-02-24T14:49:32.344Z',
         name: SubscriptionType.NEWS,
-        updateAt: "2024-02-24T14:49:32.344Z",
-      },
+        updateAt: '2024-02-24T14:49:32.344Z'
+      }
     ],
-    token: "dummy-token",
+    token: 'dummy-token',
     role: {
-      id: "user-role-id",
+      id: 'user-role-id',
       type: 2,
-      createdAt: "2024-02-24T14:49:32.344Z",
-      updatedAt: "2024-02-24T14:49:32.344Z",
+      createdAt: '2024-02-24T14:49:32.344Z',
+      updatedAt: '2024-02-24T14:49:32.344Z'
     },
-    createdAt: "2024-02-24T14:49:32.344Z",
-    updatedAt: "2024-02-24T14:49:32.344Z",
-  },
+    createdAt: '2024-02-24T14:49:32.344Z',
+    updatedAt: '2024-02-24T14:49:32.344Z'
+  }
 };
 
 export const userStoreSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: INITIAL_USER_DATA,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
-      const [setToken] = localStorageHelper<string | null>("token");
-      console.log("action: ", action.payload.data);
+      const [setToken] = localStorageHelper<string | null>('token');
       const { data } = action.payload;
       setToken(data.token);
       state.data = data;
     },
     logoutUser: (state) => {
-      const [setToken] = localStorageHelper<string | null>("token");
+      const [setToken] = localStorageHelper<string | null>('token');
       setToken(null);
       state.data = INITIAL_USER_DATA.data;
-    },
-  },
+    }
+  }
 });
 
 export const { setUser, logoutUser } = userStoreSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.data;
-export const selectIsUserProfileUpdated = (state: RootState) =>
-  state.user.data.profileUpdated;
-export const selectToken = (state: RootState) => state.user.data.token;
 export const selectIsUserLoggedIn = (state: RootState) =>
   state.user.data.loggedIn;
 export const selectUserId = (state: RootState) => state.user.data.id;

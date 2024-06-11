@@ -1,7 +1,8 @@
-import { Container, Flex, Paper } from "@mantine/core";
-import Auth from "@/features/auth/Auth.tsx";
-import ThemeToggle from "@/UI/components/themeToggle/ThemeToggle.tsx";
-import Logo from "@/UI/components/logo/Logo.tsx";
+import { Container, Flex, Paper } from '@mantine/core';
+
+import Logo from '@/UI/components/logo/Logo.tsx';
+import ThemeToggle from '@/UI/components/themeToggle/ThemeToggle.tsx';
+import Auth from '@/features/auth/Auth.tsx';
 
 export default function AuthPage() {
   return (

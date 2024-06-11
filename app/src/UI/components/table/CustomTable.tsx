@@ -1,13 +1,14 @@
-import { Alert, Box, Center, Loader, Table, Text } from "@mantine/core";
-import { ReactNode } from "react";
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { Table as TableType, flexRender } from "@tanstack/react-table";
-import { IconInfoCircle } from "@tabler/icons-react";
+import { ReactNode } from 'react';
 
-import Error from "@/UI/components/error/Error";
+import { Alert, Box, Center, Loader, Table, Text } from '@mantine/core';
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { IconInfoCircle } from '@tabler/icons-react';
+import { Table as TableType, flexRender } from '@tanstack/react-table';
 
-import classes from "./CustomTable.module.scss";
+import Error from '@/UI/components/error/Error';
+
+import classes from './CustomTable.module.scss';
 
 interface Props<T> {
   isLoading: boolean;
@@ -18,7 +19,7 @@ interface Props<T> {
   footerElement?: ReactNode | string;
 }
 
-function TableHead<T>({ tableData }: Pick<Props<T>, "tableData">) {
+function TableHead<T>({ tableData }: Pick<Props<T>, 'tableData'>) {
   return (
     <Table.Thead>
       {tableData.getHeaderGroups().map((headerGroup) => (
@@ -27,7 +28,7 @@ function TableHead<T>({ tableData }: Pick<Props<T>, "tableData">) {
             <Table.Th key={header.id}>
               <Box
                 className={
-                  header.column.getCanSort() ? classes["sort-header"] : ""
+                  header.column.getCanSort() ? classes['sort-header'] : ''
                 }
                 onClick={header.column.getToggleSortingHandler()}
               >
@@ -36,9 +37,9 @@ function TableHead<T>({ tableData }: Pick<Props<T>, "tableData">) {
                   header.getContext()
                 )}
                 {{
-                  asc: " ▲",
-                  desc: " ▼",
-                }[header.column.getIsSorted() as string] ?? " "}
+                  asc: ' ▲',
+                  desc: ' ▼'
+                }[header.column.getIsSorted() as string] ?? ' '}
               </Box>
             </Table.Th>
           ))}
@@ -48,7 +49,7 @@ function TableHead<T>({ tableData }: Pick<Props<T>, "tableData">) {
   );
 }
 
-function TableBody<T>({ tableData }: Pick<Props<T>, "tableData">) {
+function TableBody<T>({ tableData }: Pick<Props<T>, 'tableData'>) {
   return (
     <Table.Tbody>
       {tableData.getRowModel().rows.map((row) => (
@@ -83,7 +84,7 @@ export default function CustomTable<T>({
   isError,
   error,
   captionElement,
-  footerElement,
+  footerElement
 }: Props<T>) {
   const renderTableData = () => {
     if (isLoading || isError || tableData.getRowModel().rows.length === 0) {

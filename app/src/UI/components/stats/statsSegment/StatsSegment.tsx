@@ -1,19 +1,20 @@
 import {
-  Progress,
   Box,
-  Text,
   Group,
   Paper,
+  Progress,
   SimpleGrid,
-  rem,
-} from "@mantine/core";
-import { IconArrowUpRight, IconDeviceAnalytics } from "@tabler/icons-react";
-import classes from "./StatsSegment.module.scss";
+  Text,
+  rem
+} from '@mantine/core';
+import { IconArrowUpRight, IconDeviceAnalytics } from '@tabler/icons-react';
+
+import classes from './StatsSegment.module.scss';
 
 const data = [
-  { label: "Mobile", count: "204,001", part: 59, color: "#47d6ab" },
-  { label: "Desktop", count: "121,017", part: 35, color: "#e65df5" },
-  { label: "Tablet", count: "31,118", part: 6, color: "#4fcdf7" },
+  { label: 'Mobile', count: '204,001', part: 59, color: '#47d6ab' },
+  { label: 'Desktop', count: '121,017', part: 35, color: '#e65df5' },
+  { label: 'Tablet', count: '31,118', part: 6, color: '#4fcdf7' }
 ];
 
 export function StatsSegment() {

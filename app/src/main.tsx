@@ -1,12 +1,12 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { Provider } from "react-redux";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 
-import { createStore } from "@/store";
+import { CypressWithStore, createStore } from '@/store';
 
-import App from "./App";
+import App from './App';
 
-const container = document.getElementById("root") as HTMLElement;
+const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container!);
 const store = createStore();
 root.render(
@@ -17,16 +17,12 @@ root.render(
   </React.StrictMode>
 );
 
-interface CypressWithStore extends Cypress.Cypress {
-  store?: typeof store;
-}
-
 declare global {
   interface Window {
     Cypress?: CypressWithStore;
   }
 }
 
-if (typeof window !== "undefined" && window.Cypress) {
+if (typeof window !== 'undefined' && window.Cypress) {
   window.Cypress.store = store;
 }

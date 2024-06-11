@@ -1,3 +1,3 @@
-export * from "./statsGrid/StatsGrid";
-export * from "./statsSegment/StatsSegment";
-export * from "./statsControl/StatsControl";
+export * from './statsGrid/StatsGrid';
+export * from './statsSegment/StatsSegment';
+export * from './statsControl/StatsControl';

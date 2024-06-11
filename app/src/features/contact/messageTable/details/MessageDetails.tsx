@@ -6,29 +6,28 @@ import {
   Center,
   Checkbox,
   Grid,
-  Loader,
-} from "@mantine/core";
-import { useClipboard } from "@mantine/hooks";
-import { IconInfoCircle, IconMessage } from "@tabler/icons-react";
+  Loader
+} from '@mantine/core';
+import { useClipboard } from '@mantine/hooks';
+import { IconInfoCircle, IconMessage } from '@tabler/icons-react';
+
+import Error from '@/UI/components/error/Error';
+import { formatDate } from '@/utils';
 
 import {
   useGetMessageQuery,
-  useUpdateMessageMutation,
-} from "../../store/contactApiSlice";
-
-import { formatDate } from "@/utils";
-
-import Error from "@/UI/components/error/Error";
+  useUpdateMessageMutation
+} from '../../store/contactApiSlice';
 
 export default function MessageDetails({ id }: { id: string }) {
   const clipboard = useClipboard({ timeout: 500 });
   const { data, isLoading, isError, error } = useGetMessageQuery({
-    messageId: id,
+    messageId: id
   });
 
   const [
     updateMessage,
-    { isError: isUpdateError, error: updateError, isLoading: isUpdateLoading },
+    { isError: isUpdateError, error: updateError, isLoading: isUpdateLoading }
   ] = useUpdateMessageMutation();
 
   if (isLoading) {
@@ -63,7 +62,7 @@ export default function MessageDetails({ id }: { id: string }) {
       cite={`Message from ${data?.sender}`}
     >
       <Box p="md">
-        <Grid gutter={{ base: "xs", lg: "md" }}>
+        <Grid gutter={{ base: 'xs', lg: 'md' }}>
           <Grid.Col span={{ base: 12, lg: 6 }} fw="bold">
             Send on date:
           </Grid.Col>
@@ -86,16 +85,16 @@ export default function MessageDetails({ id }: { id: string }) {
           <Grid.Col span={{ base: 12, lg: 6 }}>
             <Badge
               w="100%"
-              color={clipboard.copied ? "green" : "blue"}
+              color={clipboard.copied ? 'green' : 'blue'}
               onClick={() => clipboard.copy(data?.email)}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
               title="Copy"
             >
               {data?.email}
             </Badge>
           </Grid.Col>
           <Grid.Col span={{ base: 12, lg: 6 }} fw="bold">
-            Mark as {data?.unread ? "readed" : "unread"}
+            Mark as {data?.unread ? 'readed' : 'unread'}
           </Grid.Col>
           <Grid.Col span={{ base: 12, lg: 6 }}>
             <Checkbox

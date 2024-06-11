@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import {
   Blockquote,
   Chip,
@@ -5,15 +7,13 @@ import {
   Paper,
   Text,
   ThemeIcon,
-  rem,
-} from "@mantine/core";
-import { useMemo } from "react";
-import { IconCircleCheck, IconForbid, IconMessage2 } from "@tabler/icons-react";
+  rem
+} from '@mantine/core';
+import { IconCircleCheck, IconForbid, IconMessage2 } from '@tabler/icons-react';
 
-import { useAppSelector } from "@/store";
-import { selectUser } from "@/store/userSlice";
-
-import { SubscriptionType } from "@/constants";
+import { SubscriptionType } from '@/constants';
+import { useAppSelector } from '@/store';
+import { selectUser } from '@/store/userSlice';
 
 export default function SubscriptionDetails() {
   const user = useAppSelector(selectUser);
@@ -34,7 +34,7 @@ export default function SubscriptionDetails() {
         color="blue"
         cite={
           <Chip defaultChecked={user.subscribed} color="green" variant="light">
-            Subscription alerts {!user.subscribed && "not "}activated
+            Subscription alerts {!user.subscribed && 'not '}activated
           </Chip>
         }
         icon={<IconMessage2 />}

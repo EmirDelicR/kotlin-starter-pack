@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+
 import {
   Button,
   Group,
@@ -7,20 +8,22 @@ import {
   Stack,
   Stepper,
   Title,
-  rem,
-} from "@mantine/core";
-import { isInRange, isNotEmpty } from "@mantine/form";
-
+  rem
+} from '@mantine/core';
+import { isInRange, isNotEmpty } from '@mantine/form';
 import {
-  IconUserCheck,
-  IconMailOpened,
   IconImageInPicture,
-} from "@tabler/icons-react";
+  IconMailOpened,
+  IconUserCheck
+} from '@tabler/icons-react';
 
-import { useAppDispatch, useAppSelector } from "@/store";
-import { selectUser, setUser } from "@/store/userSlice";
-import { useUpdateUserMutation } from "@/store/userSlice/userApiSlice";
+import Error from '@/UI/components/error/Error';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { selectUser, setUser } from '@/store/userSlice';
+import { useUpdateUserMutation } from '@/store/userSlice/userApiSlice';
 
+import AccountForm from './forms/AccountForm';
+import AvatarForm from './forms/AvatarForm';
 import {
   ProfileFormData,
   ProfileFormProvider,
@@ -28,30 +31,26 @@ import {
   setFormDataDefaultValues,
   useProfileForm,
   validateFirstStep,
-  validateSecondStep,
-} from "./forms/FormContext";
-
-import AccountForm from "./forms/AccountForm";
-import AvatarForm from "./forms/AvatarForm";
-import SubscriptionForm from "./forms/SubscriptionForm";
-import Error from "@/UI/components/error/Error";
+  validateSecondStep
+} from './forms/FormContext';
+import SubscriptionForm from './forms/SubscriptionForm';
 
 const FORM_STEPS = [
   {
-    description: "Data",
+    description: 'Data',
     icon: <IconUserCheck style={{ width: rem(18), height: rem(18) }} />,
-    form: <AccountForm />,
+    form: <AccountForm />
   },
   {
-    description: "Avatar",
+    description: 'Avatar',
     icon: <IconImageInPicture style={{ width: rem(18), height: rem(18) }} />,
-    form: <AvatarForm />,
+    form: <AvatarForm />
   },
   {
-    description: "Subscriptions",
+    description: 'Subscriptions',
     icon: <IconMailOpened style={{ width: rem(18), height: rem(18) }} />,
-    form: <SubscriptionForm />,
-  },
+    form: <SubscriptionForm />
+  }
 ];
 
 interface Props {
@@ -67,14 +66,14 @@ export default function EditProfileForm({ onSuccessCallback }: Props) {
     useUpdateUserMutation();
 
   const form = useProfileForm({
-    mode: "uncontrolled",
+    mode: 'uncontrolled',
     initialValues: setFormDataDefaultValues(user),
     validate: {
-      firstName: isNotEmpty("First name is required"),
-      lastName: isNotEmpty("Last name is required"),
-      age: isInRange({ min: 1, max: 120 }, "Age must be provided"),
-      image: isNotEmpty("Avatar must be set"),
-    },
+      firstName: isNotEmpty('First name is required'),
+      lastName: isNotEmpty('Last name is required'),
+      age: isInRange({ min: 1, max: 120 }, 'Age must be provided'),
+      image: isNotEmpty('Avatar must be set')
+    }
   });
 
   useEffect(() => {
@@ -161,7 +160,7 @@ export default function EditProfileForm({ onSuccessCallback }: Props) {
               </Button>
             ) : (
               <Button onClick={nextStep}>
-                {active === STEPS.LAST_STEP ? "Submit" : "Next step"}
+                {active === STEPS.LAST_STEP ? 'Submit' : 'Next step'}
               </Button>
             )}
           </Group>

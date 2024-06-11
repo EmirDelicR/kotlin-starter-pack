@@ -1,23 +1,23 @@
-import { createDynamicArray } from "@/utils";
-import { Avatar, Container, Image, Paper, Select, Stack } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { Avatar, Container, Image, Paper, Select, Stack } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 
-import { useProfileFormContext } from "./FormContext";
+import Error from '@/UI/components/error/Error';
+import { createDynamicArray } from '@/utils';
 
-import classes from "./AvatarForm.module.scss";
-import Error from "@/UI/components/error/Error";
+import classes from './AvatarForm.module.scss';
+import { useProfileFormContext } from './FormContext';
 
 const AVATAR_IMAGES = createDynamicArray(10).map((index) => {
   const idx = index + 1;
   return {
     label: `Avatar-${idx}`,
-    value: `https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-${idx}.png`,
+    value: `https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-${idx}.png`
   };
 });
 
 export default function AvatarForm() {
   const form = useProfileFormContext();
-  const isFitContentView = useMediaQuery("(max-width: 870px)");
+  const isFitContentView = useMediaQuery('(max-width: 870px)');
 
   if (isFitContentView) {
     return (
@@ -27,9 +27,9 @@ export default function AvatarForm() {
           label="Your avatar"
           placeholder="Pick value"
           data={AVATAR_IMAGES}
-          key={form.key("image")}
-          {...form.getInputProps("image")}
-          onChange={(value) => form.setFieldValue("image", value)}
+          key={form.key('image')}
+          {...form.getInputProps('image')}
+          onChange={(value) => form.setFieldValue('image', value)}
         />
       </Stack>
     );
@@ -45,7 +45,7 @@ export default function AvatarForm() {
                 key={avatar.label}
                 alt={avatar.label}
                 src={avatar.value}
-                onClick={() => form.setFieldValue("image", avatar.value)}
+                onClick={() => form.setFieldValue('image', avatar.value)}
               />
             );
           })}
@@ -59,8 +59,8 @@ export default function AvatarForm() {
       </Container>
 
       <Error
-        isError={form.getInputProps("image").error !== undefined}
-        error={{ error: form.getInputProps("image").error }}
+        isError={form.getInputProps('image').error !== undefined}
+        error={{ error: form.getInputProps('image').error }}
       />
     </Paper>
   );

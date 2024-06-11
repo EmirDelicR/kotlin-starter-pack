@@ -1,11 +1,13 @@
-import { AppShell, Burger, Center, Loader } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
+import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
 
-import Header from "../header/Header";
-import NavBar from "../navBar/NavBar";
-import useAutoLogin from "@/hooks/useAutoLogin";
+import { AppShell, Burger, Center, Loader } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
+import useAutoLogin from '@/hooks/useAutoLogin';
+
+import Header from '../header/Header';
+import NavBar from '../navBar/NavBar';
 
 export default function AppLayout() {
   const [opened, { toggle }] = useDisclosure();
@@ -16,8 +18,8 @@ export default function AppLayout() {
       header={{ height: 60 }}
       navbar={{
         width: 300,
-        breakpoint: "sm",
-        collapsed: { mobile: !opened },
+        breakpoint: 'sm',
+        collapsed: { mobile: !opened }
       }}
       padding="md"
     >

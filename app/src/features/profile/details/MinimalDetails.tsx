@@ -1,12 +1,12 @@
-import { Avatar, Button, Group, Modal, Paper, Text, rem } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { IconLogout, IconUser } from "@tabler/icons-react";
+import { Avatar, Button, Group, Modal, Paper, Text, rem } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { IconLogout, IconUser } from '@tabler/icons-react';
 
-import { useAppSelector } from "@/store";
-import { selectUser } from "@/store/userSlice";
+import useLogout from '@/hooks/useLogout';
+import { useAppSelector } from '@/store';
+import { selectUser } from '@/store/userSlice';
 
-import useLogout from "@/hooks/useLogout";
-import EditProfileForm from "../edit/EditProfileForm";
+import EditProfileForm from '../edit/EditProfileForm';
 
 export default function MinimalDetails() {
   const user = useAppSelector(selectUser);

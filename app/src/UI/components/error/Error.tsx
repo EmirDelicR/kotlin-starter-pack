@@ -1,9 +1,9 @@
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { Alert } from "@mantine/core";
-import { IconAlertTriangle } from "@tabler/icons-react";
+import { Alert } from '@mantine/core';
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { IconAlertTriangle } from '@tabler/icons-react';
 
-import { normalizeError } from "@/utils";
+import { normalizeError } from '@/utils';
 
 interface Props {
   isError: boolean;
@@ -15,7 +15,7 @@ export default function Error({ isError, error }: Props) {
     return null;
   }
 
-  const { message = "Unknown Error occurred!" } = normalizeError(error);
+  const { message = 'Unknown Error occurred!' } = normalizeError(error);
 
   return (
     <Alert

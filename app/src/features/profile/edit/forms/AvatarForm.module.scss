@@ -22,9 +22,9 @@
   //     var(--path-double-minus-10) "10," var(--path-plus-10) "10,"
   //     var(--path-plus-10) "0," var(--path-size) "0," var(--path-size) "10,"
   //     var(--path-minus-10) "Z";
-  --clip-path: "M65,10 C75,0 75,0 85,10 140,65 140,65 140,65 150,75 150,75 140,85 140,85 85,140 85,140 75,150 75,150 65,140 65,140 10,85 10,85 0,75 0,75 10,65Z";
+  --clip-path: 'M65,10 C75,0 75,0 85,10 140,65 140,65 140,65 150,75 150,75 140,85 140,85 85,140 85,140 75,150 75,150 65,140 65,140 10,85 10,85 0,75 0,75 10,65Z';
   // TODO update this with path-size and double path size check the pattern
-  --clip-path-hover: "M0,0 C0,0 150,0 150,0 150,0 150,75 150,75 150,75 150,150 150,150 150,150 75,150 75,150 75,150 75,150 0,150 0,150 0,75 0,75 0,75 0,75 0,75Z";
+  --clip-path-hover: 'M0,0 C0,0 150,0 150,0 150,0 150,75 150,75 150,75 150,150 150,150 150,150 75,150 75,150 75,150 75,150 0,150 0,150 0,75 0,75 0,75 0,75 0,75Z';
 
   .gallery {
     display: grid;
@@ -44,7 +44,9 @@
       width: calc(var(--size) * 2);
       height: calc(var(--size) * 2);
       clip-path: path(var(--clip-path));
-      transition: clip-path 0.25s, filter 0.75s;
+      transition:
+        clip-path 0.25s,
+        filter 0.75s;
       grid-column: auto / span 2;
       border-radius: 5px;
       cursor: pointer;
@@ -61,7 +63,9 @@
       &:focus {
         clip-path: path(var(--clip-path-hover));
         z-index: 1;
-        transition: clip-path 0.25s, filter 0.25s;
+        transition:
+          clip-path 0.25s,
+          filter 0.25s;
       }
     }
   }

@@ -1,6 +1,7 @@
-import { Box, Flex } from "@mantine/core";
-import Logo from "@/UI/components/logo/Logo";
-import UserMenu from "@/UI/components/userMenu/UserMenu";
+import { Box, Flex } from '@mantine/core';
+
+import Logo from '@/UI/components/logo/Logo';
+import UserMenu from '@/UI/components/userMenu/UserMenu';
 
 export default function Header() {
   return (

@@ -1,16 +1,16 @@
+import { useNavigate } from 'react-router-dom';
+
 import {
   AspectRatio,
   Button,
   Center,
   Container,
   Stack,
-  Text,
-} from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+  Text
+} from '@mantine/core';
 
-import { NavRoutes } from "@/constants";
-
-import NotFound from "@/assets/404.png";
+import NotFound from '@/assets/404.png';
+import { NavRoutes } from '@/constants';
 
 export default function NotFoundPage() {
   const navigation = useNavigate();
@@ -32,7 +32,7 @@ export default function NotFoundPage() {
             size="xl"
             fw={900}
             variant="gradient"
-            gradient={{ from: "blue", to: "cyan", deg: 90 }}
+            gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
           >
             Oops! The page that you requested was not found!
           </Text>

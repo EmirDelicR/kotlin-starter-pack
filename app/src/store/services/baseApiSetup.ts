@@ -1,24 +1,25 @@
 import {
-  createApi,
-  fetchBaseQuery,
-  type FetchArgs,
   type BaseQueryApi,
-} from "@reduxjs/toolkit/query/react";
+  type FetchArgs,
+  createApi,
+  fetchBaseQuery
+} from '@reduxjs/toolkit/query/react';
 
-import { API_URL } from "@/constants";
-import { RootState } from "@/store";
-import { UserResponse, logoutUser, setUser } from "../userSlice";
+import { API_URL } from '@/constants';
+import { RootState } from '@/store';
+
+import { UserResponse, logoutUser, setUser } from '../userSlice';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
-  credentials: "include",
+  credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).user.data.token;
     if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
+      headers.set('Authorization', `Bearer ${token}`);
     }
     return headers;
-  },
+  }
 });
 
 async function baseQueryWithReAuth(
@@ -30,7 +31,7 @@ async function baseQueryWithReAuth(
 
   if (result?.error?.status === 403) {
     /** Get new token from endpoint */
-    const refreshData = await baseQuery("/refresh", api, extraOptions);
+    const refreshData = await baseQuery('/refresh', api, extraOptions);
 
     if (refreshData?.data) {
       const { data } = refreshData.data as UserResponse;
@@ -40,8 +41,8 @@ async function baseQueryWithReAuth(
         setUser({
           data: {
             ...userData,
-            ...data,
-          },
+            ...data
+          }
         })
       );
 
@@ -57,7 +58,7 @@ async function baseQueryWithReAuth(
 
 const baseApi = createApi({
   baseQuery: baseQueryWithReAuth,
-  endpoints: () => ({}),
+  endpoints: () => ({})
 });
 
 export default baseApi;
