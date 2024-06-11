@@ -1,0 +1,16 @@
+*.md
+**/node_modules/
+**/dev-dist
+npm-debug.log
+Dockerfile
+.dockerignore
+.git
+.coverage
+.coverage.*
+scripts/
+**.test.ts
+**.test.tsx
+**.stories.tsx
+src/utils/test/test-utils.tsx
+.storybook
+cypress
