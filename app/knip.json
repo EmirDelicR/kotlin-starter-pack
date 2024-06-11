@@ -1,0 +1,12 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": ["src/main.tsx"],
+  "ignore": [
+    "package.json",
+    ".eslintrc",
+    "vite.config.ts",
+    "cypress/support/*.ts",
+    "cypress/cypress.d.ts",
+    "src/constants/*ts"
+  ]
+}
