@@ -218,7 +218,8 @@ In `tsconfig.json` add:
       "vite/client",
       "vitest/globals",
       "node",
-      "@testing-library/jest-dom"
+      "@testing-library/jest-dom",
+      "cypress"
     ]
   }
 }
