@@ -11,6 +11,6 @@ scripts/
 **.test.ts
 **.test.tsx
 **.stories.tsx
-src/utils/test/test-utils.tsx
+src/utils/test/testUtils.tsx
 .storybook
 cypress

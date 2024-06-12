@@ -81,7 +81,7 @@ sudo chmod -R 777 scripts
 To use docker you need to install docker on your machine and run:
 
 ```console
-./scripts/start_docker.sh
+./scripts/start_app_in_docker.sh
 ```
 
 To stop the container and (optional) remove the container and image run
@@ -142,8 +142,8 @@ in `vite.config.ts` add:
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: [{ find: "@", replacement: "/src" }],
-  },
+    alias: [{ find: '@', replacement: '/src' }]
+  }
 });
 ```
 
@@ -181,7 +181,7 @@ npm i -D @testing-library/jest-dom @testing-library/react @testing-library/user-
 Add `setupTests.ts` to root of the project! and in that file add
 
 ```js
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom';
 ```
 
 In `vite.config.ts` add:
@@ -238,8 +238,8 @@ Add script to `package.json`:
 Create `[fileName].test.[tsx/ts]` and add:
 
 ```js
-describe("Simple working test", () => {
-  it("should ...", () => {
+describe('Simple working test', () => {
+  it('should ...', () => {
     expect(true).toEqual(true);
   });
 });
@@ -397,24 +397,24 @@ Click on E2E and configure files for cypress. This will also create `cypress.con
 In the `cypress.config.ts` file add:
 
 ```js
-import { defineConfig } from "cypress";
+import { defineConfig } from 'cypress';
 
 export default defineConfig({
   e2e: {
-    baseUrl: "http://localhost:3000",
-    specPattern: "cypress/e2e/**/*.{ts,tsx}",
-    supportFile: "cypress/support/e2e.ts",
+    baseUrl: 'http://localhost:3000',
+    specPattern: 'cypress/e2e/**/*.{ts,tsx}',
+    supportFile: 'cypress/support/e2e.ts',
     setupNodeEvents(_on, _config) {
       // implement node event listeners here
-    },
+    }
   },
 
   component: {
     devServer: {
-      framework: "react",
-      bundler: "vite",
-    },
-  },
+      framework: 'react',
+      bundler: 'vite'
+    }
+  }
 });
 ```
 
@@ -529,11 +529,11 @@ If you are developing a production application, we recommend updating the config
 export default {
   // other rules...
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname
+  }
 };
 ```
 
