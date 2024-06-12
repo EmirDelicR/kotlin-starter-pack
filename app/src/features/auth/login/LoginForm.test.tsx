@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, vi } from 'vitest';
 
+import { VALIDATION_MESSAGES } from '@/constants';
 import {
   renderWithProviders,
   typeDataInFieldByDataTestId,
@@ -98,9 +99,9 @@ describe('<LoginForm/>', () => {
       await userEvent.click(button);
 
       expect(mockLogin).not.toHaveBeenCalled();
-      expect(screen.getByText('Valid email is required.')).toBeInTheDocument();
+      expect(screen.getByText(VALIDATION_MESSAGES.email)).toBeInTheDocument();
       expect(
-        screen.getByText('Password field is required.')
+        screen.getByText(VALIDATION_MESSAGES.passwordRequired)
       ).toBeInTheDocument();
     });
 
@@ -112,7 +113,7 @@ describe('<LoginForm/>', () => {
       await userEvent.click(button);
 
       expect(mockLogin).not.toHaveBeenCalled();
-      expect(screen.getByText('Valid email is required.')).toBeInTheDocument();
+      expect(screen.getByText(VALIDATION_MESSAGES.email)).toBeInTheDocument();
     });
 
     it('should submit for if validation pass', async () => {

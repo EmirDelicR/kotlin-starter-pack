@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, vi } from 'vitest';
 
+import { VALIDATION_MESSAGES } from '@/constants';
 import {
   renderWithProviders,
   typeDataInInputField
@@ -54,11 +55,7 @@ describe('<CreateTaskForm/>', () => {
 
       await userEvent.click(screen.getByText('Submit'));
 
-      expect(
-        screen.getByText(
-          'Task title field is required to be between 2 and 80 chars.'
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText(VALIDATION_MESSAGES.title)).toBeInTheDocument();
     });
 
     it('should not create task and it will render error if request fails', () => {

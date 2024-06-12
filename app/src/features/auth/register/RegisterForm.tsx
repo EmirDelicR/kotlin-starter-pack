@@ -13,7 +13,7 @@ import { isEmail, isNotEmpty, matches, useForm } from '@mantine/form';
 
 import Error from '@/UI/components/error/Error';
 import HelpPopover from '@/UI/components/helpPopover/HelpPopover.tsx';
-import { PASSWORD_PATTERNS } from '@/constants';
+import { PASSWORD_PATTERNS, VALIDATION_MESSAGES } from '@/constants';
 
 import { useRegisterMutation } from '../store/authApiSlice';
 import useAuth from '../useAuth';
@@ -42,13 +42,10 @@ export default function Register() {
     mode: 'uncontrolled',
     initialValues: INITIAL_FORM_VALUES,
     validate: {
-      email: isEmail('Valid email is required.'),
-      password: matches(
-        PASSWORD_PATTERNS,
-        'Your password is not strong enough.'
-      ),
-      firstName: isNotEmpty('First name is required.'),
-      lastName: isNotEmpty('Last name is required.')
+      email: isEmail(VALIDATION_MESSAGES.email),
+      password: matches(PASSWORD_PATTERNS, VALIDATION_MESSAGES.password),
+      firstName: isNotEmpty(VALIDATION_MESSAGES.firstName),
+      lastName: isNotEmpty(VALIDATION_MESSAGES.lastName)
     }
   });
 

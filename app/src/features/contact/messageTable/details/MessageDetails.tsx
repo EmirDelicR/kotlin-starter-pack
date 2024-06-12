@@ -19,7 +19,11 @@ import {
   useUpdateMessageMutation
 } from '../../store/contactApiSlice';
 
-export default function MessageDetails({ id }: { id: string }) {
+interface Props {
+  id: string;
+}
+
+export default function MessageDetails({ id }: Props) {
   const clipboard = useClipboard({ timeout: 500 });
   const { data, isLoading, isError, error } = useGetMessageQuery({
     messageId: id

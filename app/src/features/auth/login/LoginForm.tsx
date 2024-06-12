@@ -10,6 +10,7 @@ import {
 import { isEmail, isNotEmpty, useForm } from '@mantine/form';
 
 import Error from '@/UI/components/error/Error';
+import { VALIDATION_MESSAGES } from '@/constants';
 
 import { useLoginMutation } from '../store/authApiSlice';
 import useAuth from '../useAuth';
@@ -31,8 +32,8 @@ export default function Login() {
     mode: 'uncontrolled',
     initialValues: INITIAL_FORM_VALUES,
     validate: {
-      email: isEmail('Valid email is required.'),
-      password: isNotEmpty('Password field is required.')
+      email: isEmail(VALIDATION_MESSAGES.email),
+      password: isNotEmpty(VALIDATION_MESSAGES.passwordRequired)
     }
   });
 

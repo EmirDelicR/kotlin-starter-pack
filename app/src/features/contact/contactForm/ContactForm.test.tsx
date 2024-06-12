@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, vi } from 'vitest';
 
+import { VALIDATION_MESSAGES } from '@/constants';
 import {
   renderWithProviders,
   typeDataInInputField
@@ -105,9 +106,11 @@ describe('<ContactForm/>', () => {
       await userEvent.click(button);
 
       expect(mockSendMessage).not.toHaveBeenCalled();
-      expect(screen.getByText('Valid email is required.')).toBeInTheDocument();
-      expect(screen.getByText('Full name is required.')).toBeInTheDocument();
-      expect(screen.getByText('Message is required.')).toBeInTheDocument();
+      expect(screen.getByText(VALIDATION_MESSAGES.email)).toBeInTheDocument();
+      expect(
+        screen.getByText(VALIDATION_MESSAGES.fullName)
+      ).toBeInTheDocument();
+      expect(screen.getByText(VALIDATION_MESSAGES.message)).toBeInTheDocument();
     });
 
     it('should not send message if email is set and have invalid pattern', async () => {
@@ -118,7 +121,7 @@ describe('<ContactForm/>', () => {
       await userEvent.click(button);
 
       expect(mockSendMessage).not.toHaveBeenCalled();
-      expect(screen.getByText('Valid email is required.')).toBeInTheDocument();
+      expect(screen.getByText(VALIDATION_MESSAGES.email)).toBeInTheDocument();
     });
 
     it('should send message if fullName, message and email is set', async () => {

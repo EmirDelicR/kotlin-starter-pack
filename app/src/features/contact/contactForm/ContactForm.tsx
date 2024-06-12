@@ -13,6 +13,7 @@ import { isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 import Error from '@/UI/components/error/Error';
+import { VALIDATION_MESSAGES } from '@/constants';
 
 import {
   ContactFormMessage,
@@ -28,9 +29,9 @@ export default function ContactForm() {
       message: ''
     },
     validate: {
-      email: isEmail('Valid email is required.'),
-      fullName: isNotEmpty('Full name is required.'),
-      message: isNotEmpty('Message is required.')
+      email: isEmail(VALIDATION_MESSAGES.email),
+      fullName: isNotEmpty(VALIDATION_MESSAGES.fullName),
+      message: isNotEmpty(VALIDATION_MESSAGES.message)
     }
   });
 

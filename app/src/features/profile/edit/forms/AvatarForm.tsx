@@ -17,7 +17,7 @@ const AVATAR_IMAGES = createDynamicArray(10).map((index) => {
 
 export default function AvatarForm() {
   const form = useProfileFormContext();
-  const isFitContentView = useMediaQuery('(max-width: 870px)');
+  const isFitContentView = useMediaQuery('(max-width: 62em)');
 
   if (isFitContentView) {
     return (

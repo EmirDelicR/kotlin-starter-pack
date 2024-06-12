@@ -46,6 +46,8 @@ export default function MinimalDetails() {
         </Group>
       </Paper>
       <Modal
+        closeOnClickOutside={false}
+        closeOnEscape={false}
         opened={opened}
         centered
         onClose={close}

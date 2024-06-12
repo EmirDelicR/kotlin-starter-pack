@@ -28,6 +28,7 @@ export default function useAutoLogin() {
     if (response?.data && response?.data?.status === 200) {
       dispatch(setUser(response.data));
     }
+    // TODO @ed check if here navigate to auth page is needed
   }, []);
 
   useAsyncEffect(makeApiCall);

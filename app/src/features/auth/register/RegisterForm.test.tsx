@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, vi } from 'vitest';
 
+import { VALIDATION_MESSAGES } from '@/constants';
 import {
   renderWithProviders,
   typeDataInFieldByDataTestId,
@@ -103,11 +104,15 @@ describe('<RegisterForm/>', () => {
       await userEvent.click(button);
 
       expect(mockRegister).not.toHaveBeenCalled();
-      expect(screen.getByText('First name is required.')).toBeInTheDocument();
-      expect(screen.getByText('Last name is required.')).toBeInTheDocument();
-      expect(screen.getByText('Valid email is required.')).toBeInTheDocument();
       expect(
-        screen.getByText('Your password is not strong enough.')
+        screen.getByText(VALIDATION_MESSAGES.firstName)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(VALIDATION_MESSAGES.lastName)
+      ).toBeInTheDocument();
+      expect(screen.getByText(VALIDATION_MESSAGES.email)).toBeInTheDocument();
+      expect(
+        screen.getByText(VALIDATION_MESSAGES.password)
       ).toBeInTheDocument();
     });
 
@@ -120,9 +125,9 @@ describe('<RegisterForm/>', () => {
       await userEvent.click(button);
 
       expect(mockRegister).not.toHaveBeenCalled();
-      expect(screen.getByText('Valid email is required.')).toBeInTheDocument();
+      expect(screen.getByText(VALIDATION_MESSAGES.email)).toBeInTheDocument();
       expect(
-        screen.getByText('Your password is not strong enough.')
+        screen.getByText(VALIDATION_MESSAGES.password)
       ).toBeInTheDocument();
     });
 

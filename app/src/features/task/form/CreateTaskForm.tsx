@@ -4,6 +4,7 @@ import { Button, LoadingOverlay, Paper, TextInput } from '@mantine/core';
 import { hasLength, useForm } from '@mantine/form';
 
 import Error from '@/UI/components/error/Error';
+import { VALIDATION_MESSAGES } from '@/constants';
 import { useAppSelector } from '@/store';
 import { selectUserId } from '@/store/userSlice';
 
@@ -27,10 +28,7 @@ export default function CreateTaskForm({ onSuccessCallback }: Props) {
     mode: 'uncontrolled',
     initialValues: INITIAL_FORM_VALUES,
     validate: {
-      title: hasLength(
-        { min: 2, max: 80 },
-        'Task title field is required to be between 2 and 80 chars.'
-      )
+      title: hasLength({ min: 2, max: 80 }, VALIDATION_MESSAGES.title)
     }
   });
 

@@ -43,13 +43,12 @@ function DeleteMessageActionIcon({ messageId }: { messageId: string }) {
   );
 }
 
-export default function Actions({
-  id,
-  unread
-}: {
+interface Props {
   id: string;
   unread: boolean;
-}) {
+}
+
+export default function Actions({ id, unread }: Props) {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <Flex gap="sm">

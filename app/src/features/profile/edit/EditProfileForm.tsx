@@ -18,6 +18,7 @@ import {
 } from '@tabler/icons-react';
 
 import Error from '@/UI/components/error/Error';
+import { VALIDATION_MESSAGES } from '@/constants';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { selectUser, setUser } from '@/store/userSlice';
 import { useUpdateUserMutation } from '@/store/userSlice/userApiSlice';
@@ -69,10 +70,10 @@ export default function EditProfileForm({ onSuccessCallback }: Props) {
     mode: 'uncontrolled',
     initialValues: setFormDataDefaultValues(user),
     validate: {
-      firstName: isNotEmpty('First name is required'),
-      lastName: isNotEmpty('Last name is required'),
-      age: isInRange({ min: 1, max: 120 }, 'Age must be provided'),
-      image: isNotEmpty('Avatar must be set')
+      firstName: isNotEmpty(VALIDATION_MESSAGES.firstName),
+      lastName: isNotEmpty(VALIDATION_MESSAGES.lastName),
+      age: isInRange({ min: 1, max: 120 }, VALIDATION_MESSAGES.age),
+      image: isNotEmpty(VALIDATION_MESSAGES.image)
     }
   });
 

@@ -126,6 +126,8 @@ export default function UserMenu() {
         </Menu.Dropdown>
       </Menu>
       <Modal
+        closeOnClickOutside={false}
+        closeOnEscape={false}
         opened={opened}
         centered
         onClose={close}
