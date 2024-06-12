@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { Roles, SubscriptionType } from '@/constants';
+import { Roles } from '@/constants';
 import { RootState } from '@/store';
 import { localStorageHelper } from '@/utils';
 
@@ -26,38 +26,38 @@ export const INITIAL_USER_DATA: UserState = {
   }
 };
 
-const INITIAL_USER_DATA_POPULATE: UserState = {
-  data: {
-    id: 'userId',
-    age: 23,
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
-    email: 'test@test.com',
-    firstName: 'John',
-    lastName: 'Doe',
-    userName: 'Cabal',
-    loggedIn: true,
-    profileUpdated: true,
-    subscribed: true,
-    subscriptions: [
-      {
-        id: 'sub-uuid-1',
-        createdAt: '2024-02-24T14:49:32.344Z',
-        name: SubscriptionType.NEWS,
-        updateAt: '2024-02-24T14:49:32.344Z'
-      }
-    ],
-    token: 'dummy-token',
-    role: {
-      id: 'user-role-id',
-      type: 2,
-      createdAt: '2024-02-24T14:49:32.344Z',
-      updatedAt: '2024-02-24T14:49:32.344Z'
-    },
-    createdAt: '2024-02-24T14:49:32.344Z',
-    updatedAt: '2024-02-24T14:49:32.344Z'
-  }
-};
+// const INITIAL_USER_DATA_POPULATE: UserState = {
+//   data: {
+//     id: 'userId',
+//     age: 23,
+//     avatar:
+//       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
+//     email: 'test@test.com',
+//     firstName: 'John',
+//     lastName: 'Doe',
+//     userName: 'Cabal',
+//     loggedIn: true,
+//     profileUpdated: true,
+//     subscribed: true,
+//     subscriptions: [
+//       {
+//         id: 'sub-uuid-1',
+//         createdAt: '2024-02-24T14:49:32.344Z',
+//         name: SubscriptionType.NEWS,
+//         updateAt: '2024-02-24T14:49:32.344Z'
+//       }
+//     ],
+//     token: 'dummy-token',
+//     role: {
+//       id: 'user-role-id',
+//       type: 2,
+//       createdAt: '2024-02-24T14:49:32.344Z',
+//       updatedAt: '2024-02-24T14:49:32.344Z'
+//     },
+//     createdAt: '2024-02-24T14:49:32.344Z',
+//     updatedAt: '2024-02-24T14:49:32.344Z'
+//   }
+// };
 
 export const userStoreSlice = createSlice({
   name: 'user',
