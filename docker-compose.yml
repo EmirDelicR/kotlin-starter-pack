@@ -26,9 +26,37 @@ services:
       timeout: 20s
       retries: 30
 
+  api:
+    container_name: "api_container"
+    image: api-backend/kotlin:latest
+    build: ./api
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - default
+    ports:
+      - "3100:3100"
+    stdin_open: true
+    tty: true
+
+  app:
+    container_name: "app_container"
+    depends_on:
+      - api
+    build: ./app
+    ports:
+      - "3000:3000"
+    volumes:
+      - app:/app/src
+    stdin_open: true
+    tty: true
+
 volumes:
   db:
   logs:
+  app:
 
 networks:
   default:

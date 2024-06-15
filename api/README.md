@@ -24,6 +24,20 @@ docker compose up
 
 run app by clicking play
 
+### DB instruction
+
+If something is running on port `3306` default one for mysql you can check with command:
+
+```console
+sudo netstat -nlp | grep 3306
+```
+
+You can kill that service with command:
+
+```console
+service mysql stop
+```
+
 ## Adding lint and format
 
 [ktlint](https://reflectoring.io/code-format-with-ktlint/)

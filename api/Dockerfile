@@ -2,7 +2,7 @@
 # Stage 1: Build the Spring Boot application
 FROM maven:3.9.6-amazoncorretto-21 as builder
 # Set the working directory inside the container to /app
-WORKDIR /app
+WORKDIR /api
 
 # Copy only the pom.xml initially to cache Maven dependencies
 COPY pom.xml .
@@ -17,7 +17,7 @@ RUN mvn package -DskipTests
 FROM amazoncorretto:21-alpine
 
 # Copy the built jar file from the build stage to the root directory of the runtime container
-COPY --from=builder /app/target/*.jar app.jar
+COPY --from=builder /api/target/*.jar api.jar
 
 # Set the container to run the application when it starts
 ENTRYPOINT ["java","-jar","/app.jar"]
