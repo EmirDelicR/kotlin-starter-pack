@@ -20,6 +20,10 @@ docker compose up
 
 run app by clicking play
 
+Go to Swagger URL:
+
+[App-Swagger](http://localhost:3100/swagger-ui/index.html)
+
 ### DB instruction
 
 If something is running on port `3306` default one for mysql you can check with command:
@@ -33,8 +37,6 @@ You can kill that service with command:
 ```console
 service mysql stop
 ```
-
-Maven docker image: https://hub.docker.com/r/fxdom/maven-openjdk-21/tags
 
 ## Use POSTMAN
 
@@ -104,15 +106,15 @@ import org.springframework.context.annotation.Configuration
 class SpringdocConfig
 ```
 
-https://www.baeldung.com/springdoc-openapi-form-login-and-basic-authentication
+[OpenAPI Auth](https://www.baeldung.com/springdoc-openapi-form-login-and-basic-authentication)
 
-https://github.com/eugenp/tutorials/blob/master/spring-security-modules/spring-security-web-springdoc/src/main/java/com/baeldung/basicauth/FooController.java
+[Example repository](https://github.com/eugenp/tutorials/blob/master/spring-security-modules/spring-security-web-springdoc/src/main/java/com/baeldung/basicauth/FooController.java)
 
-https://github.com/springdoc/springdoc-openapi-demos/blob/2.x/demo-spring-boot-3-webmvc/pom.xml
+[Pom example](https://github.com/springdoc/springdoc-openapi-demos/blob/2.x/demo-spring-boot-3-webmvc/pom.xml)
 
-https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
+[Configuration](https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/)
 
-https://springdoc.org/#demos
+[Demos](https://springdoc.org/#demos)
 
 ## Test setup
 
@@ -140,12 +142,16 @@ Links:
 
 ## Argon 2 password hash
 
-https://github.com/eugenp/tutorials/blob/ff723063a709cd6983cc35bc1302112c43f2c2f0/core-java-modules/core-java-security-3/src/test/java/com/baeldung/hash/argon/HashPasswordUnitTest.java#L13
+[Unit test](https://github.com/eugenp/tutorials/blob/ff723063a709cd6983cc35bc1302112c43f2c2f0/core-java-modules/core-java-security-3/src/test/java/com/baeldung/hash/argon/HashPasswordUnitTest.java#L13)
 
-https://www.baeldung.com/java-argon2-hashing
+[Example](https://www.baeldung.com/java-argon2-hashing)
 
-https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web/3.2.4
+[Artifact](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web/3.2.4)
 
 ## DB samples
 
-https://www.geeksforgeeks.org/spring-boot-load-initial-data/
+[DB load init data](https://www.geeksforgeeks.org/spring-boot-load-initial-data/)
+
+## Maven docker image
+
+[Maven docker image](https://hub.docker.com/r/fxdom/maven-openjdk-21/tags)
