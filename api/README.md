@@ -138,3 +138,7 @@ https://github.com/eugenp/tutorials/blob/ff723063a709cd6983cc35bc1302112c43f2c2f
 https://www.baeldung.com/java-argon2-hashing
 
 https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web/3.2.4
+
+## DB samples
+
+https://www.geeksforgeeks.org/spring-boot-load-initial-data/
