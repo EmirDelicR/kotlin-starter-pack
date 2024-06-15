@@ -2,6 +2,7 @@ package com.starter.api.rest.users.core
 
 import com.starter.api.exception.NotFoundException
 import com.starter.api.rest.roles.core.RoleService
+import com.starter.api.rest.subscriptions.core.SubscriptionService
 import com.starter.api.testUtils.sampleRegisterUserRequest
 import com.starter.api.testUtils.sampleRole
 import com.starter.api.testUtils.sampleUpdateUserRequest
@@ -29,9 +30,12 @@ class UserServiceTest {
     @SpyBean
     private lateinit var roleService: RoleService
 
+    @SpyBean
+    private lateinit var subscriptionService: SubscriptionService
+
     @BeforeEach
     fun setUp() {
-        userService = UserService(userRepository, roleService)
+        userService = UserService(userRepository, roleService, subscriptionService)
     }
 
     @Nested

@@ -1,6 +1,7 @@
 package com.starter.api.rest.tasks.core
 
 import com.starter.api.rest.roles.core.RoleService
+import com.starter.api.rest.subscriptions.core.SubscriptionService
 import com.starter.api.rest.tasks.dtos.TaskRequest
 import com.starter.api.rest.users.core.UserRepository
 import com.starter.api.rest.users.core.UserService
@@ -46,6 +47,9 @@ class TaskControllerTest {
     private lateinit var roleService: RoleService
 
     @SpyBean
+    private lateinit var subscriptionService: SubscriptionService
+
+    @SpyBean
     private lateinit var taskService: TaskService
 
     @SpyBean
@@ -58,7 +62,7 @@ class TaskControllerTest {
 
     @BeforeEach
     fun setUp() {
-        userService = UserService(userRepository, roleService)
+        userService = UserService(userRepository, roleService, subscriptionService)
         taskService = TaskService(taskRepository, userService)
         taskController = TaskController(taskService)
     }

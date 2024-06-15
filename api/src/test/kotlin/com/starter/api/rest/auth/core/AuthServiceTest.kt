@@ -6,6 +6,7 @@ import com.starter.api.exception.NotValidException
 import com.starter.api.rest.roles.core.RoleRepository
 import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.rest.roles.enums.RoleType
+import com.starter.api.rest.subscriptions.core.SubscriptionService
 import com.starter.api.rest.users.core.UserRepository
 import com.starter.api.rest.users.core.UserService
 import com.starter.api.testUtils.sampleLoginUserRequest
@@ -49,6 +50,9 @@ class AuthServiceTest {
     private lateinit var roleService: RoleService
 
     @SpyBean
+    private lateinit var subscriptionService: SubscriptionService
+
+    @SpyBean
     private lateinit var authService: AuthService
 
     @SpyBean
@@ -57,7 +61,7 @@ class AuthServiceTest {
     @BeforeEach
     fun setUp() {
         roleService = RoleService(roleRepository)
-        userService = UserService(userRepository, roleService)
+        userService = UserService(userRepository, roleService, subscriptionService)
         authService = AuthService(userService, roleService, jwtHandler)
     }
 

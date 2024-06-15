@@ -4,6 +4,7 @@ import com.starter.api.rest.auth.dtos.TokenRequest
 import com.starter.api.rest.roles.core.RoleRepository
 import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.rest.roles.enums.RoleType
+import com.starter.api.rest.subscriptions.core.SubscriptionService
 import com.starter.api.rest.users.core.UserRepository
 import com.starter.api.rest.users.core.UserService
 import com.starter.api.testUtils.sampleLoginUserRequest
@@ -55,6 +56,9 @@ class AuthControllerTest {
     @SpyBean
     private lateinit var authService: AuthService
 
+    @SpyBean
+    private lateinit var subscriptionService: SubscriptionService
+
     @MockBean
     private lateinit var jwtHandler: JWTHandler
 
@@ -66,7 +70,7 @@ class AuthControllerTest {
     @BeforeEach
     fun setUp() {
         roleService = RoleService(roleRepository)
-        userService = UserService(userRepository, roleService)
+        userService = UserService(userRepository, roleService, subscriptionService)
         authService = AuthService(userService, roleService, jwtHandler)
         authController = AuthController(authService)
     }

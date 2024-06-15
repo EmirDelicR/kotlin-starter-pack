@@ -57,7 +57,7 @@ fun sampleUser(): User {
         loggedIn = false,
         subscribed = true,
         role = role,
-        subscriptions = setOf(subscriptions),
+        subscriptions = mutableSetOf(subscriptions),
     )
 }
 
