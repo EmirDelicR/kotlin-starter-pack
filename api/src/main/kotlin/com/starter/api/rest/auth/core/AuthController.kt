@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 @RestController
 @RequestMapping(path = ["/api/v1/"])
-class AuthController(val authService: AuthService) {
+class AuthController(private val authService: AuthService) {
     @PostMapping("/register")
     fun registerUser(
         @RequestBody @Valid registerRequest: RegisterUserRequest,

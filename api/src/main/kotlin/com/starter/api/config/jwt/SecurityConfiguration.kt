@@ -1,7 +1,6 @@
 package com.starter.api.config.jwt
 
 import com.starter.api.rest.roles.enums.RoleType
-import com.starter.api.utils.logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -20,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-class SecurityConfiguration(val authenticationProvider: AuthenticationProvider) {
+class SecurityConfiguration(private val authenticationProvider: AuthenticationProvider) {
     private final val whiteListUrl: Array<String> =
         arrayOf("/h2-console/**", "/api/v1/register", "/api/v1/login", "/api/v1/autoLogin", "/swagger-ui/**", "/swagger-ui/index.html", "/v3/api-docs/**", "/error")
     private final val adminListUrl: Array<String> =
