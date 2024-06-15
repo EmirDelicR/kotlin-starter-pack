@@ -51,8 +51,6 @@ class UserController(val userService: UserService) {
         )
     }
 
-
-    // TODO @ed mark this as internal
     @PutMapping("/{id}/admin")
     @ResponseStatus(HttpStatus.OK)
     fun updateUserAsAdmin(
