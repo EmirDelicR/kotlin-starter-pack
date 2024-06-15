@@ -10,14 +10,6 @@
 4. Java -> 21
 5. Dependencies -> Spring Data JPA, Spring Web, MySQL Driver
 
-Maven docker image: https://hub.docker.com/r/fxdom/maven-openjdk-21/tags
-
-TODO @ed add more docs
-- add postman
-- How to use postmen
-1. make register call and from response headers you will see Set-Cookie jwt=... Copy that and add to variables and also add user id
-
-
 ## How to run
 
 gor to /api folder and run:
@@ -42,15 +34,32 @@ You can kill that service with command:
 service mysql stop
 ```
 
+Maven docker image: https://hub.docker.com/r/fxdom/maven-openjdk-21/tags
+
+## Use POSTMAN
+
+Import post collection. After importing run first **register** request. After this you will need to update some data:
+
+1. Copy user id and go to **kotlin-backed-api** collection and update in variables user_id
+2. In same register request from above from response headers you will see **Set-Cookie jwt=...**, copy token and set in variables as token
+3. Update other variables after specific request 
+
+
 ## Adding lint and format
 
 [ktlint](https://reflectoring.io/code-format-with-ktlint/)
 
 [repo](https://github.com/gantsign/ktlint-maven-plugin)
 
-ktlint:format format your Kotlin sources using ktlint.
+format your Kotlin sources using ktlint
+```console 
+ktlint:format
+```
 
-ktlint: check your Kotlin sources for code style violations using ktlint.
+check your Kotlin sources for code style violations using ktlint
+```console
+ktlint:check
+```
 
 ktlint: ktlint generate project report of code style violations using ktlint.
 
