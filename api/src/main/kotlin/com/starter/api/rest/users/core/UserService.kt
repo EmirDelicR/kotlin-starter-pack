@@ -5,11 +5,18 @@ import com.starter.api.rest.auth.dtos.RegisterUserRequest
 import com.starter.api.rest.roles.core.Role
 import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.rest.roles.enums.RoleType
+import com.starter.api.rest.subscriptions.core.Subscription
+import com.starter.api.rest.subscriptions.core.SubscriptionService
+import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import com.starter.api.rest.users.dtos.UserUpdateRequest
 import org.springframework.stereotype.Service
 
 @Service
-class UserService(val userRepository: UserRepository, val roleService: RoleService,) {
+class UserService(
+    private val userRepository: UserRepository,
+    private val roleService: RoleService,
+    private val subscriptionService: SubscriptionService
+) {
     fun getById(id: String): User =
         userRepository.findUserById(id)
             ?: throw NotFoundException("User with id: ($id) was not found!")
@@ -68,8 +75,8 @@ class UserService(val userRepository: UserRepository, val roleService: RoleServi
             it.subscribed = userRequest.subscribed
             it.avatar = userRequest.avatar
             it.profileUpdated = true
+            it.subscriptions = getUserSubscriptions(userRequest.subscriptions, userRequest.subscribed)
             it.userName = getUserName(userRequest.userName, user.userName, userRequest.firstName, userRequest.lastName)
-            // TODO @ed add subscriptions here
             userRepository.saveAndFlush(it)
         }
     }
@@ -85,12 +92,12 @@ class UserService(val userRepository: UserRepository, val roleService: RoleServi
     }
 
     private fun getUserName(
-        newUserName: String,
+        newUserName: String?,
         oldUserName: String,
         firstName: String,
         lastName: String,
     ): String {
-        if (newUserName.isNotEmpty()) {
+        if (!newUserName.isNullOrBlank()) {
             return newUserName.trim()
         }
 
@@ -99,5 +106,16 @@ class UserService(val userRepository: UserRepository, val roleService: RoleServi
         }
 
         return "$firstName $lastName".trim()
+    }
+
+    private fun getUserSubscriptions(newSubscriptions:  Set<SubscriptionType>, isSubscribed: Boolean): MutableSet<Subscription> {
+        if(!isSubscribed) {
+            return mutableSetOf()
+        }
+
+        val dbSubscriptions = subscriptionService.findAll()
+        val result = dbSubscriptions.filter { it.name in newSubscriptions }
+
+        return result.toMutableSet()
     }
 }

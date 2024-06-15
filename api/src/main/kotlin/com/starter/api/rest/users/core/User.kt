@@ -1,11 +1,11 @@
 package com.starter.api.rest.users.core
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.starter.api.rest.roles.core.Role
 import com.starter.api.rest.subscriptions.core.Subscription
 import com.starter.api.rest.users.dtos.UserResponse
 import com.starter.api.utils.JWTHandler
 import com.starter.api.utils.PasswordEncoder
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -18,9 +18,12 @@ import jakarta.persistence.PrePersist
 import jakarta.persistence.PreUpdate
 import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.OffsetDateTime
-import java.util.UUID
+import java.util.*
+
 
 @Entity
 @Table(name = "user")
@@ -59,13 +62,15 @@ data class User(
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     var role: Role? = null,
-    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH])
+    @ManyToMany
+    @Fetch(value= FetchMode.SELECT)
     @JoinTable(
         name = "user_subscription",
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "subscription_id")],
     )
-    val subscriptions: Set<Subscription>? = null,
+    @JsonIgnoreProperties("users")
+    var subscriptions: MutableSet<Subscription> = mutableSetOf(),
 ) {
     @PreUpdate
     private fun preUpdate() {

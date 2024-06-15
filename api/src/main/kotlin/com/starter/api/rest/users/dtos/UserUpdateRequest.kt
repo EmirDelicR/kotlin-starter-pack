@@ -14,7 +14,7 @@ data class UserUpdateRequest(
     val firstName: String,
     @field:NotBlank(message = "Last name must not be blank!")
     val lastName: String,
-    val userName: String,
+    val userName: String?,
     val subscribed: Boolean,
     val subscriptions: Set<SubscriptionType>,
 )
