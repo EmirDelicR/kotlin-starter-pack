@@ -20,7 +20,6 @@ import org.hibernate.annotations.UpdateTimestamp
 import java.time.OffsetDateTime
 import java.util.UUID
 
-
 @Entity
 @Table(name = "user")
 data class User(

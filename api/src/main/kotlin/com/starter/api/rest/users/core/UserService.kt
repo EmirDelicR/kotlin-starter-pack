@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service
 class UserService(
     private val userRepository: UserRepository,
     private val roleService: RoleService,
-    private val subscriptionService: SubscriptionService
+    private val subscriptionService: SubscriptionService,
 ) {
     fun getById(id: String): User =
         userRepository.findUserById(id)
@@ -108,8 +108,11 @@ class UserService(
         return "$firstName $lastName".trim()
     }
 
-    private fun getUserSubscriptions(newSubscriptions:  Set<SubscriptionType>, isSubscribed: Boolean): MutableSet<Subscription> {
-        if(!isSubscribed) {
+    private fun getUserSubscriptions(
+        newSubscriptions: Set<SubscriptionType>,
+        isSubscribed: Boolean,
+    ): MutableSet<Subscription> {
+        if (!isSubscribed) {
             return mutableSetOf()
         }
 

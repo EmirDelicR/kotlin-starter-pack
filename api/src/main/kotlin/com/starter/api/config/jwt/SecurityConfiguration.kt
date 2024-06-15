@@ -22,7 +22,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 class SecurityConfiguration(private val authenticationProvider: AuthenticationProvider) {
     private final val whiteListUrl: Array<String> =
-        arrayOf("/h2-console/**", "/api/v1/register", "/api/v1/login", "/api/v1/autoLogin", "/swagger-ui/**", "/swagger-ui/index.html", "/v3/api-docs/**", "/error")
+        arrayOf(
+            "/h2-console/**",
+            "/api/v1/register",
+            "/api/v1/login",
+            "/api/v1/autoLogin",
+            "/swagger-ui/**",
+            "/swagger-ui/index.html",
+            "/v3/api-docs/**",
+            "/error",
+        )
 
     @Autowired
     private val unauthorizedHandler: EntryPoint? = null
@@ -37,18 +46,17 @@ class SecurityConfiguration(private val authenticationProvider: AuthenticationPr
             .cors { obj: CorsConfigurer<HttpSecurity> -> obj.disable() }
             .authorizeHttpRequests { req ->
                 req.requestMatchers(*whiteListUrl)
-                        .permitAll()
-                        .requestMatchers(HttpMethod.POST, *arrayOf("/api/v1/subscriptions", "/api/v1/roles"))
-                        .hasRole(RoleType.ADMIN.toString())
-                        .requestMatchers(HttpMethod.GET, "/api/v1/messages/**")
-                        .hasRole(RoleType.ADMIN.toString())
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/messages/**")
-                        .hasRole(RoleType.ADMIN.toString())
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/messages/**")
-                        .hasRole(RoleType.ADMIN.toString())
-                        .anyRequest()
-                        .fullyAuthenticated()
-
+                    .permitAll()
+                    .requestMatchers(HttpMethod.POST, *arrayOf("/api/v1/subscriptions", "/api/v1/roles"))
+                    .hasRole(RoleType.ADMIN.toString())
+                    .requestMatchers(HttpMethod.GET, "/api/v1/messages/**")
+                    .hasRole(RoleType.ADMIN.toString())
+                    .requestMatchers(HttpMethod.PUT, "/api/v1/messages/**")
+                    .hasRole(RoleType.ADMIN.toString())
+                    .requestMatchers(HttpMethod.DELETE, "/api/v1/messages/**")
+                    .hasRole(RoleType.ADMIN.toString())
+                    .anyRequest()
+                    .fullyAuthenticated()
             }
             .exceptionHandling { ex: ExceptionHandlingConfigurer<HttpSecurity?> ->
                 ex.authenticationEntryPoint(

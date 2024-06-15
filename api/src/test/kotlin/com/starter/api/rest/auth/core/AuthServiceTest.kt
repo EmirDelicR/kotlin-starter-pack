@@ -33,7 +33,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.SpyBean
 import java.util.Date
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class AuthServiceTest {

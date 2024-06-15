@@ -10,7 +10,10 @@ import org.springframework.stereotype.Repository
 @Repository
 interface TaskRepository : JpaRepository<Task, String>, JpaSpecificationExecutor<Task> {
     @Query(value = "SELECT t FROM Task t WHERE t.user.id = :userId")
-    fun findAndCount(userId: String, pageable: Pageable): Page<Task>
+    fun findAndCount(
+        userId: String,
+        pageable: Pageable,
+    ): Page<Task>
 
     fun findTasksById(id: String): Task?
 

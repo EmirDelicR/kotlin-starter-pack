@@ -9,7 +9,6 @@ import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
 
-
 @Component
 class DataLoader(private val roleService: RoleService, private val subscriptionService: SubscriptionService) : CommandLineRunner {
     @Throws(Exception::class)
@@ -22,7 +21,7 @@ class DataLoader(private val roleService: RoleService, private val subscriptionS
     private fun addRoleSamples() {
         val roles = roleService.findAll()
 
-        if(roles.isEmpty()) {
+        if (roles.isEmpty()) {
             roleService.create(RoleRequest(type = RoleType.ADMIN))
             roleService.create(RoleRequest(type = RoleType.USER))
         }
@@ -31,7 +30,7 @@ class DataLoader(private val roleService: RoleService, private val subscriptionS
     private fun addSubscriptionSamples() {
         val subscriptions = subscriptionService.findAll()
 
-        if(subscriptions.isEmpty()) {
+        if (subscriptions.isEmpty()) {
             subscriptionService.create(SubscriptionRequest(name = SubscriptionType.NEWS))
             subscriptionService.create(SubscriptionRequest(name = SubscriptionType.CODE))
             subscriptionService.create(SubscriptionRequest(name = SubscriptionType.GENERAL))

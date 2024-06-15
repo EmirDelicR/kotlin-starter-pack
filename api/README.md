@@ -53,23 +53,17 @@ Import post collection. After importing run first **register** request. After th
 
 format your Kotlin sources using ktlint
 ```console 
-ktlint:format
+mvn ktlint:format
 ```
 
 check your Kotlin sources for code style violations using ktlint
 ```console
-ktlint:check
+mvn ktlint:check
 ```
 
-ktlint: ktlint generate project report of code style violations using ktlint.
-
-```console
-mvn ktlint:format
-
-mvn ktlint:check
-
+generate project report of code style violations using ktlint
+```console 
 mvn ktlint:ktlint
-
 ```
 
 ## Adding swagger

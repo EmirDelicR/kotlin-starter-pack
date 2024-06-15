@@ -56,7 +56,7 @@ class TaskController(val taskService: TaskService) {
     @ResponseStatus(HttpStatus.OK)
     fun getTaskStatistics(
         @PathVariable userId: String,
-        ): ResponseEnvelope<TaskStatisticsResponse> {
+    ): ResponseEnvelope<TaskStatisticsResponse> {
         logger.info("Handling getTaskStatistics Request with user id: $userId")
         val userTaskStatistics = taskService.getTaskStatistics(userId)
 

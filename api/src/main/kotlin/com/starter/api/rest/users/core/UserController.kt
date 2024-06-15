@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/v1/users"])
 class UserController(val userService: UserService) {
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun getUser(

@@ -2,7 +2,6 @@ package com.starter.api.config.jwt
 
 import com.starter.api.rest.users.core.CustomUserDetailsService
 import com.starter.api.utils.JWTHandler
-import com.starter.api.utils.logger
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
@@ -20,7 +19,6 @@ class AuthenticationFilter(
     private val userDetailsService: CustomUserDetailsService,
     private val jwtHandler: JWTHandler,
 ) : OncePerRequestFilter() {
-
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(
         request: HttpServletRequest,
