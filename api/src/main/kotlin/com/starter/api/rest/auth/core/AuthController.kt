@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/v1/"])
 class AuthController(val authService: AuthService) {
-    private val logger = logger()
-
     @PostMapping("/register")
     fun registerUser(
         @RequestBody @Valid registerRequest: RegisterUserRequest,

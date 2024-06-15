@@ -65,8 +65,8 @@ class AuthControllerTest {
 
     @BeforeEach
     fun setUp() {
-        userService = UserService(userRepository)
         roleService = RoleService(roleRepository)
+        userService = UserService(userRepository, roleService)
         authService = AuthService(userService, roleService, jwtHandler)
         authController = AuthController(authService)
     }
@@ -302,7 +302,7 @@ class AuthControllerTest {
             }.andExpect {
                 status { isBadRequest() }
                 jsonPath("$.status") { value(HttpStatus.BAD_REQUEST.value()) }
-                jsonPath("$.message") { value("This token is not valid. Please login again!") }
+                jsonPath("$.message") { value("This token is expired. Please login again!") }
                 jsonPath("$.data") { isEmpty() }
             }
         }

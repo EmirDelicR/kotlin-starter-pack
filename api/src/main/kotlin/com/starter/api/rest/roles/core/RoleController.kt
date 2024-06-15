@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/v1/roles"])
 class RoleController(val roleService: RoleService) {
-    private val logger = logger()
-
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     fun getRoles(): ResponseEnvelope<List<RoleResponse>> {

@@ -5,7 +5,9 @@ import com.starter.api.exception.NotFoundException
 import com.starter.api.rest.tasks.dtos.TaskRequest
 import com.starter.api.rest.tasks.dtos.TaskResponse
 import com.starter.api.rest.users.core.UserService
+import com.starter.api.utils.JsonUtil
 import com.starter.api.utils.PageableResolver
+import com.starter.api.utils.logger
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 
@@ -34,7 +36,8 @@ class TaskService(val taskRepository: TaskRepository, val userService: UserServi
         }
 
         val pageableReq = pageableResolver.getPageableObject(skip, take, sort)
-        val response: Page<Task> = taskRepository.countAllByUserId(user.id, pageableReq)
+        val response: Page<Task> = taskRepository.findAndCount(user.id, pageableReq)
+
         return PageableResponse(
             totalCount = response.totalElements,
             numberOfPages = response.totalPages,

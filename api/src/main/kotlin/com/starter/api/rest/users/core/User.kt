@@ -58,7 +58,7 @@ data class User(
     var updatedAt: OffsetDateTime = OffsetDateTime.now(),
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-    val role: Role? = null,
+    var role: Role? = null,
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH])
     @JoinTable(
         name = "user_subscription",

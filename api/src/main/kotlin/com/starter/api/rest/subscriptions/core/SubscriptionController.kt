@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/v1/subscriptions"])
 class SubscriptionController(val subscriptionService: SubscriptionService) {
-    private val logger = logger()
-
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     fun getSubscriptions(): ResponseEnvelope<List<Subscription>> {

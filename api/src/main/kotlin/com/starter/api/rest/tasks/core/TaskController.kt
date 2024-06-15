@@ -25,8 +25,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/v1/tasks"])
 class TaskController(val taskService: TaskService) {
-    private val logger = logger()
-
     @GetMapping("/paginated/{userId}")
     @ResponseStatus(HttpStatus.OK)
     fun getPaginatedTasks(
@@ -52,6 +50,8 @@ class TaskController(val taskService: TaskService) {
             status = HttpStatus.OK.value(),
         )
     }
+
+    // TODO get statistics for task
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)

@@ -1,6 +1,7 @@
 package com.starter.api.rest.tasks.core
 
 import com.starter.api.exception.NotFoundException
+import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.rest.tasks.dtos.TaskRequest
 import com.starter.api.rest.users.core.UserRepository
 import com.starter.api.rest.users.core.UserService
@@ -21,6 +22,7 @@ import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.doNothing
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
+import org.springframework.boot.test.mock.mockito.SpyBean
 
 @DisplayName("TaskService test")
 class TaskServiceTest {
@@ -31,9 +33,12 @@ class TaskServiceTest {
     private val userRepository = mock<UserRepository>()
     private val taskRepository = mock<TaskRepository>()
 
+    @SpyBean
+    private lateinit var roleService: RoleService
+
     @BeforeEach
     fun setUp() {
-        userService = UserService(userRepository)
+        userService = UserService(userRepository, roleService)
         taskService = TaskService(taskRepository, userService)
     }
 
@@ -72,7 +77,7 @@ class TaskServiceTest {
         @Test
         fun `should call taskRepository countAllByUserId method and return data`() {
             given(userRepository.findUserById(userSample.id)).willReturn(userSample)
-            given(taskRepository.countAllByUserId(eq(userSample.id), any()))
+            given(taskRepository.findAndCount(eq(userSample.id), any()))
                 .willReturn(createPageObject(listOf(taskResponseMock)))
 
             val response = taskService.findAllByUserId(userId = userSample.id, 1, 1, false)
@@ -86,7 +91,7 @@ class TaskServiceTest {
         @Test
         fun `should call taskRepository countAllByUserId method and return multiple page`() {
             given(userRepository.findUserById(userSample.id)).willReturn(userSample)
-            given(taskRepository.countAllByUserId(eq(userSample.id), any()))
+            given(taskRepository.findAndCount(eq(userSample.id), any()))
                 .willReturn(createPageObject(listOf(taskResponseMock, taskResponseMock), 1))
 
             val response = taskService.findAllByUserId(userId = userSample.id, 2, 1, false)
@@ -100,7 +105,7 @@ class TaskServiceTest {
         @Test
         fun `should call taskRepository countAllByUserId method and return all data if is mobile`() {
             given(userRepository.findUserById(userSample.id)).willReturn(userSample)
-            given(taskRepository.countAllByUserId(eq(userSample.id), any()))
+            given(taskRepository.findAndCount(eq(userSample.id), any()))
                 .willReturn(createPageObject(listOf(taskResponseMock, taskResponseMock, taskResponseMock), 1))
 
             val response = taskService.findAllByUserId(userId = userSample.id, 1, 5, true)

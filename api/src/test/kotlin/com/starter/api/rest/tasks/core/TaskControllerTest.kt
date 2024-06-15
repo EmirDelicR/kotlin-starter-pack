@@ -1,5 +1,6 @@
 package com.starter.api.rest.tasks.core
 
+import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.rest.tasks.dtos.TaskRequest
 import com.starter.api.rest.users.core.UserRepository
 import com.starter.api.rest.users.core.UserService
@@ -42,6 +43,9 @@ class TaskControllerTest {
     private lateinit var userRepository: UserRepository
 
     @SpyBean
+    private lateinit var roleService: RoleService
+
+    @SpyBean
     private lateinit var taskService: TaskService
 
     @SpyBean
@@ -54,7 +58,7 @@ class TaskControllerTest {
 
     @BeforeEach
     fun setUp() {
-        userService = UserService(userRepository)
+        userService = UserService(userRepository, roleService)
         taskService = TaskService(taskRepository, userService)
         taskController = TaskController(taskService)
     }
@@ -64,7 +68,7 @@ class TaskControllerTest {
     inner class GetPaginatedTasks {
         @Test
         fun `Test getPaginatedTasks should return status 200 if findAllByUserId service function is successful with default values`() {
-            given(taskRepository.countAllByUserId(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
+            given(taskRepository.findAndCount(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
             given(userRepository.findUserById(userSample.id)).willReturn(userSample)
 
             mockMvc.get("$apiUrl/paginated/${userSample.id}").andExpect {
@@ -85,7 +89,7 @@ class TaskControllerTest {
 
         @Test
         fun `Test getPaginatedTasks should return status 200 if findAllByUserId service function is successful with passed values`() {
-            given(taskRepository.countAllByUserId(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
+            given(taskRepository.findAndCount(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
             given(userRepository.findUserById(userSample.id)).willReturn(userSample)
 
             mockMvc.get("$apiUrl/paginated/${userSample.id}?page=1&pageSize=1&isMobile=false").andExpect {
@@ -106,7 +110,7 @@ class TaskControllerTest {
 
         @Test
         fun `Test getPaginatedTasks should return status 400 if page is less then 1`() {
-            given(taskRepository.countAllByUserId(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
+            given(taskRepository.findAndCount(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
             given(userRepository.findUserById(userSample.id)).willReturn(userSample)
 
             mockMvc.get("$apiUrl/paginated/${userSample.id}?page=0&pageSize=1&isMobile=false").andExpect {
@@ -119,7 +123,7 @@ class TaskControllerTest {
 
         @Test
         fun `Test getPaginatedTasks should return status 400 if page is more then 100`() {
-            given(taskRepository.countAllByUserId(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
+            given(taskRepository.findAndCount(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
             given(userRepository.findUserById(userSample.id)).willReturn(userSample)
 
             mockMvc.get("$apiUrl/paginated/${userSample.id}?page=101&pageSize=1&isMobile=false").andExpect {
@@ -132,7 +136,7 @@ class TaskControllerTest {
 
         @Test
         fun `Test getPaginatedTasks should return status 400 if pageSize is less then 0`() {
-            given(taskRepository.countAllByUserId(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
+            given(taskRepository.findAndCount(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
             given(userRepository.findUserById(userSample.id)).willReturn(userSample)
 
             mockMvc.get("$apiUrl/paginated/${userSample.id}?page=1&pageSize=0&isMobile=false").andExpect {
@@ -145,7 +149,7 @@ class TaskControllerTest {
 
         @Test
         fun `Test getPaginatedTasks should return status 404 if user is not found`() {
-            given(taskRepository.countAllByUserId(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
+            given(taskRepository.findAndCount(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
             given(userRepository.findUserById(userSample.id)).willReturn(null)
 
             mockMvc.get("$apiUrl/paginated/${userSample.id}").andExpect {
@@ -158,7 +162,7 @@ class TaskControllerTest {
 
         @Test
         fun `Test getPaginatedTasks should return status 200 if findAllByUserId service function is successful and is mobile`() {
-            given(taskRepository.countAllByUserId(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
+            given(taskRepository.findAndCount(eq(userSample.id), any())).willReturn(createPageObject(listOf(taskResponseMock)))
             given(userRepository.findUserById(userSample.id)).willReturn(userSample)
 
             mockMvc.get("$apiUrl/paginated/${userSample.id}?page=1&pageSize=1&isMobile=true").andExpect {
@@ -180,7 +184,7 @@ class TaskControllerTest {
         @Test
         fun `Test getPaginatedTasks should return all items if is mobile`() {
             given(
-                taskRepository.countAllByUserId(eq(userSample.id), any()),
+                taskRepository.findAndCount(eq(userSample.id), any()),
             ).willReturn(createPageObject(listOf(taskResponseMock, taskResponseMock)))
             given(userRepository.findUserById(userSample.id)).willReturn(userSample)
 

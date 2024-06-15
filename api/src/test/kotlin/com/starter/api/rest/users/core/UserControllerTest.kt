@@ -1,5 +1,6 @@
 package com.starter.api.rest.users.core
 
+import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.rest.roles.enums.RoleType
 import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import com.starter.api.testUtils.sampleUpdateUserRequest
@@ -36,6 +37,9 @@ class UserControllerTest {
     @SpyBean
     private lateinit var userService: UserService
 
+    @SpyBean
+    private lateinit var roleService: RoleService
+
     @Autowired
     private lateinit var mockMvc: MockMvc
 
@@ -43,7 +47,7 @@ class UserControllerTest {
 
     @BeforeEach
     fun setUp() {
-        userService = UserService(userRepository)
+        userService = UserService(userRepository, roleService)
         userController = UserController(userService)
     }
 

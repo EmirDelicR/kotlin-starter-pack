@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/v1/users"])
 class UserController(val userService: UserService) {
-    private val logger = logger()
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -48,6 +47,23 @@ class UserController(val userService: UserService) {
         return ResponseEnvelope(
             data = user.toResponse(),
             message = "User with id ($id) was updated successfully.",
+            status = HttpStatus.OK.value(),
+        )
+    }
+
+
+    // TODO @ed mark this as internal
+    @PutMapping("/{id}/admin")
+    @ResponseStatus(HttpStatus.OK)
+    fun updateUserAsAdmin(
+        @PathVariable id: String,
+    ): ResponseEnvelope<UserResponse> {
+        logger.info("Handling updateUserAsAdmin Request")
+        val user = userService.updateUserAsAdmin(id)
+
+        return ResponseEnvelope(
+            data = user.toResponse(),
+            message = "User with id ($id) was updated as admin successfully.",
             status = HttpStatus.OK.value(),
         )
     }

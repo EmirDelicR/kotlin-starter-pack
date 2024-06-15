@@ -5,7 +5,6 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 
 class PasswordEncoder private constructor() {
     companion object {
-        private val logger = logger()
         private var arg2SpringSecurityInstance: Argon2PasswordEncoder? = null
 
         fun getInstance(): Argon2PasswordEncoder {

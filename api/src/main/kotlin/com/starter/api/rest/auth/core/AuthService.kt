@@ -48,7 +48,7 @@ class AuthService(
 
     fun autoLoginUser(token: String): AuthResponse {
         if (jwtHandler.isTokenExpired(token)) {
-            throw NotValidException("This token is not valid. Please login again!")
+            throw NotValidException("This token is expired. Please login again!")
         }
 
         val email =

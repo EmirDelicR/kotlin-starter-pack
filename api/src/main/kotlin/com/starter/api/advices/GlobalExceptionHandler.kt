@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 
 @ControllerAdvice
 class GlobalExceptionHandler {
-    private val logger = logger()
-
     @ExceptionHandler
     fun handle(exception: NotValidException): ResponseEntity<ResponseEnvelope<Nothing?>> {
         logger.error("Handling NotValidException:", exception)

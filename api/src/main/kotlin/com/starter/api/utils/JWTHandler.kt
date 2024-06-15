@@ -14,9 +14,9 @@ import javax.crypto.SecretKey
 @Component
 @PropertySource("classpath:application.properties")
 class JWTHandler {
-    @Value("\${jwt.secret}")
-    private lateinit var jwtSecret: String
-
+    // @Value("\${jwt.secret}")
+    private var jwtSecret: String = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
+    // TODO @ed fix this value here and also remove barrer token in login request in postman
     // 24h
     private val jwtExpires: Long = 8640000
     private val jwtRefreshExpires: Long = 8640000 * 2
@@ -59,7 +59,7 @@ class JWTHandler {
         return try {
             getAllClaims(token).expiration.before(Date())
         } catch (ex: Exception){
-            logger().error("Token expired", ex)
+            logger.error("Token expired", ex)
             true
         }
     }

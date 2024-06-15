@@ -13,8 +13,6 @@ import java.io.IOException
 
 @Component
 class EntryPoint : AuthenticationEntryPoint {
-    private val logger = logger()
-
     @Throws(IOException::class, ServletException::class)
     override fun commence(
         request: HttpServletRequest,

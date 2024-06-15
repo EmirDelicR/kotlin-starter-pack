@@ -28,8 +28,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/v1/messages"])
 class MessageController(val messageService: MessageService) {
-    private val logger = logger()
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun getMessage(

@@ -1,6 +1,7 @@
 package com.starter.api.rest.users.core
 
 import com.starter.api.exception.NotFoundException
+import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.testUtils.sampleRegisterUserRequest
 import com.starter.api.testUtils.sampleRole
 import com.starter.api.testUtils.sampleUpdateUserRequest
@@ -17,6 +18,7 @@ import org.mockito.BDDMockito.verify
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.mock
+import org.springframework.boot.test.mock.mockito.SpyBean
 
 @DisplayName("UserService test")
 class UserServiceTest {
@@ -24,9 +26,12 @@ class UserServiceTest {
     private lateinit var userService: UserService
     private val userRepository = mock<UserRepository>()
 
+    @SpyBean
+    private lateinit var roleService: RoleService
+
     @BeforeEach
     fun setUp() {
-        userService = UserService(userRepository)
+        userService = UserService(userRepository, roleService)
     }
 
     @Nested

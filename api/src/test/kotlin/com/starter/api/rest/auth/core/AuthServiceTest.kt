@@ -57,8 +57,8 @@ class AuthServiceTest {
 
     @BeforeEach
     fun setUp() {
-        userService = UserService(userRepository)
         roleService = RoleService(roleRepository)
+        userService = UserService(userRepository, roleService)
         authService = AuthService(userService, roleService, jwtHandler)
     }
 
@@ -167,7 +167,7 @@ class AuthServiceTest {
 
             assertThatCode {
                 authService.autoLoginUser(token)
-            }.hasMessage("This token is not valid. Please login again!")
+            }.hasMessage("This token is expired. Please login again!")
                 .isInstanceOf(NotValidException::class.java)
         }
 

@@ -3,16 +3,28 @@ package com.starter.api.rest.users.core
 import com.starter.api.exception.NotFoundException
 import com.starter.api.rest.auth.dtos.RegisterUserRequest
 import com.starter.api.rest.roles.core.Role
+import com.starter.api.rest.roles.core.RoleService
+import com.starter.api.rest.roles.enums.RoleType
 import com.starter.api.rest.users.dtos.UserUpdateRequest
 import org.springframework.stereotype.Service
 
 @Service
-class UserService(val userRepository: UserRepository) {
+class UserService(val userRepository: UserRepository, val roleService: RoleService,) {
     fun getById(id: String): User =
         userRepository.findUserById(id)
             ?: throw NotFoundException("User with id: ($id) was not found!")
 
     fun getByEmail(email: String): User? = userRepository.findUserByEmail(email)
+
+    fun updateUserAsAdmin(id: String): User {
+        val user = getById(id)
+        val adminRole = roleService.getByType(RoleType.ADMIN)
+
+        return user.let {
+            it.role = adminRole
+            userRepository.saveAndFlush(it)
+        }
+    }
 
     fun create(
         data: RegisterUserRequest,

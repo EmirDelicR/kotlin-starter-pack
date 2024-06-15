@@ -20,7 +20,6 @@ class AuthenticationFilter(
     private val userDetailsService: CustomUserDetailsService,
     private val jwtHandler: JWTHandler,
 ) : OncePerRequestFilter() {
-    private val log = logger()
 
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(
@@ -47,7 +46,7 @@ class AuthenticationFilter(
                 }
             }
         } catch (e: Exception) {
-            log.error("Cannot set user authentication: ${e.message}")
+            logger.error("Cannot set user authentication: ${e.message}")
         }
 
         filterChain.doFilter(request, response)
