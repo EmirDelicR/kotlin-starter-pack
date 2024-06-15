@@ -13,6 +13,10 @@
 Maven docker image: https://hub.docker.com/r/fxdom/maven-openjdk-21/tags
 
 TODO @ed add more docs
+- add postman
+- How to use postmen
+1. make register call and from response headers you will see Set-Cookie jwt=... Copy that and add to variables and also add user id
+
 
 ## How to run
 

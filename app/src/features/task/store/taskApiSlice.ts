@@ -44,7 +44,7 @@ const taskSlice = baseApiWithTag.injectEndpoints({
       { total: number; done: number; open: number },
       { userId: string }
     >({
-      query: ({ userId }) => `/tasks/statistics/${userId}`,
+      query: ({ userId }) => `/tasks/${userId}/statistics`,
       transformResponse: (res: ApiTaskStatisticsResponse) => res.data,
       providesTags: ['Task']
     }),

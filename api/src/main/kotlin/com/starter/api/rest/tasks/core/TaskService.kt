@@ -4,10 +4,9 @@ import com.starter.api.dtos.PageableResponse
 import com.starter.api.exception.NotFoundException
 import com.starter.api.rest.tasks.dtos.TaskRequest
 import com.starter.api.rest.tasks.dtos.TaskResponse
+import com.starter.api.rest.tasks.dtos.TaskStatisticsResponse
 import com.starter.api.rest.users.core.UserService
-import com.starter.api.utils.JsonUtil
 import com.starter.api.utils.PageableResolver
-import com.starter.api.utils.logger
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 
@@ -45,6 +44,18 @@ class TaskService(val taskRepository: TaskRepository, val userService: UserServi
                 response.content.map {
                     it.toResponse()
                 },
+        )
+    }
+
+    fun getTaskStatistics(userId: String): TaskStatisticsResponse {
+        val user = userService.getById(userId)
+        val tasks = taskRepository.findAllByUserId(user.id)
+        val doneTasks = tasks.filter { it.completed }
+
+        return TaskStatisticsResponse(
+            total = tasks.size,
+            done = doneTasks.size,
+            open = tasks.size - doneTasks.size,
         )
     }
 

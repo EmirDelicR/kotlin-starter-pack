@@ -4,6 +4,7 @@ import com.starter.api.dtos.PageableResponse
 import com.starter.api.dtos.ResponseEnvelope
 import com.starter.api.rest.tasks.dtos.TaskRequest
 import com.starter.api.rest.tasks.dtos.TaskResponse
+import com.starter.api.rest.tasks.dtos.TaskStatisticsResponse
 import com.starter.api.utils.logger
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Max
@@ -51,7 +52,20 @@ class TaskController(val taskService: TaskService) {
         )
     }
 
-    // TODO get statistics for task
+    @GetMapping("/{userId}/statistics")
+    @ResponseStatus(HttpStatus.OK)
+    fun getTaskStatistics(
+        @PathVariable userId: String,
+        ): ResponseEnvelope<TaskStatisticsResponse> {
+        logger.info("Handling getTaskStatistics Request with user id: $userId")
+        val userTaskStatistics = taskService.getTaskStatistics(userId)
+
+        return ResponseEnvelope(
+            data = userTaskStatistics,
+            message = "Fetch task statistics was successful.",
+            status = HttpStatus.OK.value(),
+        )
+    }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
