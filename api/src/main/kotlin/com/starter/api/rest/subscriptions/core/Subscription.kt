@@ -1,15 +1,12 @@
 package com.starter.api.rest.subscriptions.core
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.starter.api.rest.subscriptions.dtos.SubscriptionResponse
 import com.starter.api.rest.subscriptions.enums.SubscriptionType
-import com.starter.api.rest.users.core.User
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
-import jakarta.persistence.ManyToMany
 import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
 import java.time.OffsetDateTime
@@ -24,9 +21,6 @@ class Subscription(
     @Column(name = "name", unique = true)
     @Enumerated(EnumType.STRING)
     val name: SubscriptionType = SubscriptionType.NEWS,
-    @ManyToMany(mappedBy = "subscriptions")
-    @JsonIgnoreProperties("subscriptions")
-    var users: MutableSet<User> = mutableSetOf(),
 ) {
     @CreationTimestamp
     @Column(name = "created_at")
