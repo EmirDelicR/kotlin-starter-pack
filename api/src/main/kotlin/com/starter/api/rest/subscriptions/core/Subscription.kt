@@ -24,7 +24,7 @@ class Subscription(
     @Id
     @Column(name = "id")
     val id: String = UUID.randomUUID().toString(),
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     @Enumerated(EnumType.STRING)
     val name: SubscriptionType = SubscriptionType.NEWS,
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH])

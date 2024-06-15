@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController
 class SubscriptionController(val subscriptionService: SubscriptionService) {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    fun getSubscriptions(): ResponseEnvelope<List<Subscription>> {
+    fun getSubscriptions(): ResponseEnvelope<List<SubscriptionResponse>> {
         logger.info("Handling getSubscriptions Request")
         val subscriptions = subscriptionService.findAll()
 
         return ResponseEnvelope(
-            data = subscriptions,
+            data = subscriptions.map { it.toResponse() },
             message = "Fetch subscriptions successful.",
             status = HttpStatus.OK.value(),
         )

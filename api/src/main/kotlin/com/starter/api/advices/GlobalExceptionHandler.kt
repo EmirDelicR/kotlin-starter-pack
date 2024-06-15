@@ -6,8 +6,10 @@ import com.starter.api.exception.NotFoundException
 import com.starter.api.exception.NotValidException
 import com.starter.api.utils.logger
 import jakarta.validation.ConstraintViolationException
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -74,6 +76,32 @@ class GlobalExceptionHandler {
             ResponseEnvelope(
                 data = null,
                 message = exception.constraintViolations.first().message,
+                status = HttpStatus.BAD_REQUEST.value(),
+            ),
+        )
+    }
+
+    @ExceptionHandler
+    fun handle(exception: DataIntegrityViolationException): ResponseEntity<ResponseEnvelope<Nothing?>> {
+        logger.error("Handling ConstraintViolationException:", exception)
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            ResponseEnvelope(
+                data = null,
+                message = exception.cause?.cause?.message.toString(),
+                status = HttpStatus.BAD_REQUEST.value(),
+            ),
+        )
+    }
+
+    @ExceptionHandler
+    fun handle(exception: HttpMessageNotReadableException): ResponseEntity<ResponseEnvelope<Nothing?>> {
+        logger.error("Handling ConstraintViolationException:", exception)
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            ResponseEnvelope(
+                data = null,
+                message = exception.message.toString(),
                 status = HttpStatus.BAD_REQUEST.value(),
             ),
         )
