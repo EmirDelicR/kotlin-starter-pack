@@ -15,7 +15,6 @@ data class UserResponse(
     val firstName: String,
     val lastName: String,
     val userName: String,
-    val token: String?,
     val loggedIn: Boolean,
     val profileUpdated: Boolean,
     val subscribed: Boolean,
