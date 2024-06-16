@@ -4,6 +4,7 @@ import com.starter.api.dtos.ResponseEnvelope
 import com.starter.api.rest.auth.dtos.LoginUserRequest
 import com.starter.api.rest.auth.dtos.RegisterUserRequest
 import com.starter.api.rest.auth.dtos.TokenRequest
+import com.starter.api.rest.users.core.User
 import com.starter.api.rest.users.dtos.UserResponse
 import com.starter.api.utils.logger
 import jakarta.validation.Valid
@@ -24,7 +25,7 @@ class AuthController(private val authService: AuthService) {
     @PostMapping("/register")
     fun registerUser(
         @RequestBody @Valid registerRequest: RegisterUserRequest,
-    ): ResponseEntity<ResponseEnvelope<UserResponse>> {
+    ): ResponseEntity<ResponseEnvelope<User>> {
         logger.info("Handling registerUser Request")
         val authResponse = authService.registerUser(registerRequest)
 
@@ -35,7 +36,7 @@ class AuthController(private val authService: AuthService) {
                 authResponse.token,
             ).body(
                 ResponseEnvelope(
-                    data = authResponse.user.toResponse(),
+                    data = authResponse.user,
                     message = "User is register successfully.",
                     status = HttpStatus.CREATED.value(),
                 ),
@@ -45,7 +46,7 @@ class AuthController(private val authService: AuthService) {
     @PostMapping("/login")
     fun loginUser(
         @RequestBody @Valid loginRequest: LoginUserRequest,
-    ): ResponseEntity<ResponseEnvelope<UserResponse>> {
+    ): ResponseEntity<ResponseEnvelope<User>> {
         logger.info("Handling loginUser Request")
         val authResponse = authService.loginUser(loginRequest)
 
@@ -55,7 +56,7 @@ class AuthController(private val authService: AuthService) {
                 authResponse.token,
             ).body(
                 ResponseEnvelope(
-                    data = authResponse.user.toResponse(),
+                    data = authResponse.user,
                     message = "User was logged in successfully.",
                     status = HttpStatus.OK.value(),
                 ),

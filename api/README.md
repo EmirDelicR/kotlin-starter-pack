@@ -24,6 +24,12 @@ Go to Swagger URL:
 
 [App-Swagger](http://localhost:3100/swagger-ui/index.html)
 
+#### How to use swagger
+
+1. Register user and from response grab the token
+2. Set token to authorization 
+3. Make request for other calls
+
 ### DB instruction
 
 If something is running on port `3306` default one for mysql you can check with command:
