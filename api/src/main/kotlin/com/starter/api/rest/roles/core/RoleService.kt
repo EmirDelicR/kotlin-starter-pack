@@ -11,7 +11,6 @@ class RoleService(private val roleRepository: RoleRepository) {
         return roleRepository.findAll()
     }
 
-    // TODO @ed test this
     fun getByType(type: RoleType = RoleType.USER): Role =
         roleRepository.getRoleByType(type)
             ?: throw NotFoundException("Role with type: ($type) was not found!")
