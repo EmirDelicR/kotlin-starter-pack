@@ -1,5 +1,6 @@
 package com.starter.api.rest.auth.core
 
+import com.starter.api.config.DataLoader
 import com.starter.api.exception.ConflictException
 import com.starter.api.exception.NotFoundException
 import com.starter.api.exception.NotValidException
@@ -31,6 +32,7 @@ import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.mock.mockito.SpyBean
 import java.util.Date
 
@@ -57,6 +59,9 @@ class AuthServiceTest {
 
     @SpyBean
     private lateinit var jwtHandler: JWTHandler
+
+    @MockBean
+    private lateinit var dataLoader: DataLoader
 
     @BeforeEach
     fun setUp() {

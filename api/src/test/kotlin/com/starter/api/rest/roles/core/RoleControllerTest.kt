@@ -1,5 +1,6 @@
 package com.starter.api.rest.roles.core
 
+import com.starter.api.config.DataLoader
 import com.starter.api.rest.roles.dtos.RoleRequest
 import com.starter.api.rest.roles.enums.RoleType
 import com.starter.api.testUtils.sampleRole
@@ -23,7 +24,7 @@ import org.springframework.test.web.servlet.post
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser
+@WithMockUser(roles = ["ADMIN"])
 class RoleControllerTest {
     private val apiUrl = "/api/v1/roles"
     private val roleResponseMock = sampleRole()
@@ -33,6 +34,9 @@ class RoleControllerTest {
 
     @SpyBean
     private lateinit var roleService: RoleService
+
+    @MockBean
+    private lateinit var dataLoader: DataLoader
 
     @Autowired
     private lateinit var mockMvc: MockMvc

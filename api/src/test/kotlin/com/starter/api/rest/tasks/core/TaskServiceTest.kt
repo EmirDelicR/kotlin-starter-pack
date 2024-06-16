@@ -1,7 +1,10 @@
 package com.starter.api.rest.tasks.core
 
+import com.starter.api.config.DataLoader
 import com.starter.api.exception.NotFoundException
+import com.starter.api.rest.roles.core.RoleRepository
 import com.starter.api.rest.roles.core.RoleService
+import com.starter.api.rest.subscriptions.core.SubscriptionRepository
 import com.starter.api.rest.subscriptions.core.SubscriptionService
 import com.starter.api.rest.tasks.dtos.TaskRequest
 import com.starter.api.rest.users.core.UserRepository
@@ -23,25 +26,38 @@ import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.doNothing
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.mock.mockito.SpyBean
 
 @DisplayName("TaskService test")
 class TaskServiceTest {
     private val taskResponseMock = sampleTask()
     private val userSample = sampleUser()
-    private lateinit var taskService: TaskService
-    private lateinit var userService: UserService
+
     private val userRepository = mock<UserRepository>()
     private val taskRepository = mock<TaskRepository>()
+    private var roleRepository = mock<RoleRepository>()
+    private var subscriptionRepository = mock<SubscriptionRepository>()
+
+    @MockBean
+    private lateinit var dataLoader: DataLoader
+
+    @SpyBean
+    private lateinit var userService: UserService
 
     @SpyBean
     private lateinit var roleService: RoleService
+
+    @SpyBean
+    private lateinit var taskService: TaskService
 
     @SpyBean
     private lateinit var subscriptionService: SubscriptionService
 
     @BeforeEach
     fun setUp() {
+        subscriptionService = SubscriptionService(subscriptionRepository)
+        roleService = RoleService(roleRepository)
         userService = UserService(userRepository, roleService, subscriptionService)
         taskService = TaskService(taskRepository, userService)
     }

@@ -1,5 +1,6 @@
 package com.starter.api.rest.tasks.core
 
+import com.starter.api.config.DataLoader
 import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.rest.subscriptions.core.SubscriptionService
 import com.starter.api.rest.tasks.dtos.TaskRequest
@@ -54,6 +55,9 @@ class TaskControllerTest {
 
     @SpyBean
     private lateinit var userService: UserService
+
+    @MockBean
+    private lateinit var dataLoader: DataLoader
 
     @Autowired
     private lateinit var mockMvc: MockMvc

@@ -1,9 +1,12 @@
 package com.starter.api.rest.users.core
 
+import com.starter.api.config.DataLoader
 import com.starter.api.rest.roles.core.RoleService
 import com.starter.api.rest.roles.enums.RoleType
+import com.starter.api.rest.subscriptions.core.SubscriptionRepository
 import com.starter.api.rest.subscriptions.core.SubscriptionService
 import com.starter.api.rest.subscriptions.enums.SubscriptionType
+import com.starter.api.testUtils.sampleSubscription
 import com.starter.api.testUtils.sampleUpdateUserRequest
 import com.starter.api.testUtils.sampleUser
 import com.starter.api.testUtils.withJsonContent
@@ -31,9 +34,13 @@ import org.springframework.test.web.servlet.put
 class UserControllerTest {
     private val apiUrl = "/api/v1/users"
     private val userResponseMock = sampleUser()
+    private val subscriptionMock = sampleSubscription()
 
     @MockBean
     private lateinit var userRepository: UserRepository
+
+    @MockBean
+    private lateinit var subscriptionRepository: SubscriptionRepository
 
     @SpyBean
     private lateinit var userService: UserService
@@ -43,6 +50,9 @@ class UserControllerTest {
 
     @SpyBean
     private lateinit var subscriptionService: SubscriptionService
+
+    @MockBean
+    private lateinit var dataLoader: DataLoader
 
     @Autowired
     private lateinit var mockMvc: MockMvc
@@ -74,7 +84,6 @@ class UserControllerTest {
                 jsonPath("$.data.firstName") { value(userResponseMock.firstName) }
                 jsonPath("$.data.lastName") { value(userResponseMock.lastName) }
                 jsonPath("$.data.userName") { value(userResponseMock.userName) }
-                jsonPath("$.data.token") { value(userResponseMock.token) }
                 jsonPath("$.data.loggedIn") { value(userResponseMock.loggedIn) }
                 jsonPath("$.data.profileUpdated") { value(userResponseMock.profileUpdated) }
                 jsonPath("$.data.subscribed") { value(userResponseMock.subscribed) }
@@ -105,6 +114,7 @@ class UserControllerTest {
         @Test
         fun `Test updateUser should return status 200 if service function is successful`() {
             given(userRepository.findUserById(eq(userResponseMock.id))).willReturn(userResponseMock)
+            given(subscriptionRepository.findAll()).willReturn(listOf(subscriptionMock))
             given(userRepository.saveAndFlush(any())).willReturn(userResponseMock)
 
             mockMvc.put("$apiUrl/${userResponseMock.id}") {
@@ -121,7 +131,6 @@ class UserControllerTest {
                 jsonPath("$.data.firstName") { value(userResponseMock.firstName) }
                 jsonPath("$.data.lastName") { value(userResponseMock.lastName) }
                 jsonPath("$.data.userName") { value(userResponseMock.userName) }
-                jsonPath("$.data.token") { value(userResponseMock.token) }
                 jsonPath("$.data.loggedIn") { value(userResponseMock.loggedIn) }
                 jsonPath("$.data.profileUpdated") { value(userResponseMock.profileUpdated) }
                 jsonPath("$.data.subscribed") { value(userResponseMock.subscribed) }
@@ -205,7 +214,6 @@ class UserControllerTest {
                 jsonPath("$.data.firstName") { value(updateUserRequestUpdated.firstName) }
                 jsonPath("$.data.lastName") { value(updateUserRequestUpdated.lastName) }
                 jsonPath("$.data.userName") { value("Test User") }
-                jsonPath("$.data.token") { value(userResponseMock.token) }
                 jsonPath("$.data.loggedIn") { value(userResponseMock.loggedIn) }
                 jsonPath("$.data.profileUpdated") { value(true) }
                 jsonPath("$.data.subscribed") { value(true) }

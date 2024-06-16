@@ -1,5 +1,6 @@
 package com.starter.api.rest.messages.core
 
+import com.starter.api.config.DataLoader
 import com.starter.api.rest.messages.dtos.MessageRequest
 import com.starter.api.testUtils.createPageObject
 import com.starter.api.testUtils.sampleMessage
@@ -27,7 +28,7 @@ import org.springframework.test.web.servlet.put
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser
+@WithMockUser(roles = ["ADMIN"])
 class MessageControllerTest() {
     private val apiUrl = "/api/v1/messages"
     private val messageResponseMock = sampleMessage()
@@ -37,6 +38,9 @@ class MessageControllerTest() {
 
     @SpyBean
     private lateinit var messageService: MessageService
+
+    @MockBean
+    private lateinit var dataLoader: DataLoader
 
     @Autowired
     private lateinit var mockMvc: MockMvc

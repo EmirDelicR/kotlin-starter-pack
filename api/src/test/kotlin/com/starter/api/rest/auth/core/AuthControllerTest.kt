@@ -1,5 +1,6 @@
 package com.starter.api.rest.auth.core
 
+import com.starter.api.config.DataLoader
 import com.starter.api.rest.auth.dtos.TokenRequest
 import com.starter.api.rest.roles.core.RoleRepository
 import com.starter.api.rest.roles.core.RoleService
@@ -61,6 +62,9 @@ class AuthControllerTest {
 
     @MockBean
     private lateinit var jwtHandler: JWTHandler
+
+    @MockBean
+    private lateinit var dataLoader: DataLoader
 
     @Autowired
     private lateinit var mockMvc: MockMvc

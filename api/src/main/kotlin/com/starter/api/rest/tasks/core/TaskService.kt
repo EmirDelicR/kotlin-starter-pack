@@ -11,7 +11,10 @@ import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 
 @Service
-class TaskService(val taskRepository: TaskRepository, val userService: UserService) {
+class TaskService(
+    private val taskRepository: TaskRepository,
+    private val userService: UserService,
+) {
     private val pageableResolver = PageableResolver()
 
     fun getById(id: String): Task =

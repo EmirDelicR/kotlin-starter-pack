@@ -6,7 +6,7 @@ import com.starter.api.rest.roles.enums.RoleType
 import org.springframework.stereotype.Service
 
 @Service
-class RoleService(val roleRepository: RoleRepository) {
+class RoleService(private val roleRepository: RoleRepository) {
     fun findAll(): List<Role> {
         return roleRepository.findAll()
     }

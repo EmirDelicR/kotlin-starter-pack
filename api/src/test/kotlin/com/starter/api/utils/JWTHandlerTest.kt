@@ -1,9 +1,11 @@
 package com.starter.api.utils
 
+import com.starter.api.config.DataLoader
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.security.core.userdetails.User
 
 @SpringBootTest
@@ -12,6 +14,9 @@ class JWTHandlerTest {
 
     @Autowired
     private val jwtHandler = JWTHandler()
+
+    @MockBean
+    private lateinit var dataLoader: DataLoader
 
     @Test
     fun `Test generateJwtToken should generate token`() {

@@ -1,5 +1,6 @@
 package com.starter.api.rest.subscriptions.core
 
+import com.starter.api.config.DataLoader
 import com.starter.api.rest.subscriptions.dtos.SubscriptionRequest
 import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import com.starter.api.testUtils.sampleSubscription
@@ -23,7 +24,7 @@ import org.springframework.test.web.servlet.post
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser
+@WithMockUser(roles = ["ADMIN"])
 class SubscriptionsControllerTest() {
     private val apiUrl = "/api/v1/subscriptions"
     private val subscriptionResponseMock = sampleSubscription()
@@ -33,6 +34,9 @@ class SubscriptionsControllerTest() {
 
     @SpyBean
     private lateinit var subscriptionService: SubscriptionService
+
+    @MockBean
+    private lateinit var dataLoader: DataLoader
 
     @Autowired
     private lateinit var mockMvc: MockMvc

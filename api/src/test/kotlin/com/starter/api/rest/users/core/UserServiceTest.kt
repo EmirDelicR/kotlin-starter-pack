@@ -1,7 +1,10 @@
 package com.starter.api.rest.users.core
 
+import com.starter.api.config.DataLoader
 import com.starter.api.exception.NotFoundException
+import com.starter.api.rest.roles.core.RoleRepository
 import com.starter.api.rest.roles.core.RoleService
+import com.starter.api.rest.subscriptions.core.SubscriptionRepository
 import com.starter.api.rest.subscriptions.core.SubscriptionService
 import com.starter.api.testUtils.sampleRegisterUserRequest
 import com.starter.api.testUtils.sampleRole
@@ -19,13 +22,17 @@ import org.mockito.BDDMockito.verify
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.mock
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.mock.mockito.SpyBean
 
 @DisplayName("UserService test")
 class UserServiceTest {
     private val userResponseMock = sampleUser()
     private lateinit var userService: UserService
+
     private val userRepository = mock<UserRepository>()
+    private var roleRepository = mock<RoleRepository>()
+    private var subscriptionRepository = mock<SubscriptionRepository>()
 
     @SpyBean
     private lateinit var roleService: RoleService
@@ -33,8 +40,13 @@ class UserServiceTest {
     @SpyBean
     private lateinit var subscriptionService: SubscriptionService
 
+    @MockBean
+    private lateinit var dataLoader: DataLoader
+
     @BeforeEach
     fun setUp() {
+        subscriptionService = SubscriptionService(subscriptionRepository)
+        roleService = RoleService(roleRepository)
         userService = UserService(userRepository, roleService, subscriptionService)
     }
 
