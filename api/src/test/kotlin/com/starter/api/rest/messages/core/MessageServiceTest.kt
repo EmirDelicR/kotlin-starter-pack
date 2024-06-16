@@ -21,9 +21,9 @@ import org.mockito.kotlin.doNothing
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 
-@DisplayName("MessageService test")
 class MessageServiceTest {
     private val messageResponseMock = sampleMessage()
+
     private lateinit var messageService: MessageService
     private val messageRepository = mock<MessageRepository>()
 
