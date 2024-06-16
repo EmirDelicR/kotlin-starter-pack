@@ -25,7 +25,6 @@ import org.mockito.kotlin.mock
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.mock.mockito.SpyBean
 
-@DisplayName("UserService test")
 class UserServiceTest {
     private val userResponseMock = sampleUser()
     private lateinit var userService: UserService
