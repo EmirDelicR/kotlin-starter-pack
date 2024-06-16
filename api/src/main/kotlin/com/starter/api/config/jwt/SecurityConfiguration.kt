@@ -19,7 +19,6 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -43,10 +42,15 @@ class SecurityConfiguration(private val authenticationProvider: AuthenticationPr
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
         configuration.allowedOrigins = listOf("http://localhost:3000")
-        configuration.allowedMethods = listOf(
-            "HEAD",
-            "GET", "POST", "PUT", "DELETE", "PATCH"
-        )
+        configuration.allowedMethods =
+            listOf(
+                "HEAD",
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "PATCH",
+            )
         // setAllowCredentials(true) is important, otherwise:
         // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
         configuration.allowCredentials = true
@@ -67,7 +71,7 @@ class SecurityConfiguration(private val authenticationProvider: AuthenticationPr
         http.csrf { it.disable() }
             .cors(Customizer.withDefaults())
             .authorizeHttpRequests { req ->
-                req.requestMatchers(HttpMethod.OPTIONS,"/api/v1/**").permitAll()
+                req.requestMatchers(HttpMethod.OPTIONS, "/api/v1/**").permitAll()
                     .requestMatchers(*whiteListUrl)
                     .permitAll()
                     .requestMatchers(HttpMethod.POST, *arrayOf("/api/v1/subscriptions", "/api/v1/roles"))
