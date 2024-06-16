@@ -5,7 +5,6 @@ import com.starter.api.rest.subscriptions.enums.SubscriptionType
 import com.starter.api.testUtils.sampleSubscription
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
 import org.mockito.BDDMockito.times
@@ -14,9 +13,9 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.mock
 
-@DisplayName("SubscriptionService test")
 class SubscriptionServiceTest {
     private val subscriptionResponseMock = sampleSubscription()
+
     private lateinit var subscriptionService: SubscriptionService
     private val subscriptionRepository = mock<SubscriptionRepository>()
 

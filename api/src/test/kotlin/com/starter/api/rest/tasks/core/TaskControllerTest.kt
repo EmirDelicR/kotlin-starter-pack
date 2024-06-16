@@ -214,6 +214,69 @@ class TaskControllerTest {
     }
 
     @Nested
+    @DisplayName("getTaskStatistics Function")
+    inner class GetTaskStatistics {
+        @Test
+        fun `Test getTaskStatistics should return status 404 if user do not exist`() {
+            given(userRepository.findUserById(eq(userSample.id))).willReturn(null)
+
+            mockMvc.get("$apiUrl/${userSample.id}/statistics").andExpect {
+                status { isNotFound() }
+                jsonPath("$.status") { value(HttpStatus.NOT_FOUND.value()) }
+                jsonPath("$.message") { value("User with id: (${userSample.id}) was not found!") }
+                jsonPath("$.data") { value(null) }
+            }
+        }
+
+        @Test
+        fun `Test getTaskStatistics should return status 200 if user is set and there is no tasks`() {
+            given(userRepository.findUserById(eq(userSample.id))).willReturn(userSample)
+            given(taskRepository.findAllByUserId(eq(userSample.id))).willReturn(listOf())
+
+            mockMvc.get("$apiUrl/${userSample.id}/statistics").andExpect {
+                status { isOk() }
+                jsonPath("$.status") { value(HttpStatus.OK.value()) }
+                jsonPath("$.message") { value("Fetch task statistics was successful.") }
+                jsonPath("$.data.total") { value(0) }
+                jsonPath("$.data.done") { value(0) }
+                jsonPath("$.data.open") { value(0) }
+            }
+        }
+
+        @Test
+        fun `Test getTaskStatistics should return status 200 if user is set and there is tasks`() {
+            given(userRepository.findUserById(eq(userSample.id))).willReturn(userSample)
+            given(taskRepository.findAllByUserId(eq(userSample.id))).willReturn(listOf(taskResponseMock))
+
+            mockMvc.get("$apiUrl/${userSample.id}/statistics").andExpect {
+                status { isOk() }
+                jsonPath("$.status") { value(HttpStatus.OK.value()) }
+                jsonPath("$.message") { value("Fetch task statistics was successful.") }
+                jsonPath("$.data.total") { value(1) }
+                jsonPath("$.data.done") { value(0) }
+                jsonPath("$.data.open") { value(1) }
+            }
+        }
+
+        @Test
+        fun `Test getTaskStatistics should return status 200 and calculate statistics correctly`() {
+            given(userRepository.findUserById(eq(userSample.id))).willReturn(userSample)
+            given(
+                taskRepository.findAllByUserId(eq(userSample.id)),
+            ).willReturn(listOf(taskResponseMock, taskResponseMock.copy(completed = true)))
+
+            mockMvc.get("$apiUrl/${userSample.id}/statistics").andExpect {
+                status { isOk() }
+                jsonPath("$.status") { value(HttpStatus.OK.value()) }
+                jsonPath("$.message") { value("Fetch task statistics was successful.") }
+                jsonPath("$.data.total") { value(2) }
+                jsonPath("$.data.done") { value(1) }
+                jsonPath("$.data.open") { value(1) }
+            }
+        }
+    }
+
+    @Nested
     @DisplayName("saveTask Function")
     inner class SaveTask {
         @Test

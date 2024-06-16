@@ -29,7 +29,6 @@ import org.mockito.kotlin.mock
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.mock.mockito.SpyBean
 
-@DisplayName("TaskService test")
 class TaskServiceTest {
     private val taskResponseMock = sampleTask()
     private val userSample = sampleUser()
@@ -134,6 +133,57 @@ class TaskServiceTest {
             assertThat(response.numberOfPages).isEqualTo(3)
             assertThat(response.items.size).isEqualTo(3)
             assertThat(response.items[0]).isEqualTo(taskResponseMock.toResponse())
+        }
+    }
+
+    @Nested
+    @DisplayName("getTaskStatistics Function")
+    inner class GetTaskStatistics {
+        @Test
+        fun `should throw exception if user is not found`() {
+            given(userRepository.findUserById(userSample.id)).willReturn(null)
+            assertThatCode {
+                taskService.getTaskStatistics(userId = userSample.id)
+            }.hasMessage("User with id: (${userSample.id}) was not found!")
+                .isInstanceOf(NotFoundException::class.java)
+        }
+
+        @Test
+        fun `should return data all 0 if no task`() {
+            given(userRepository.findUserById(userSample.id)).willReturn(userSample)
+            given(taskRepository.findAllByUserId(eq(userSample.id))).willReturn(listOf())
+
+            val response = taskService.getTaskStatistics(userId = userSample.id)
+
+            assertThat(response.total).isEqualTo(0)
+            assertThat(response.done).isEqualTo(0)
+            assertThat(response.open).isEqualTo(0)
+        }
+
+        @Test
+        fun `should return data if task are set`() {
+            given(userRepository.findUserById(userSample.id)).willReturn(userSample)
+            given(taskRepository.findAllByUserId(eq(userSample.id))).willReturn(listOf(taskResponseMock))
+
+            val response = taskService.getTaskStatistics(userId = userSample.id)
+
+            assertThat(response.total).isEqualTo(1)
+            assertThat(response.done).isEqualTo(0)
+            assertThat(response.open).isEqualTo(1)
+        }
+
+        @Test
+        fun `should correctly calculate statistics`() {
+            given(userRepository.findUserById(userSample.id)).willReturn(userSample)
+            given(
+                taskRepository.findAllByUserId(eq(userSample.id)),
+            ).willReturn(listOf(taskResponseMock, taskResponseMock.copy(completed = true)))
+
+            val response = taskService.getTaskStatistics(userId = userSample.id)
+
+            assertThat(response.total).isEqualTo(2)
+            assertThat(response.done).isEqualTo(1)
+            assertThat(response.open).isEqualTo(1)
         }
     }
 
