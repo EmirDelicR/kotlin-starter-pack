@@ -16,13 +16,10 @@ class JWTHandler {
     // @Value("\${jwt.secret}")
     private var jwtSecret: String = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
 
-    // TODO @ed fix this value here and also remove barrer token in login request in postman
+    // TODO @ed fix this value here
     // 24h
     private val jwtExpires: Long = 8640000
     private val jwtRefreshExpires: Long = 8640000 * 2
-
-    // https://github.com/eugenp/tutorials/blob/master/spring-security-modules/spring-security-core-2/src/main/java/com/baeldung/jwtsignkey/jwtconfig/JwtUtils.java
-    // https://www.youtube.com/watch?v=iqkt9ip567A&list=PLvN8k8yxjoeud4ESoB-wjiieqYGaDVqPR&index=7
 
     fun generateJwtToken(
         email: String,

@@ -161,3 +161,8 @@ Links:
 ## Maven docker image
 
 [Maven docker image](https://hub.docker.com/r/fxdom/maven-openjdk-21/tags)
+
+## Some useful links
+
+https://github.com/eugenp/tutorials/blob/master/spring-security-modules/spring-security-core-2/src/main/java/com/baeldung/jwtsignkey/jwtconfig/JwtUtils.java
+https://www.youtube.com/watch?v=iqkt9ip567A&list=PLvN8k8yxjoeud4ESoB-wjiieqYGaDVqPR&index=7
