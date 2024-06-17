@@ -21,7 +21,7 @@ export default function SubscriptionDetails() {
   const getSubscriptions = useMemo(() => {
     return Object.values(SubscriptionType).map((subscription) => {
       return user.subscriptions
-        .map((subscriptionItem) => subscriptionItem.name)
+        .map((subscriptionItem) => subscriptionItem?.name)
         .includes(subscription)
         ? { name: subscription, isSubscribed: true }
         : { name: subscription, isSubscribed: false };
@@ -33,7 +33,12 @@ export default function SubscriptionDetails() {
       <Blockquote
         color="blue"
         cite={
-          <Chip defaultChecked={user.subscribed} color="green" variant="light">
+          <Chip
+            checked={user.subscribed}
+            color="green"
+            variant="light"
+            onClick={() => {}}
+          >
             Subscription alerts {!user.subscribed && 'not '}activated
           </Chip>
         }

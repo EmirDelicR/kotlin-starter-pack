@@ -56,7 +56,7 @@ export default function ProfileDetails() {
         </Grid.Col>
         <Grid.Col span={{ base: 12, lg: 6 }}>
           <Badge w="100%" color="blue">
-            {Roles[user.role?.type || 2]}
+            {Roles[user.role?.type || 'USER']}
           </Badge>
         </Grid.Col>
       </Grid>

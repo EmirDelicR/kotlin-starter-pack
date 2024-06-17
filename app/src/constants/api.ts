@@ -23,7 +23,12 @@ enum HTTP_PORT {
   HTTPS = 443
 }
 
-export const API_URL = `${HTTP_PROTOCOL.HTTP}://0.0.0.0:${HTTP_PORT.HTTP}/api/v1`;
+enum HOST {
+  local = 'localhost',
+  docker = '0.0.0.0'
+}
+
+export const API_URL = `${HTTP_PROTOCOL.HTTP}://${HOST.docker}:${HTTP_PORT.HTTP}/api/v1`;
 
 export const ITEMS_PER_PAGE = 5;
 export const POOL_INTERVAL_5_MINUTES = 1000 * 60 * 5;

@@ -127,7 +127,7 @@ function TaskItem({ item }: TaskItemProps) {
 
 function TaskList() {
   const userId = useAppSelector(selectUserId);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const isMobileView = useMediaQuery(MOBILE);
 
   const { data, isLoading, isSuccess, isError, error } =
@@ -142,16 +142,17 @@ function TaskList() {
     if (!isSuccess) {
       return null;
     }
-    const { tasks, numberOfPages } = data;
 
-    if (tasks && tasks.length > 0) {
-      return tasks.map((task: Task) => {
+    const { items, numberOfPages } = data;
+
+    if (items && items.length > 0) {
+      return items.map((task: Task) => {
         return <TaskItem key={task.id} item={task} />;
       });
     }
 
     // This is in case that user delete last item on page
-    if (tasks.length === 0 && numberOfPages > 0) {
+    if (items.length === 0 && numberOfPages > 0) {
       setCurrentPage((prev) => prev - 1);
     }
 

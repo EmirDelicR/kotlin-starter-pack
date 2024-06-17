@@ -7,10 +7,10 @@ export default function WorkPage() {
   return (
     <Container size="lg" py="md">
       <Grid>
-        <Grid.Col span={{ base: 7 }}>
+        <Grid.Col span={{ base: 12, lg: 7 }} order={{ base: 2, lg: 1 }}>
           <TaskManager />
         </Grid.Col>
-        <Grid.Col span={{ base: 5 }}>
+        <Grid.Col span={{ base: 12, lg: 5 }} order={{ base: 1, lg: 2 }}>
           <TaskStatistics />
         </Grid.Col>
       </Grid>

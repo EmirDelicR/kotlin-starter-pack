@@ -5,7 +5,6 @@ import com.starter.api.rest.auth.dtos.LoginUserRequest
 import com.starter.api.rest.auth.dtos.RegisterUserRequest
 import com.starter.api.rest.auth.dtos.TokenRequest
 import com.starter.api.rest.users.core.User
-import com.starter.api.rest.users.dtos.UserResponse
 import com.starter.api.utils.logger
 import jakarta.validation.Valid
 import org.springframework.http.HttpHeaders
@@ -66,7 +65,7 @@ class AuthController(private val authService: AuthService) {
     @PostMapping("/autoLogin")
     fun autoLoginUser(
         @RequestBody @Valid tokenRequest: TokenRequest,
-    ): ResponseEntity<ResponseEnvelope<UserResponse>> {
+    ): ResponseEntity<ResponseEnvelope<User>> {
         logger.info("Handling autoLoginUser Request")
         val authResponse = authService.autoLoginUser(tokenRequest.token)
 
@@ -76,7 +75,7 @@ class AuthController(private val authService: AuthService) {
                 authResponse.token,
             ).body(
                 ResponseEnvelope(
-                    data = authResponse.user.toResponse(),
+                    data = authResponse.user,
                     message = "User was logged in successfully.",
                     status = HttpStatus.OK.value(),
                 ),

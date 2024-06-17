@@ -1,11 +1,9 @@
 package com.starter.api.rest.users.dtos
 
-import com.fasterxml.jackson.annotation.JsonInclude
 import com.starter.api.rest.roles.core.Role
 import com.starter.api.rest.subscriptions.core.Subscription
 import java.time.OffsetDateTime
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 data class UserResponse(
     val id: String,
     val email: String,

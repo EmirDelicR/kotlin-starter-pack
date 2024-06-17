@@ -16,7 +16,7 @@ type SubscriptionFormData = Pick<User, 'subscribed'> & {
 };
 type AvatarData = {
   [key: string]: unknown;
-  image: string | null;
+  avatar: string | null;
 };
 
 export type ProfileFormData = AccountFormData &
@@ -37,13 +37,13 @@ export const validateFirstStep = (form: ProfileFormType) => {
 };
 
 export const validateSecondStep = (form: ProfileFormType) =>
-  form.validateField('image').hasError;
+  form.validateField('avatar').hasError;
 
 export const setFormDataDefaultValues = (user: User) => ({
-  image: user.avatar,
+  avatar: user.avatar,
   firstName: user.firstName,
   lastName: user.lastName,
   age: user.age || 0,
   subscribed: user.subscribed,
-  subscriptions: user.subscriptions.map((subscription) => subscription.name)
+  subscriptions: user.subscriptions.map((subscription) => subscription?.name)
 });

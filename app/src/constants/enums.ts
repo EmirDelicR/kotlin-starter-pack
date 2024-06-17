@@ -1,12 +1,12 @@
 export enum Roles {
-  ADMIN = 1,
-  USER = 2
+  ADMIN = 'ADMIN',
+  USER = 'USER'
 }
 
 export enum SubscriptionType {
-  NEWS = 'news',
-  CODE = 'code',
-  GENERAL = 'general'
+  NEWS = 'NEWS',
+  CODE = 'CODE',
+  GENERAL = 'GENERAL'
 }
 
 export enum NavRoutes {

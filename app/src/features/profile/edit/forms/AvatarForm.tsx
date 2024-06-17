@@ -22,14 +22,14 @@ export default function AvatarForm() {
   if (isFitContentView) {
     return (
       <Stack p="md" align="center">
-        <Avatar size="xl" src={form.getValues().image} alt="User avatar" />
+        <Avatar size="xl" src={form.getValues().avatar} alt="User avatar" />
         <Select
           label="Your avatar"
           placeholder="Pick value"
           data={AVATAR_IMAGES}
-          key={form.key('image')}
-          {...form.getInputProps('image')}
-          onChange={(value) => form.setFieldValue('image', value)}
+          key={form.key('avatar')}
+          {...form.getInputProps('avatar')}
+          onChange={(value) => form.setFieldValue('avatar', value)}
         />
       </Stack>
     );
@@ -45,13 +45,13 @@ export default function AvatarForm() {
                 key={avatar.label}
                 alt={avatar.label}
                 src={avatar.value}
-                onClick={() => form.setFieldValue('image', avatar.value)}
+                onClick={() => form.setFieldValue('avatar', avatar.value)}
               />
             );
           })}
         </div>
         <Avatar
-          src={form.getValues().image}
+          src={form.getValues().avatar}
           alt="User avatar"
           pos="absolute"
           className={classes.avt}

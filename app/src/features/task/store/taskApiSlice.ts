@@ -15,17 +15,26 @@ interface ApiTaskResponse {
   status: number;
 }
 
+interface PaginatedData {
+  items: Task[];
+  numberOfPages: number;
+  totalCount: number;
+}
+
 interface ApiPaginatedTaskResponse {
-  data: {
-    tasks: Task[];
-    numberOfPages: number;
-  };
+  data: PaginatedData;
   message: string;
   status: number;
 }
 
+interface StatisticData {
+  total: number;
+  done: number;
+  open: number;
+}
+
 interface ApiTaskStatisticsResponse {
-  data: { total: number; done: number; open: number };
+  data: StatisticData;
   message: string;
   status: number;
 }
@@ -40,17 +49,14 @@ const taskSlice = baseApiWithTag.injectEndpoints({
       providesTags: ['Task']
     }),
 
-    getTasksStatistics: builder.query<
-      { total: number; done: number; open: number },
-      { userId: string }
-    >({
+    getTasksStatistics: builder.query<StatisticData, { userId: string }>({
       query: ({ userId }) => `/tasks/${userId}/statistics`,
       transformResponse: (res: ApiTaskStatisticsResponse) => res.data,
       providesTags: ['Task']
     }),
 
     getPaginatedTasks: builder.query<
-      { tasks: Task[]; numberOfPages: number },
+      PaginatedData,
       { userId: string; page?: number; pageSize?: number; isMobile?: boolean }
     >({
       query: ({

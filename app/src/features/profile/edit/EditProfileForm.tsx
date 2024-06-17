@@ -73,7 +73,7 @@ export default function EditProfileForm({ onSuccessCallback }: Props) {
       firstName: isNotEmpty(VALIDATION_MESSAGES.firstName),
       lastName: isNotEmpty(VALIDATION_MESSAGES.lastName),
       age: isInRange({ min: 1, max: 120 }, VALIDATION_MESSAGES.age),
-      image: isNotEmpty(VALIDATION_MESSAGES.image)
+      avatar: isNotEmpty(VALIDATION_MESSAGES.image)
     }
   });
 

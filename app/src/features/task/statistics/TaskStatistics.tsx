@@ -44,7 +44,8 @@ function TaskStatisticsData() {
     );
   }
 
-  const progress = Math.round((100 / data.total) * data.done);
+  const progress =
+    data.total === 0 ? 0 : Math.round((100 / data.total) * data.done);
 
   return (
     <>
