@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { useAutoLoginMutation } from '@/features/auth/store/authApiSlice';
 import { useAppDispatch } from '@/store';
@@ -26,7 +25,6 @@ export default function useAutoLogin() {
 
     try {
       const response = (await autoLogin(token)) as { data: UserResponse };
-      console.log('Response: ', response);
       if (response?.data && response?.data?.status === 200) {
         dispatch(setUser(response.data));
         setIsAuth(true);
