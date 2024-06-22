@@ -144,6 +144,8 @@ Links:
 
 [Chron-job](https://codersee.com/scheduling-tasks-with-spring-boot-and-kotlin/)
 
+[cron expression generator](https://crontab.cronhub.io/)
+
 ## JWT implementation
 [JWT](https://www.baeldung.com/spring-security-sign-jwt-token)
 

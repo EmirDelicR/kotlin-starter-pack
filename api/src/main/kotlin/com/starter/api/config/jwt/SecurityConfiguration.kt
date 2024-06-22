@@ -26,6 +26,7 @@ class SecurityConfiguration(private val authenticationProvider: AuthenticationPr
     private final val whiteListUrl: Array<String> =
         arrayOf(
             "/h2-console/**",
+            "/api/v1/cron/**",
             "/api/v1/register",
             "/api/v1/login",
             "/api/v1/autoLogin",
