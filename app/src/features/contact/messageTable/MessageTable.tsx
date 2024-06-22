@@ -91,7 +91,7 @@ export default function MessageTable() {
 
   const onSortingChangeHandler = (sortOptions: Updater<SortingState>) => {
     setPagination({
-      pageIndex: 0,
+      pageIndex: 1,
       pageSize: pageSize
     });
 

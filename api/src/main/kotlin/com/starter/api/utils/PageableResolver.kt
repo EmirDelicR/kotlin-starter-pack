@@ -8,7 +8,7 @@ class PageableResolver {
     companion object {
         const val SORT_DEFAULT_FIELD = "createdAt"
         const val ORDER_DEFAULT_VALUE = "DESC"
-        val allowedOrderingParams = listOf(SORT_DEFAULT_FIELD, "sender")
+        val allowedOrderingParams = listOf(SORT_DEFAULT_FIELD, "sender", "email")
     }
 
     private fun getSortingDirection(order: String): Sort.Direction {
