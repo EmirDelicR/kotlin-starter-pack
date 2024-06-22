@@ -140,6 +140,9 @@ Links:
 [BDD-mockito](https://www.baeldung.com/bdd-mockito)
 
 
+## Chron JOb
+
+[Chron-job](https://codersee.com/scheduling-tasks-with-spring-boot-and-kotlin/)
 
 ## JWT implementation
 [JWT](https://www.baeldung.com/spring-security-sign-jwt-token)

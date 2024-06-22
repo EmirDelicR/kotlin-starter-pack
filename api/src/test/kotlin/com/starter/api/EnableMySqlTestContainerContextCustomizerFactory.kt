@@ -1,8 +1,8 @@
 package com.starter.api
 
 import jakarta.transaction.Transactional
-import org.junit.runner.notification.RunListener
 import org.junit.jupiter.api.Nested
+import org.junit.runner.notification.RunListener
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.core.annotation.AnnotatedElementUtils.hasAnnotation
@@ -11,10 +11,10 @@ import org.springframework.test.context.ContextConfigurationAttributes
 import org.springframework.test.context.ContextCustomizer
 import org.springframework.test.context.ContextCustomizerFactory
 import org.springframework.test.context.MergedContextConfiguration
-import java.lang.annotation.Inherited
-import org.testcontainers.utility.DockerImageName
 import org.testcontainers.containers.MySQLContainer
+import org.testcontainers.utility.DockerImageName
 import org.testcontainers.utility.TestcontainersConfiguration
+import java.lang.annotation.Inherited
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
