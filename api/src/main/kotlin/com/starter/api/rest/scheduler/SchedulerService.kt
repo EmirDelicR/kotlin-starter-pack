@@ -12,7 +12,10 @@ class SchedulerService(private val taskScheduler: TaskScheduler) {
     private val taskId = AtomicInteger()
     private val futureTasks = mutableMapOf<Int, ScheduledFuture<*>>()
 
-    fun addCronTask(task: Runnable, duration: Long): Int {
+    fun addCronTask(
+        task: Runnable,
+        duration: Long,
+    ): Int {
         val taskPeriod = Duration.ofSeconds(duration)
         val scheduledTaskFuture = taskScheduler.scheduleAtFixedRate(task, taskPeriod)
 
@@ -30,7 +33,7 @@ class SchedulerService(private val taskScheduler: TaskScheduler) {
     }
 
     fun getCronTasks(): String {
-        if(futureTasks.isEmpty()) {
+        if (futureTasks.isEmpty()) {
             throw NotFoundException("There is no cron task scheduled!")
         }
 

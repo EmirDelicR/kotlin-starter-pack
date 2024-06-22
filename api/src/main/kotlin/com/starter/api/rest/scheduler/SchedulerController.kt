@@ -54,8 +54,7 @@ class SchedulerController(
     }
 
     @GetMapping("/tasks")
-    fun getCronTasks(
-    ): ResponseEnvelope<String> {
+    fun getCronTasks(): ResponseEnvelope<String> {
         logger.info("Handling getCronTasks Request")
         val tasks = scheduleService.getCronTasks()
 
