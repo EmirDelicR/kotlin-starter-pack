@@ -17,7 +17,7 @@ export interface Message {
   updateAt: string;
 }
 
-export interface PaginatedMessage {
+interface PaginatedMessage {
   items: Message[];
   numberOfPages: number;
 }
