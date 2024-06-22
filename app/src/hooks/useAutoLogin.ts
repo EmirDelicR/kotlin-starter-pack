@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAutoLoginMutation } from '@/features/auth/store/authApiSlice';
@@ -12,8 +12,8 @@ import useAsyncEffect from './useAsyncEffect';
  * @description This hook make auto login of the user with token
  */
 export default function useAutoLogin() {
+  const [isAuth, setIsAuth] = useState<null | boolean>(null);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const [autoLogin] = useAutoLoginMutation();
   const [, getToken] = localStorageHelper<string>('token');
 
@@ -21,15 +21,22 @@ export default function useAutoLogin() {
     const token = getToken('token');
 
     if (!token) {
-      return navigate('/auth');
+      return setIsAuth(false);
     }
 
-    const response = (await autoLogin(token)) as { data: UserResponse };
-    if (response?.data && response?.data?.status === 200) {
-      dispatch(setUser(response.data));
+    try {
+      const response = (await autoLogin(token)) as { data: UserResponse };
+      console.log('Response: ', response);
+      if (response?.data && response?.data?.status === 200) {
+        dispatch(setUser(response.data));
+        setIsAuth(true);
+      }
+    } catch (e) {
+      setIsAuth(false);
     }
-    // TODO @ed check if here navigate to auth page is needed
   }, []);
 
   useAsyncEffect(makeApiCall);
+
+  return isAuth;
 }

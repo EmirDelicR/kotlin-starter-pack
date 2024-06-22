@@ -5,6 +5,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import AppLayout from '@/UI/elements/layout/AppLayout';
 import DefaultLayout from '@/UI/elements/layout/DefaultLayout';
 import { NavRoutes } from '@/constants';
+import useAutoLogin from '@/hooks/useAutoLogin';
 import { useAppSelector } from '@/store';
 import { selectIsUserAdmin, selectIsUserLoggedIn } from '@/store/userSlice';
 
@@ -17,15 +18,22 @@ const NotFoundPage = lazy(() => import('@/UI/pages/NotFoundPage'));
 
 function ProtectedRoute({ children }: PropsWithChildren) {
   const isLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  const isAuth = useAutoLogin();
   const location = useLocation();
 
-  if (!isLoggedIn) {
-    return (
-      <Navigate to={`/${NavRoutes.AUTH}`} state={{ from: location }} replace />
-    );
+  if (isLoggedIn) {
+    return children;
   }
 
-  return children;
+  if (isAuth === null) {
+    return null; // waiting..
+  }
+
+  return isAuth ? (
+    children
+  ) : (
+    <Navigate to={`/${NavRoutes.AUTH}`} state={{ from: location }} replace />
+  );
 }
 
 function AdminRoute({ children }: PropsWithChildren) {

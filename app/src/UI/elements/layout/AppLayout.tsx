@@ -4,14 +4,11 @@ import { Outlet } from 'react-router-dom';
 import { AppShell, Burger, Center, Loader } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
-import useAutoLogin from '@/hooks/useAutoLogin';
-
 import Header from '../header/Header';
 import NavBar from '../navBar/NavBar';
 
 export default function AppLayout() {
   const [opened, { toggle }] = useDisclosure();
-  useAutoLogin();
 
   return (
     <AppShell
