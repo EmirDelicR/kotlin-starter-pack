@@ -18,7 +18,7 @@ const NotFoundPage = lazy(() => import('@/UI/pages/NotFoundPage'));
 
 function ProtectedRoute({ children }: PropsWithChildren) {
   const isLoggedIn = useAppSelector(selectIsUserLoggedIn);
-  const isAuth = useAutoLogin();
+  const isAuth = useAutoLogin(isLoggedIn);
   const location = useLocation();
 
   if (isLoggedIn) {

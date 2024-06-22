@@ -24,9 +24,11 @@ import org.testcontainers.utility.TestcontainersConfiguration
 annotation class EnableMySqlTestContainer
 
 /**
+ * How ot use test containers
  * 1. ADD @EnableMySqlTestContainer to test that uses repositories
  * 2. uncomment code in spring.factories in resource file
  * 3. uncomment code in application properties in test folder
+ * 4. rewrite test to use MYSQL DB
  * */
 
 class EnableMySqlTestContainerContextCustomizerFactory : ContextCustomizerFactory, RunListener() {

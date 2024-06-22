@@ -10,7 +10,7 @@ import useAsyncEffect from './useAsyncEffect';
 /**
  * @description This hook make auto login of the user with token
  */
-export default function useAutoLogin() {
+export default function useAutoLogin(isLoggedIn: boolean) {
   const [isAuth, setIsAuth] = useState<null | boolean>(null);
   const dispatch = useAppDispatch();
   const [autoLogin] = useAutoLoginMutation();
@@ -18,6 +18,9 @@ export default function useAutoLogin() {
 
   const makeApiCall = useCallback(async () => {
     const token = getToken('token');
+    if (isLoggedIn) {
+      return setIsAuth(true);
+    }
 
     if (!token) {
       return setIsAuth(false);
@@ -28,6 +31,8 @@ export default function useAutoLogin() {
       if (response?.data && response?.data?.status === 200) {
         dispatch(setUser(response.data));
         setIsAuth(true);
+      } else {
+        setIsAuth(false);
       }
     } catch (e) {
       setIsAuth(false);
