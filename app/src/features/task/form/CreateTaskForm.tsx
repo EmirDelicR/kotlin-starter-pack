@@ -44,7 +44,7 @@ export default function CreateTaskForm({ onSuccessCallback }: Props) {
   };
 
   return (
-    <Paper withBorder shadow="md" p="md" my="md" radius="md">
+    <Paper withBorder shadow="md" p="md" my="md" radius="md" pos="relative">
       <LoadingOverlay
         visible={isLoading}
         zIndex={1000}

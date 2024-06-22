@@ -53,7 +53,7 @@ export default function ContactForm() {
   };
 
   return (
-    <Paper withBorder shadow="md" p="md">
+    <Paper withBorder shadow="md" p="md" pos="relative">
       <LoadingOverlay
         data-testid="contact-loading-overlay"
         visible={isLoading}
