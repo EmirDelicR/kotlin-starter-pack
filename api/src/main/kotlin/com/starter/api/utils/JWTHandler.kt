@@ -18,8 +18,8 @@ class JWTHandler {
     private var jwtSecret: String = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
 
     // 24h
-    private val jwtExpires: Long = 8640000
-    private val jwtRefreshExpires: Long = 8640000 * 2
+    private val jwtExpires: Long = 86400000
+    private val jwtRefreshExpires: Long = 86400000 * 2
 
     fun generateJwtToken(
         email: String,
