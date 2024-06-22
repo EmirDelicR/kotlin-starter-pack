@@ -11,7 +11,7 @@ const mockUpdateMessage = vi.fn();
 
 const MESSAGE_DATA = {
   numberOfPages: 2,
-  messages: [
+  items: [
     {
       id: 'dummy-message-id-1',
       sender: 'John Doe',
@@ -151,7 +151,7 @@ describe('<MessageTable/>', () => {
         ...mockUseGetPaginatedMessagesQueryData,
         data: undefined as unknown as {
           numberOfPages: number;
-          messages: Message[];
+          items: Message[];
         }
       };
       renderWithProviders(<MessageTable />);
@@ -164,7 +164,7 @@ describe('<MessageTable/>', () => {
 
       const cells = screen.getAllByRole('cell');
 
-      expect(cells.length).to.eq(MESSAGE_DATA.messages.length * 6 + 1);
+      expect(cells.length).to.eq(MESSAGE_DATA.items.length * 6 + 1);
     });
   });
 

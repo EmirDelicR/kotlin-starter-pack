@@ -47,7 +47,7 @@ describe('<ProfileDetails/>', () => {
       expect(screen.getByText(`${DATA.age}`)).toBeInTheDocument();
       expect(screen.getByText('Initial login:')).toBeInTheDocument();
       expect(screen.getByText('Role:')).toBeInTheDocument();
-      expect(screen.getByText(`${Roles[2]}`)).toBeInTheDocument();
+      expect(screen.getByText(`${Roles.USER}`)).toBeInTheDocument();
     });
   });
 });

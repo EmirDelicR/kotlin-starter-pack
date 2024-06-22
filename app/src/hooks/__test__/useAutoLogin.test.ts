@@ -4,14 +4,14 @@ import { expect, vi } from 'vitest';
 import useAutoLogin from '@/hooks/useAutoLogin';
 import { renderHookWithProviders } from '@/utils/test/testUtils';
 
-const mockGetData = vi.fn();
+const mockGetTokenData = vi.fn();
 const mockAutoLogin = vi.fn();
 const mockDispatch = vi.fn();
 const mockNavigate = vi.fn();
 
 vi.mock('@/utils', async () => ({
   ...(await vi.importActual<Record<string, unknown>>('@/utils')),
-  localStorageHelper: () => [vi.fn(), mockGetData]
+  localStorageHelper: () => [vi.fn(), mockGetTokenData]
 }));
 
 vi.mock('react-router-dom', async () => ({
@@ -38,7 +38,7 @@ vi.mock('@/store/userSlice', async () => ({
 
 describe('useAutoLogin hook test', () => {
   beforeEach(() => {
-    mockGetData.mockReset().mockReturnValue('token');
+    mockGetTokenData.mockReset().mockReturnValue('token');
     mockAutoLogin.mockReset().mockResolvedValue({ data: { status: 200 } });
     mockDispatch.mockReset();
     mockNavigate.mockReset();
@@ -48,38 +48,49 @@ describe('useAutoLogin hook test', () => {
     vi.restoreAllMocks();
   });
 
-  it('Should not call dispatch and setUser if token is not set', async () => {
-    mockGetData.mockReturnValue(null);
-    renderHookWithProviders(() => useAutoLogin());
+  it('Should return false and not call dispatch and setUser if token is not set', async () => {
+    mockGetTokenData.mockReturnValue(null);
+    const { result } = renderHookWithProviders(() => useAutoLogin(false));
 
     await waitFor(() => {
-      expect(mockGetData).toHaveBeenCalledTimes(1);
+      expect(mockGetTokenData).toHaveBeenCalledTimes(1);
       expect(mockAutoLogin).toHaveBeenCalledTimes(0);
       expect(mockDispatch).toHaveBeenCalledTimes(0);
-      expect(mockNavigate).toHaveBeenCalledWith('/auth');
+      expect(result.current).eq(false);
     });
   });
 
-  it('Should not call dispatch and setUser if response status is not 200', async () => {
+  it('Should return false and not call dispatch and setUser if response status is not 200', async () => {
     mockAutoLogin.mockResolvedValue({ data: { status: 400 } });
-    renderHookWithProviders(() => useAutoLogin());
+    const { result } = renderHookWithProviders(() => useAutoLogin(false));
 
     await waitFor(() => {
-      expect(mockGetData).toHaveBeenCalledTimes(1);
+      expect(mockGetTokenData).toHaveBeenCalledTimes(1);
       expect(mockAutoLogin).toHaveBeenCalledTimes(1);
       expect(mockDispatch).toHaveBeenCalledTimes(0);
-      expect(mockNavigate).toHaveBeenCalledTimes(0);
+      expect(result.current).eq(false);
     });
   });
 
-  it('Should call dispatch and setUser if response status is 200', async () => {
-    renderHookWithProviders(() => useAutoLogin());
+  it('Should return true and call dispatch and setUser if response status is 200', async () => {
+    const { result } = renderHookWithProviders(() => useAutoLogin(false));
 
     await waitFor(() => {
-      expect(mockGetData).toHaveBeenCalledTimes(1);
+      expect(mockGetTokenData).toHaveBeenCalledTimes(1);
       expect(mockAutoLogin).toHaveBeenCalledTimes(1);
       expect(mockDispatch).toHaveBeenCalledTimes(1);
-      expect(mockNavigate).toHaveBeenCalledTimes(0);
+      expect(result.current).eq(true);
+    });
+  });
+
+  it('Should return true if user is already logged in', async () => {
+    const { result } = renderHookWithProviders(() => useAutoLogin(true));
+
+    await waitFor(() => {
+      expect(mockGetTokenData).toHaveBeenCalledTimes(1);
+      expect(mockAutoLogin).toHaveBeenCalledTimes(0);
+      expect(mockDispatch).toHaveBeenCalledTimes(0);
+      expect(result.current).eq(true);
     });
   });
 });

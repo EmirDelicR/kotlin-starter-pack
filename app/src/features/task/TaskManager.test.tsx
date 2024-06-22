@@ -26,7 +26,7 @@ const DEFAULT_TASK = {
   completed: false
 };
 const DATA = {
-  tasks: [DEFAULT_TASK],
+  items: [DEFAULT_TASK],
   numberOfPages: 2
 };
 let mockGetPaginatedTasksData = {
@@ -87,7 +87,7 @@ describe('<TaskManager/>', () => {
 
     it('should not render items and pagination if no elements', () => {
       mockGetPaginatedTasksData = {
-        data: { tasks: [], numberOfPages: 0 },
+        data: { items: [], numberOfPages: 0 },
         isLoading: false,
         isSuccess: true,
         isError: false,
@@ -146,7 +146,7 @@ describe('<TaskManager/>', () => {
       mockGetPaginatedTasksData = {
         ...mockGetPaginatedTasksData,
         data: {
-          tasks: [],
+          items: [],
           numberOfPages: 0
         }
       };

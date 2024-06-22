@@ -1,14 +1,20 @@
 import { screen } from '@testing-library/react';
 import { expect, vi } from 'vitest';
 
+import { SubscriptionType } from '@/constants';
 import { INITIAL_USER_DATA } from '@/store/userSlice';
 import { renderWithProviders } from '@/utils/test/testUtils';
 
 import SubscriptionDetails from './SubscriptionDetails';
 
+const SUBSCRIPTIONS = [
+  { name: SubscriptionType.NEWS },
+  { name: SubscriptionType.CODE }
+];
+
 let DATA = {
   subscribed: true,
-  subscriptions: [{ name: 'news' }, { name: 'code' }]
+  subscriptions: SUBSCRIPTIONS
 };
 
 describe('<SubscriptionDetails/>', () => {
@@ -29,7 +35,7 @@ describe('<SubscriptionDetails/>', () => {
     beforeEach(() => {
       DATA = {
         subscribed: true,
-        subscriptions: [{ name: 'news' }, { name: 'code' }]
+        subscriptions: SUBSCRIPTIONS
       };
 
       PRELOADED_STATE = {
@@ -50,9 +56,9 @@ describe('<SubscriptionDetails/>', () => {
       expect(
         screen.getByText('Subscription alerts activated')
       ).toBeInTheDocument();
-      expect(screen.getByText('news')).toBeInTheDocument();
-      expect(screen.getByText('code')).toBeInTheDocument();
-      expect(screen.getByText('general')).toBeInTheDocument();
+      expect(screen.getByText(SubscriptionType.NEWS)).toBeInTheDocument();
+      expect(screen.getByText(SubscriptionType.CODE)).toBeInTheDocument();
+      expect(screen.getByText(SubscriptionType.GENERAL)).toBeInTheDocument();
     });
 
     it('should render element icon for subscribed', () => {
@@ -68,7 +74,7 @@ describe('<SubscriptionDetails/>', () => {
     it('should render not activated alerts chip if user is not subscribed', () => {
       DATA = {
         subscribed: false,
-        subscriptions: [{ name: 'news' }, { name: 'code' }]
+        subscriptions: SUBSCRIPTIONS
       };
 
       PRELOADED_STATE = {
