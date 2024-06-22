@@ -39,12 +39,12 @@ class UserController(val userService: UserService) {
     fun updateUser(
         @PathVariable id: String,
         @RequestBody @Valid userRequest: UserUpdateRequest,
-    ): ResponseEnvelope<UserResponse> {
+    ): ResponseEnvelope<User> {
         logger.info("Handling updateMessage Request")
         val user = userService.update(id, userRequest)
 
         return ResponseEnvelope(
-            data = user.toResponse(),
+            data = user,
             message = "User with id ($id) was updated successfully.",
             status = HttpStatus.OK.value(),
         )

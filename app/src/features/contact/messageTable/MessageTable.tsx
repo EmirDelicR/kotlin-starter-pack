@@ -66,7 +66,7 @@ export default function MessageTable() {
     `${ITEMS_PER_PAGE}`
   );
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
+    pageIndex: 1,
     pageSize: ITEMS_PER_PAGE
   });
 
@@ -99,7 +99,7 @@ export default function MessageTable() {
   };
 
   const table = useReactTable({
-    data: data?.messages ?? [],
+    data: data?.items ?? [],
     columns,
     pageCount: data?.numberOfPages ?? -1,
     state: {
@@ -116,7 +116,7 @@ export default function MessageTable() {
     manualPagination: true
   });
 
-  const totalItems = data?.messages.length || 0;
+  const totalItems = data?.items?.length || 0;
 
   const selectValues = useMemo(
     () => createPaginationShowList(totalItems),

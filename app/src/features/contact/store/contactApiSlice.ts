@@ -17,11 +17,13 @@ export interface Message {
   updateAt: string;
 }
 
+export interface PaginatedMessage {
+  items: Message[];
+  numberOfPages: number;
+}
+
 interface ApiPaginatedMessageResponse {
-  data: {
-    messages: Message[];
-    numberOfPages: number;
-  };
+  data: PaginatedMessage;
   message: string;
   status: number;
 }
@@ -46,7 +48,7 @@ const contactSlice = baseApiWithTag.injectEndpoints({
     }),
 
     getPaginatedMessages: builder.query<
-      { messages: Message[]; numberOfPages: number },
+      PaginatedMessage,
       {
         currentPage?: number;
         pageSize?: number;
