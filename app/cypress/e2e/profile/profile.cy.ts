@@ -84,7 +84,7 @@ describe('Profile form test', () => {
 
   const checkSecondStep = () => {
     cy.get('button:contains(Next)').click();
-    cy.get('div:contains(Avatar must be set |)').should('exist');
+    cy.get('div:contains(Avatar must be set. |)').should('exist');
     cy.get('img[alt="Avatar-5"]').click();
     cy.get('button:contains(Next)').click();
   };
@@ -93,27 +93,27 @@ describe('Profile form test', () => {
     cy.get('p:contains(Stop taking advice from the dark side.)').should(
       'exist'
     );
-    cy.get('p:contains(news)').should('exist');
-    cy.get('p:contains(code)').should('exist');
-    cy.get('p:contains(general)').should('exist');
+    cy.get('p:contains(NEWS)').should('exist');
+    cy.get('p:contains(CODE)').should('exist');
+    cy.get('p:contains(GENERAL)').should('exist');
     cy.get('[data-testid="subscription-chip"]').should('exist');
-    cy.get('[data-testid="subscription-switch-news"]')
+    cy.get('[data-testid="subscription-switch-NEWS"]')
       .should('exist')
       .should('be.disabled');
-    cy.get('[data-testid="subscription-switch-code"]')
+    cy.get('[data-testid="subscription-switch-CODE"]')
       .should('exist')
       .should('be.disabled');
-    cy.get('[data-testid="subscription-switch-general"]')
+    cy.get('[data-testid="subscription-switch-GENERAL"]')
       .should('exist')
       .should('be.disabled');
     cy.get('[data-testid="subscription-chip"]').click({ force: true });
-    cy.get('[data-testid="subscription-switch-news"]')
+    cy.get('[data-testid="subscription-switch-NEWS"]')
       .should('not.be.disabled')
       .click({ force: true });
-    cy.get('[data-testid="subscription-switch-code"]')
+    cy.get('[data-testid="subscription-switch-CODE"]')
       .should('not.be.disabled')
       .click({ force: true });
-    cy.get('[data-testid="subscription-switch-general"]').should(
+    cy.get('[data-testid="subscription-switch-GENERAL"]').should(
       'not.be.disabled'
     );
     cy.get('button:contains(Submit)').click();

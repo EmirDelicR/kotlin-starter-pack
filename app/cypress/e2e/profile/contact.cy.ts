@@ -18,6 +18,10 @@ describe('Contact form test', () => {
         fixture: 'messages/message.json'
       }
     ).as('postMessage');
+    cy.intercept('GET', '/api/v1/tasks/userId/statistics', {
+      statusCode: 200,
+      fixture: 'tasks/statistics.json'
+    }).as('taskStatistics');
   });
 
   it('should throw error if api call fails', () => {

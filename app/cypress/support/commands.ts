@@ -33,6 +33,14 @@ Cypress.Commands.add('login', (asAdmin: boolean = false) => {
           type: 'user/setUser',
           payload: { data: user, status: 200 }
         });
+    },
+    onLoad: () => {
+      cy.window()
+        .its('Cypress')
+        .its('store')
+        .invoke('getState')
+        .its('user')
+        .should('deep.equal', { data: user });
     }
   });
 
@@ -47,14 +55,6 @@ Cypress.Commands.add('login', (asAdmin: boolean = false) => {
     }
   ).as('autoLoginUser');
   cy.intercept({ method: 'GET', url: 'api/v1/refresh' }).as('refreshToken');
-  cy.wait('@autoLoginUser').then(() => {
-    cy.window()
-      .its('Cypress')
-      .its('store')
-      .invoke('getState')
-      .its('user')
-      .should('deep.equal', { data: user });
-  });
 });
 
 Cypress.Commands.add('navigateTo', (route: Routes) => {

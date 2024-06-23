@@ -59,8 +59,8 @@ export default function AvatarForm() {
       </Container>
 
       <Error
-        isError={form.getInputProps('image').error !== undefined}
-        error={{ error: form.getInputProps('image').error }}
+        isError={form.getInputProps('avatar').error !== undefined}
+        error={{ error: form.getInputProps('avatar').error }}
       />
     </Paper>
   );

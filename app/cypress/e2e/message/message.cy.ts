@@ -62,6 +62,11 @@ describe('Message table test', () => {
         fixture: 'messages/message.json'
       }
     ).as('deleteMessage');
+
+    cy.intercept('GET', '/api/v1/tasks/userId/statistics', {
+      statusCode: 200,
+      fixture: 'tasks/statistics.json'
+    }).as('taskStatistics');
   });
 
   it('should navigate to emails page and show messages', () => {
