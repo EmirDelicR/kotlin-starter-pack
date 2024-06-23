@@ -29,8 +29,7 @@
       "vite/client",
       "vitest/globals",
       "@testing-library/jest-dom",
-      "node",
-      "cypress"
+      "node"
     ]
   },
   "include": ["src"],

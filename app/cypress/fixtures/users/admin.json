@@ -14,7 +14,7 @@
     "token": "dummy-token",
     "role": {
       "id": "admin-role-id",
-      "type": 1
+      "type": "ADMIN"
     },
     "createdAt": "2024-02-24T14:49:32.344Z",
     "updateAt": "2024-02-24T14:49:32.344Z"
