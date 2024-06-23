@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Center, Flex, Pagination, Select } from '@mantine/core';
 import {
@@ -81,6 +81,15 @@ export default function MessageTable() {
     { pollingInterval: POOL_INTERVAL_5_MINUTES }
   );
 
+  useEffect(() => {
+    if (data?.items?.length === 0 && data?.numberOfPages > 0) {
+      setPagination({
+        pageIndex: pageIndex - 1,
+        pageSize
+      });
+    }
+  }, [data?.items?.length, data?.numberOfPages]);
+
   const pagination = useMemo(
     () => ({
       pageIndex,
@@ -116,7 +125,7 @@ export default function MessageTable() {
     manualPagination: true
   });
 
-  const totalItems = data?.items?.length || 0;
+  const totalItems = data?.totalCount || 0;
 
   const selectValues = useMemo(
     () => createPaginationShowList(totalItems),
@@ -125,6 +134,10 @@ export default function MessageTable() {
   const onSelectChange = (value: string | null) => {
     setSelectValue(value);
     table.setPageSize(Number(value));
+    setPagination({
+      pageIndex: 1,
+      pageSize: Number(value)
+    });
   };
 
   const CaptionElement = (
@@ -148,9 +161,14 @@ export default function MessageTable() {
   const FooterElement = (
     <Center py="lg" miw="100%">
       <Pagination
-        value={pageSize}
+        value={pageIndex}
         total={table.getPageCount()}
-        onChange={table.setPageIndex}
+        onChange={(index) => {
+          table.setPagination({
+            pageIndex: index,
+            pageSize: pageSize
+          });
+        }}
       />
     </Center>
   );

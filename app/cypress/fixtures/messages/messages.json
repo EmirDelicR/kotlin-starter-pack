@@ -1,6 +1,7 @@
 {
   "data": {
     "numberOfPages": 1,
+    "totalCount": 6,
     "items": [
       {
         "id": "dummy-message-id-1",

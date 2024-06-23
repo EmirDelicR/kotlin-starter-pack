@@ -20,6 +20,7 @@ export interface Message {
 interface PaginatedMessage {
   items: Message[];
   numberOfPages: number;
+  totalCount: number;
 }
 
 interface ApiPaginatedMessageResponse {

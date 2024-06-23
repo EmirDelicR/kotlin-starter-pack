@@ -2,8 +2,7 @@
 import { Message } from '../../support/interfaces';
 
 describe('Message table test', () => {
-  let messagesData: { numberOfPages: number; messages: Message[] } | null =
-    null;
+  let messagesData: { numberOfPages: number; items: Message[] } | null = null;
   let message: Message | null = null;
 
   before(() => {
@@ -22,7 +21,7 @@ describe('Message table test', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: 'api/v1/messages/paginated?page=0&pageSize=5&columnId=createdAt&desc=ASC&filter='
+        url: 'api/v1/messages/paginated?page=1&pageSize=5&columnId=createdAt&desc=ASC&filter='
       },
       {
         statusCode: 200,
@@ -33,7 +32,7 @@ describe('Message table test', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: `api/v1/messages/${messagesData?.messages[0].id}`
+        url: `api/v1/messages/${messagesData?.items[0].id}`
       },
       {
         statusCode: 200,
@@ -76,7 +75,7 @@ describe('Message table test', () => {
     cy.get('[data-testid="table"]').should('exist');
     cy.get('[data-testid="table"] tbody tr').should(
       'have.length',
-      messagesData?.messages.length
+      messagesData?.items.length
     );
   });
 
@@ -176,16 +175,16 @@ describe('Message table test', () => {
 
     cy.wait('@getPaginatedMessages').then(() => {
       cy.interceptWithFixtureHook<{
-        data: { totalCount: number; messages: Message[] };
+        data: { totalCount: number; items: Message[] };
       }>(
         {
           method: 'GET',
-          url: 'api/v1/messages/paginated?page=0&pageSize=5&columnId=createdAt&desc=ASC&filter='
+          url: 'api/v1/messages/paginated?page=1&pageSize=5&columnId=createdAt&desc=ASC&filter='
         },
         'messages/messages.json',
         (items) => {
-          const [_firstItem, ...rest] = items.data.messages;
-          items.data.messages = rest;
+          const [_firstItem, ...rest] = items.data.items;
+          items.data.items = rest;
         }
       );
     });
@@ -211,7 +210,7 @@ describe('Message table test', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: `api/v1/messages/paginated?page=0&pageSize=5&columnId=createdAt&desc=ASC&filter=${searchText}`
+        url: `api/v1/messages/paginated?page=1&pageSize=5&columnId=createdAt&desc=ASC&filter=${searchText}`
       },
       {
         statusCode: 200,
@@ -231,27 +230,26 @@ describe('Message table test', () => {
 
     cy.wait('@getPaginatedMessages').then(() => {
       cy.interceptWithFixtureHook<{
-        data: { totalCount: number; messages: Message[] };
+        data: { totalCount: number; items: Message[] };
       }>(
         {
           method: 'GET',
-          url: 'api/v1/messages/paginated?page=0&pageSize=10&columnId=createdAt&desc=ASC&filter='
+          url: 'api/v1/messages/paginated?page=1&pageSize=10&columnId=createdAt&desc=ASC&filter='
         },
         'messages/messages.json',
         (items) => {
-          items.data.messages = [
-            ...items.data.messages,
-            ...items.data.messages
-          ];
+          items.data.items = [...items.data.items, ...items.data.items];
         }
       );
     });
 
     cy.get('[data-testid="show-entry-select"]').should('exist').click();
-    cy.get('span:contains(Show 10)').click();
-
-    cy.wait('@interceptRequest').then(() => {
-      cy.get('[data-testid="table"] tbody tr').should('have.length', 12);
-    });
+    cy.get('span:contains(Show 10)')
+      .click()
+      .then(() => {
+        cy.wait('@interceptRequest').then(() => {
+          cy.get('[data-testid="table"] tbody tr').should('have.length', 12);
+        });
+      });
   });
 });
