@@ -1,7 +1,7 @@
 {
   "data": {
     "numberOfPages": 1,
-    "messages": [
+    "items": [
       {
         "id": "dummy-message-id-1",
         "sender": "John Doe",

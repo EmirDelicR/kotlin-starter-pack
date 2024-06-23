@@ -2,7 +2,7 @@
   "data": {
     "numberOfPages": 1,
     "totalCount": 2,
-    "tasks": [
+    "items": [
       {
         "id": "dummy-task-id-1",
         "title": "dummy task 1",

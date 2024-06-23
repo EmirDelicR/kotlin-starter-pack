@@ -23,7 +23,7 @@ describe('Manage user tasks', () => {
         method: 'GET',
         url: `api/v1/tasks/paginated/${
           user!.id
-        }?page=0&pageSize=5&isMobile=false`
+        }?page=1&pageSize=5&isMobile=false`
       },
       {
         statusCode: 200,
@@ -61,13 +61,18 @@ describe('Manage user tasks', () => {
         statusCode: 200
       }
     ).as('deleteTask');
+
+    cy.intercept('GET', '/api/v1/tasks/userId/statistics', {
+      statusCode: 200,
+      fixture: 'tasks/statistics.json'
+    }).as('taskStatistics');
   });
 
   it('should throw error if api call fails', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: 'api/v1/tasks/paginated/userId?page=0&pageSize=5&isMobile=false'
+        url: 'api/v1/tasks/paginated/userId?page=1&pageSize=5&isMobile=false'
       },
       { forceNetworkError: true }
     ).as('getPaginatedTasks');
@@ -82,18 +87,18 @@ describe('Manage user tasks', () => {
     cy.get('[data-testid="task-title"]').type(title, { delay: 0 });
 
     cy.interceptWithFixtureHook<{
-      data: { totalCount: number; tasks: Task[] };
+      data: { totalCount: number; items: Task[] };
     }>(
       {
         method: 'GET',
         url: `api/v1/tasks/paginated/${
           user!.id
-        }?page=0&pageSize=5&isMobile=false`
+        }?page=1&pageSize=5&isMobile=false`
       },
       'tasks/tasks.json',
       (items) => {
-        items.data.totalCount = items.data.tasks.length + 1;
-        items.data.tasks.push(task!);
+        items.data.totalCount = items.data.items.length + 1;
+        items.data.items.push(task!);
       }
     );
 
@@ -123,22 +128,22 @@ describe('Manage user tasks', () => {
     cy.navigateTo('Work');
     cy.wait('@getPaginatedTasks').then(() => {
       cy.interceptWithFixtureHook<{
-        data: { totalCount: number; tasks: Task[] };
+        data: { totalCount: number; items: Task[] };
       }>(
         {
           method: 'GET',
           url: `/api/v1/tasks/paginated/${
             user!.id
-          }?page=0&pageSize=5&isMobile=false`
+          }?page=1&pageSize=5&isMobile=false`
         },
         'tasks/tasks.json',
         (items) => {
-          items.data.tasks[0].completed = true;
+          items.data.items[0].completed = true;
         }
       );
     });
 
-    cy.get('[data-testid="task-update-icon"]').first().click();
+    cy.get('[data-testid="task-update-icon"]').should('exist').first().click();
 
     cy.get('@updateTask').its('request.body').should('deep.equal', {
       completed: true,
@@ -175,17 +180,17 @@ describe('Manage user tasks', () => {
 
     cy.wait('@getPaginatedTasks').then(() => {
       cy.interceptWithFixtureHook<{
-        data: { totalCount: number; tasks: Task[] };
+        data: { totalCount: number; items: Task[] };
       }>(
         {
           method: 'GET',
           url: `/api/v1/tasks/paginated/${
             user!.id
-          }?page=0&pageSize=5&isMobile=false`
+          }?page=1&pageSize=5&isMobile=false`
         },
         'tasks/tasks.json',
         (items) => {
-          items.data.tasks = [items.data.tasks[1]];
+          items.data.items = [items.data.items[1]];
         }
       );
     });
@@ -203,7 +208,7 @@ describe('Manage user tasks', () => {
     cy.navigateTo('Work');
 
     cy.fixture('tasks/tasks.json').then((data) => {
-      expect(data.data.tasks.length).to.eq(2);
+      expect(data.data.items.length).to.eq(2);
     });
   });
 });
