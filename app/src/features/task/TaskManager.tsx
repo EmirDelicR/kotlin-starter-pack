@@ -144,6 +144,14 @@ function TaskList() {
     }
 
     const { items, numberOfPages } = data;
+    // This is in case that user delete last item on page
+    if (!isMobileView && items.length === 0 && numberOfPages > 0) {
+      setCurrentPage((prev) => prev - 1);
+    }
+    // This is in case that user delete last item on page for mobile
+    if (isMobileView && currentPage > numberOfPages && numberOfPages > 0) {
+      setCurrentPage((prev) => prev - 1);
+    }
 
     if (items && items.length > 0) {
       return items.map((task: Task) => {
@@ -151,13 +159,8 @@ function TaskList() {
       });
     }
 
-    // This is in case that user delete last item on page
-    if (items.length === 0 && numberOfPages > 0) {
-      setCurrentPage((prev) => prev - 1);
-    }
-
     return <Text>Currently there is no data.</Text>;
-  }, [data, isSuccess]);
+  }, [data?.items, data?.numberOfPages, isSuccess]);
 
   if ((isLoading || !data) && !isError) {
     return (

@@ -9,6 +9,7 @@ import com.starter.api.rest.users.core.UserService
 import com.starter.api.utils.PageableResolver
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
+import kotlin.math.ceil
 
 @Service
 class TaskService(
@@ -40,9 +41,15 @@ class TaskService(
         val pageableReq = pageableResolver.getPageableObject(skip, take, sort)
         val response: Page<Task> = taskRepository.findAndCount(user.id, pageableReq)
 
+        var totalPages = response.totalPages
+
+        if(isMobile){
+            totalPages = ceil(response.totalElements.toDouble().div(limit)).toInt()
+        }
+
         return PageableResponse(
             totalCount = response.totalElements,
-            numberOfPages = response.totalPages,
+            numberOfPages = totalPages,
             items =
                 response.content.map {
                     it.toResponse()

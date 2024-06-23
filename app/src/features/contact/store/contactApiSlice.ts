@@ -59,7 +59,7 @@ const contactSlice = baseApiWithTag.injectEndpoints({
     >({
       query: ({
         columnId = 'createdAt',
-        currentPage = 0,
+        currentPage = 1,
         pageSize = ITEMS_PER_PAGE,
         desc = 'DESC',
         filter = ''

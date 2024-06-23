@@ -61,7 +61,7 @@ const taskSlice = baseApiWithTag.injectEndpoints({
     >({
       query: ({
         userId,
-        page = 0,
+        page = 1,
         pageSize = ITEMS_PER_PAGE,
         isMobile = false
       }) =>
